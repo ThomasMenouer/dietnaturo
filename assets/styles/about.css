@@ -1,0 +1,20 @@
+.section-valeurs img{
+
+    height: 100%;
+    width: auto;
+}
+
+
+.section-metiers .container .row .card{
+
+    background-color: #ECDFCC;
+}
+
+.section-metiers .container .row .card img{
+    height: 100%;
+    width: auto;
+    }
+
+.section-diplomes .text-diplome{
+        font-size: 20px;
+}

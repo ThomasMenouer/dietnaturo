@@ -16,7 +16,7 @@
 
                             {% for consultation in consultations %}
                                 <h5 class="card-title">{{ consultation.title }}</h5>
-                                <p class="card-text">{{ consultation.content }}</p>
+                                <p class="card-text">{{ consultation.content | raw }}</p>
                             {% endfor %}
                         </div>
                     </div>

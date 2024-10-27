@@ -1,0 +1,12 @@
+body{
+    background-color: #FCFAEE;
+}
+
+nav {
+
+    background-color: #A5B68D;
+}
+
+nav .nav-link{
+    line-height: 30px;
+}
