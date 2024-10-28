@@ -8,5 +8,13 @@ nav {
 }
 
 nav .nav-link{
-    line-height: 30px;
+    color: white;
 }
+
+.card{
+    background-color: #ECDFCC;
+}
+
+    /* .card{
+        border-color: #DA8359;
+    } */
