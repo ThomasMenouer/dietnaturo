@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller\Admin\Pages;
+namespace App\Controller\Admin\Pages\Coaching;
 
-use App\Entity\Pages\CycleCoachings;
+use App\Entity\Pages\Coaching\CycleCoachings;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;

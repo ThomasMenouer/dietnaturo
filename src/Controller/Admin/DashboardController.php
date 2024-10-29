@@ -4,10 +4,11 @@ namespace App\Controller\Admin;
 
 use App\Entity\Blog\Articles;
 use App\Entity\Blog\Categories;
-use App\Entity\Pages\Coachings;
+use App\Entity\Pages\Coaching\Coachings;
 use App\Entity\Ateliers\Ateliers;
-use App\Entity\Pages\Consultations;
-use App\Entity\Pages\CycleCoachings;
+use App\Entity\Pages\Consultation\Consultations;
+use App\Entity\Pages\Coaching\CycleCoachings;
+use App\Entity\Pages\Consultation\DeroulementConsultation;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -32,11 +33,12 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
 
-        yield MenuItem::subMenu('Pages', 'fa-regular fa-newspaper')->setSubItems([
+        yield MenuItem::subMenu('Consultation', 'fa-regular fa-newspaper')->setSubItems([
             MenuItem::linkToCrud('Voir consultations', 'fa-regular fa-newspaper', Consultations::class),
+            MenuItem::linkToCrud('Voir déroulement consultation', 'fa-regular fa-newspaper', DeroulementConsultation::class),
         ]);
 
-        yield MenuItem::subMenu('Coachings', 'fa-regular fa-newspaper')->setSubItems([
+        yield MenuItem::subMenu('Coaching', 'fa-regular fa-newspaper')->setSubItems([
             MenuItem::linkToCrud('Voir coachings', 'fa-regular fa-newspaper', Coachings::class),
             MenuItem::linkToCrud('Voir cycle coachings', 'fa-regular fa-newspaper', CycleCoachings::class),
         ]);

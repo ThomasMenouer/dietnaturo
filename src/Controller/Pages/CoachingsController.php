@@ -2,8 +2,8 @@
 
 namespace App\Controller\Pages;
 
-use App\Repository\Pages\CoachingsRepository;
-use App\Repository\Pages\CycleCoachingsRepository;
+use App\Repository\Pages\Coaching\CoachingsRepository;
+use App\Repository\Pages\Coaching\CycleCoachingsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

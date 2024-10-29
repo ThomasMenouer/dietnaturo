@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Entity\Pages;
+namespace App\Entity\Pages\Coaching;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\Pages\CycleCoachingsRepository;
+use App\Repository\Pages\Coaching\CycleCoachingsRepository;
 
 #[ORM\Entity(repositoryClass: CycleCoachingsRepository::class)]
 class CycleCoachings
@@ -40,7 +40,7 @@ class CycleCoachings
         return $this;
     }
 
-    public function getContent(): ?string
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -52,7 +52,7 @@ class CycleCoachings
         return $this;
     }
 
-    public function getPrice(): ?int
+    public function getPrice(): int
     {
         return $this->price;
     }

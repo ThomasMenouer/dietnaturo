@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository\Pages;
+namespace App\Repository\Pages\Consultation;
 
-use App\Entity\Pages\Consultations;
+use App\Entity\Pages\Consultation\Consultations;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

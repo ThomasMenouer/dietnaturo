@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Entity\Pages;
+namespace App\Entity\Pages\Consultation;
 
-use App\Repository\Pages\CoachingsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\Pages\Consultation\ConsultationsRepository;
 
-#[ORM\Entity(repositoryClass: CoachingsRepository::class)]
-class Coachings
+#[ORM\Entity(repositoryClass: ConsultationsRepository::class)]
+class Consultations
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -37,7 +37,7 @@ class Coachings
         return $this;
     }
 
-    public function getContent(): ?string
+    public function getContent(): string
     {
         return $this->content;
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller\Admin\Pages;
+namespace App\Controller\Admin\Pages\Consultation;
 
-use App\Entity\Pages\Consultations;
+use App\Entity\Pages\Consultation\Consultations;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -20,11 +20,6 @@ class ConsultationsCrudController extends AbstractCrudController
         return [
             TextField::new('title'),
             TextEditorField::new('content')->hideOnIndex(),
-            // BooleanField::new('isPublished'),
-            // DateTimeField::new('datePublished')->setFormat('d/m/Y'),
-            // TextField::new('imageFile')->setFormType(VichImageType::class),
-            // ImageField::new('imageName')->setBasePath('/images/articles')->setUploadDir('public/images'),
-            // SlugField::new('slug')->setTargetFieldName('title'),
         ];
     }
 }

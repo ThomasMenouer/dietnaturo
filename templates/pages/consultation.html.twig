@@ -23,6 +23,27 @@
 
                 </div>
             </div>
+
+
+            <div class="row">
+
+                {% for deroulement in deroulements %}
+                
+                    <div class="col">
+            
+                        <div class="card h-100">
+            
+                            <div class="card-body">
+                                <p class="card-text"> {{ deroulement.step }}</p>
+                                <h5 class="card-title">{{ deroulement.title }}</h5>
+                                <p class="card-text">{{ deroulement.content | raw }}</p>
+                                {# <img class="img-fluid" src="{{ asset('/images/ateliers/') ~ ateliers.imageName }}"> #}
+                            </div>
+            
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
 
     </section>

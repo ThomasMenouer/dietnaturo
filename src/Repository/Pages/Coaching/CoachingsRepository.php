@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Repository\Pages;
+namespace App\Repository\Pages\Coaching;
 
-use App\Entity\Pages\CycleCoachings;
+use App\Entity\Pages\Coaching\Coachings;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<CycleCoachings>
+ * @extends ServiceEntityRepository<Coachings>
  */
-class CycleCoachingsRepository extends ServiceEntityRepository
+class CoachingsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, CycleCoachings::class);
+        parent::__construct($registry, Coachings::class);
     }
 
     //    /**
-    //     * @return CycleCoachings[] Returns an array of CycleCoachings objects
+    //     * @return Coachings[] Returns an array of Coachings objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class CycleCoachingsRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?CycleCoachings
+    //    public function findOneBySomeField($value): ?Coachings
     //    {
     //        return $this->createQueryBuilder('c')
     //            ->andWhere('c.exampleField = :val')
