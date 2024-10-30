@@ -14,53 +14,11 @@
     </head>
     <body>
         <header>
-            <nav>
-                <ul class="nav justify-content-end">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="#" href="{{ path('home') }}">Accueil</a>
-                    </li>
-
-                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('about') }}">A propos</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('consultation') }}">Consultation</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('activities') }}">Activités</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('ateliers_index') }}">Ateliers</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('coachings') }}">Coaching</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('contact') }}">Contact</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('faq') }}">FAQ</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('blog_index') }}">Blog</a>
-                    </li>
-                </ul>
-            </nav>
+            {% include "_partials/nav.html.twig" %} <!-- .nav-menu -->
         </header>
 
         {% block body %}{% endblock %}
 
-        <footer class="text-center">
-            <p>©Copyright coline.legeard@gmail.com</p>
-            <p>06 35 23 76 01</p>
-            <p>mettre les liens des réseaux</p>
-        </footer>
+        {% include "_partials/footer.html.twig" %}
     </body>
 </html>

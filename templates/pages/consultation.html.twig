@@ -30,17 +30,22 @@
                 {% for deroulement in deroulements %}
                 
                     <div class="col">
-            
-                        <div class="card h-100">
-            
-                            <div class="card-body">
-                                <p class="card-text"> {{ deroulement.step }}</p>
-                                <h5 class="card-title">{{ deroulement.title }}</h5>
-                                <p class="card-text">{{ deroulement.content | raw }}</p>
-                                {# <img class="img-fluid" src="{{ asset('/images/ateliers/') ~ ateliers.imageName }}"> #}
+                        <div class="card mb-3" style="max-width: 540px;">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="..." class="img-fluid rounded-start" alt="...">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <p class="card-text"> {{ deroulement.step }}</p>
+                                        <h5 class="card-title">{{ deroulement.title }}</h5>
+
+                                        <p class="card-text">{{ deroulement.content | raw }}</p>
+                                    </div>
+                                </div>
                             </div>
-            
                         </div>
+
                     </div>
                 {% endfor %}
             </div>

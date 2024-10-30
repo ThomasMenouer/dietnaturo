@@ -11,6 +11,14 @@ nav .nav-link{
     color: white;
 }
 
+nav .active{
+    color: #DA8359;
+}
+
+nav .nav-link:hover{
+    color: #DA8359;
+}
+
 .card{
     background-color: #ECDFCC;
 }
