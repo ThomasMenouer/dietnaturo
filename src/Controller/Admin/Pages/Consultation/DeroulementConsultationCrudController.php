@@ -2,11 +2,13 @@
 
 namespace App\Controller\Admin\Pages\Consultation;
 
-use App\Entity\Pages\Consultation\DeroulementConsultation;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use App\Entity\Pages\Consultation\DeroulementConsultation;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 
 class DeroulementConsultationCrudController extends AbstractCrudController
 {
@@ -21,6 +23,8 @@ class DeroulementConsultationCrudController extends AbstractCrudController
             IntegerField::new('step'),
             TextField::new('title'),
             TextEditorField::new('content')->hideOnIndex(),
+            TextField::new('imageFile')->setFormType(VichImageType::class),
+            ImageField::new('imageName')->setBasePath('/images/consultations')->setUploadDir('public/images'),
         ];
     }
 }
