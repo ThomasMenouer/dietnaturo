@@ -4,65 +4,66 @@
 
 {% block body %}
 
-<main>
-    <section class="activities">
+<main class="activities">
+    <section class="title-activities">
         <div class="container">
             <h1 class="text-center py-5">Mes différentes Activités</h1>
-            <div class="row">
-                <div class="col-6">
-                    <img src="{{asset('/images/activities/colored_food.webp') }}" alt="">
-                </div>
-                <div class="col-6">
-
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">Consultation en diététique et/ou en naturopathie en présentiel ou distanciel</h5>
-                            <p class="card-text">Prise en charge diététique : surpoids, obésité, hypertension, diabète... 
-                            ou pour changer d'hygiène de vie tout simplement !
-                            Prise en charge naturopathique : gestion du stress, troubles du sommeil, désordres digestifs, accompagnement de la ménopause, endométriose ... </p>
-                            <p class="card-text">Chèque et espèces uniquement</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">Soins énergétiques en présentiel ou en distanciel</h5>
-                            <p class="card-text">Un soin énergétique est par définition un soin qui permet d’harmoniser, d’équilibrer le flux énergétique du corps et de l’esprit. 
-                            Il dénoue les nœuds, les blocages et apaise le stress autant mental que physique. 
-                            Il dure en général entre 45min et 1h. </p>
-                            <p class="card-text">Me contacter directement par mail ou téléphone pour une demande de soins énergétiques.</p>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-6">
-                    <img src="{{asset('/images/activities/candles.webp') }}" alt="">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <img src="{{asset('/images/activities/crepe.webp') }}" alt="">
-                </div>
-                <div class="col-6">
-
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">Ateliers en présentiel et en visioconférence</h5>
-                            <p class="card-text">Différents thèmes abordés (Cours de cuisine saine, arrêt du tabac, gestion du stress...) dans différentes structures comme les écoles, les entreprises, les magasins bio, etc. 
-                            Ou dans des lieux publics type salon de thé, librairie...</p>
-                            <p class="card-text">Sous devis</p>
-                            <p class="card-text">Hey pssst! Il y aussi des ateliers au sein du cabinet, ça vous intéresse ? 
-                            Des prochaines dates sont à</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
         </div>
+    </section>
+
+    <section class="section-activities">
+        <div class="container my-5">
+
+            {% for activity in activities %}
+                {% if loop.index is odd %}
+
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="card border-0 h-100">
+                                <img src="{{ asset('/images/activities/') ~ activity.imageName }}"  class="img-fluid rounded" alt="">
+                            </div>
+                           
+                        </div>
+                        
+                        <div class="col-6">
+
+                            <div class="card text-center border-0 h-100">
+
+                                <div class="card-header text-center">
+                                    <h3 class="card-title mt-3">{{ activity.title }}</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-text">{{ activity.content | raw }}</div>
+                                </div>
+                            
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="row mb-3">
+                        <div class="col-6">
+
+                            <div class="card text-center border-0 h-100">
+
+                                <div class="card-header text-center">
+                                    <h3 class="card-title mt-3">{{ activity.title }}</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-text">{{ activity.content | raw }}</div>
+                                </div>
+                            
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card border-0 h-100">
+                                <img src="{{ asset('/images/activities/') ~ activity.imageName }}"  class="img-fluid rounded" alt="">
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
     </section>
 </main>
 

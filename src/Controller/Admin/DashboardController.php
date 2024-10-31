@@ -6,6 +6,7 @@ use App\Entity\Blog\Articles;
 use App\Entity\Blog\Categories;
 use App\Entity\Pages\Coaching\Coachings;
 use App\Entity\Ateliers\Ateliers;
+use App\Entity\Pages\Activities\Activities;
 use App\Entity\Pages\Consultation\Consultations;
 use App\Entity\Pages\Coaching\CycleCoachings;
 use App\Entity\Pages\Consultation\DeroulementConsultation;
@@ -32,6 +33,8 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+
+        yield MenuItem::linkToCrud('Activités', 'fa-regular fa-newspaper', Activities::class);
 
         yield MenuItem::subMenu('Consultation', 'fa-regular fa-newspaper')->setSubItems([
             MenuItem::linkToCrud('Voir consultations', 'fa-regular fa-newspaper', Consultations::class),

@@ -1,24 +1,21 @@
 <?php
 
-namespace App\Entity\Pages\Consultation;
+namespace App\Entity\Pages\Activities;
 
-use App\Repository\Pages\Consultation\DeroulementConsultationRepository;
+use App\Repository\Pages\Activities\ActivitiesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 
-#[ORM\Entity(repositoryClass: DeroulementConsultationRepository::class)]
+#[ORM\Entity(repositoryClass: ActivitiesRepository::class)]
 #[Vich\Uploadable]
-class DeroulementConsultation
+class Activities
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
-
-    #[ORM\Column]
-    private int $step;
 
     #[ORM\Column(length: 255)]
     private string $title;
@@ -26,7 +23,7 @@ class DeroulementConsultation
     #[ORM\Column(type: Types::TEXT)]
     private string $content;
 
-    #[Vich\UploadableField(mapping: 'consultations', fileNameProperty: 'imageName', size: 'imageSize')]
+    #[Vich\UploadableField(mapping: 'activities', fileNameProperty: 'imageName', size: 'imageSize')]
     private ?File $imageFile = null;
 
     #[ORM\Column(nullable: true)]
@@ -86,18 +83,6 @@ class DeroulementConsultation
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getStep(): int
-    {
-        return $this->step;
-    }
-
-    public function setStep(int $step): static
-    {
-        $this->step = $step;
-
-        return $this;
     }
 
     public function getTitle(): string

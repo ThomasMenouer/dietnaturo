@@ -19,6 +19,10 @@ nav .nav-link:hover{
     color: #DA8359;
 }
 
+footer {
+    background-color: #A5B68D;
+}
+
 .card{
     background-color: #ECDFCC;
 }

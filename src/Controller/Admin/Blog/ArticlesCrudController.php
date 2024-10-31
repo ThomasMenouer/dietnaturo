@@ -27,8 +27,8 @@ class ArticlesCrudController extends AbstractCrudController
             TextEditorField::new('content')->hideOnIndex(),
             BooleanField::new('isPublished'),
             DateTimeField::new('datePublished')->setFormat('d/m/Y'),
-            TextField::new('imageFile')->setFormType(VichImageType::class),
-            ImageField::new('imageName')->setBasePath('/images/articles')->setUploadDir('public/images'),
+            TextField::new('imageFile')->setFormType(VichImageType::class)->hideOnIndex(),
+            ImageField::new('imageName')->setBasePath('/images/articles')->setUploadDir('public/images')->hideOnForm(),
             AssociationField::new('categories'),
             SlugField::new('slug')->setTargetFieldName('title'),
         ];
