@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Entity\Blog;
+namespace App\Entity\Shop;
 
-use App\Repository\Blog\CategoriesRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Shop\Products;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use App\Repository\Shop\CategoriesProductsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 
-#[ORM\Entity(repositoryClass: CategoriesRepository::class)]
-class Categories
+#[ORM\Entity(repositoryClass: CategoriesProductsRepository::class)]
+class CategoriesProducts
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,8 +19,8 @@ class Categories
     #[ORM\Column(length: 255)]
     private string $name;
 
-    #[ORM\OneToMany(mappedBy: 'categories', targetEntity: Articles::class)]
-    private Collection $articles;
+    #[ORM\OneToMany(mappedBy: 'products', targetEntity: Products::class)]
+    private Collection $products;
 
     #[ORM\Column(length: 255)]
     private string $slug;
@@ -31,7 +32,7 @@ class Categories
 
     public function __construct()
     {
-        $this->articles = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function getId(): int
@@ -51,30 +52,30 @@ class Categories
         return $this;
     }
 
-    /**
-     * @return Collection<int, Articles>
+        /**
+     * @return Collection<int, Products>
      */
-    public function getArticles(): Collection
+    public function getProducts(): Collection
     {
-        return $this->articles;
+        return $this->products;
     }
 
-    public function addArticle(Articles $article): static
+    public function addArticle(Products $product): static
     {
-        if (!$this->articles->contains($article)) {
-            $this->articles->add($article);
-            $article->setCategories($this);
+        if (!$this->products->contains($product)) {
+            $this->products->add($product);
+            $product->setCategories($this);
         }
 
         return $this;
     }
 
-    public function removeArticle(Articles $article): static
+    public function removeArticle(Products $product): static
     {
-        if ($this->articles->removeElement($article)) {
+        if ($this->products->removeElement($product)) {
             // set the owning side to null (unless already changed)
-            if ($article->getCategories() === $this) {
-                $article->setCategories(null);
+            if ($product->getCategories() === $this) {
+                $product->setCategories(null);
             }
         }
 
