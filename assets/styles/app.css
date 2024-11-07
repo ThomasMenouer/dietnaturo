@@ -27,6 +27,13 @@ footer {
     background-color: #ECDFCC;
 }
 
-    /* .card{
-        border-color: #DA8359;
-    } */
+.card-footer{
+
+    background: unset;
+}
+
+/* .btn-close-custom{
+    right: -205px;
+    position: relative;
+    top: -85px;
+} */

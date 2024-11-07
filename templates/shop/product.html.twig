@@ -14,7 +14,9 @@
                 <div class="">{{ product.description | raw }}<div>
         
                 <p>{{ (product.price / 100) | format_currency('EUR') }}</p>
-            
+
+                <div class="btn"></div>
+                <a href="{{ path('cart_add', { "id": product.id }) }}" class="btn btn-primary">Ajouter au panier</a>
             
             </div>
         
