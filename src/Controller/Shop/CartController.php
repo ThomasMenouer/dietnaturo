@@ -37,4 +37,23 @@ class CartController extends AbstractController
         
         return $this->redirectToRoute('cart_index');
     }
+
+    #[Route('/remove', name: 'remove')]
+    public function removeCart(CartService $cartService){
+
+        $cartService->removeCart();
+
+        return $this->redirectToRoute('cart_index');
+    }
+
+
+    #[Route('/remove/{id}', name: 'remove_product')]
+    public function removeProduct(CartService $cartService, #[MapEntity(mapping: ['id' => 'id'])] Products $product): Response{
+
+        $cartService->removeProduct($product->getId());
+        
+        return $this->redirectToRoute('cart_index');
+    }
+
+
 }

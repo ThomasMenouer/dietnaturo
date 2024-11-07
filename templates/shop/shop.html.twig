@@ -38,7 +38,8 @@
                                 <img class="img-fluid" src="{{ asset('/images/products/') ~ product.imageName }}">
                             </div>
                             <div class="card-footer text-center border-0">
-                                <a href="{{ path('shop_product', { "slug": product.slug }) }}" class="btn btn-primary">Lire</a>
+                                <a href="{{ path('shop_product', { "slug": product.slug }) }}" class="btn btn-custom-color text-white">Lire</a>
+                                <a href="{{ path('cart_add', { "id": product.id }) }}" class="btn btn-primary">Ajouter au panier</a>
                             </div>
 
                         </div>
