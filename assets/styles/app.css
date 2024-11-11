@@ -59,3 +59,9 @@ footer {
 
     background-color: #FFEEAD;
 }
+
+.cart-icon svg{
+
+    height: 27px;
+    width: auto;
+}

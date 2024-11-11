@@ -4,17 +4,17 @@
 
 {% block body %}
 
-<main class="cart">
+<main class="cart flex-grow-1">
     <section>
         <div class="container">
-        <h3 class="my-3"> Mon Panier</h3>
+        
             <div class="row">
+                
                 <div class="col-6">
-
+                    <h3 class="my-3">Panier</h3>
                     {% if cart | length > 0 %}
                         {% for item in cart %}
                         
-
                             <div class="card mb-3 g-0 border-0">
                                 <div class="row g-0">
                                     <div class="col-md-3">
@@ -31,9 +31,9 @@
                                         <div class="card-footer d-flex justify-content-between border-0">
                                             <div class="btn-group" role="group" aria-label="Basic example">
 
-                                                <a href="{{ path('cart_delete', { "id": item.product.id }) }}" class="btn btn-custom-color text-white rounded">-</a>
-                                                <button class="btn border-0 disabled">{{ item.quantity }}</button>
-                                                <a href="{{ path('cart_add', { "id": item.product.id }) }}" class="btn btn-custom-color text-white rounded">+</a>
+                                                <a href="{{ path('cart_delete', { "id": item.product.id }) }}" class="btn btn-custom-color text-white fw-bold rounded">-</a>
+                                                <button class="btn border-0 disabled fw-bold">{{ item.quantity }}</button>
+                                                <a href="{{ path('cart_add', { "id": item.product.id }) }}" class="btn btn-custom-color text-white fw-bold rounded">+</a>
                                             </div>
 
 
@@ -42,35 +42,44 @@
                                     </div>       
                                 </div>
                             </div>
-                    
-                        {% else %}
-
-                            <div class="col-6">
-                                <div class="alert alert-warning" role="alert">
-                                    Votre panier est vide !
-                                </div>
-                            </div>
-
-
                         
                         {% endfor %}
 
-                            <div class="mb-3 d-flex justify-content-center">
-                                <a href="{{ path('cart_remove') }}" class="btn btn-remove-cart-color text-white">Vider le panier</a>
+                            <div class="d-flex justify-content-center">
+                                <a href="{{ path('cart_remove') }}" class="btn btn-remove-cart-color  text-white">Vider le panier</a>
                             </div>
+                    
+                    {% else %}
+
+                        <div class="card border-0">
+                            <div class="card-body text-center">
+                                <p class="card-text fw-semibold fs-5">Votre panier est vide !</p>
+                                <p class="card-text">Accédez à la boutique afin de découvrir nos articles !</p>
+
+                                <a class="btn btn-custom-color text-white" href="{{ path('shop_index') }}">Découvrir la boutique</a>
+                            </div>
+                        </div>
+
                     {% endif %}
                        
                 </div>
-
+                
                 <div class="col-6">
+                    <h3 class="my-3"> Résumé</h3>
                     <div class="card g-0 border-0 mb-3">
 
                         <div class="card-body">
+
                             <p class="card-text mt-3">Total = {{ (TotalHTC / 100) | format_currency('EUR') }}</h3>
                         </div>
 
                         <div class="card-footer text-center border-0">
-                            <a href="#" class="btn btn-custom-color text-white">Paiement</a>
+                            <a href="#" class="btn btn-custom-color text-white">Passer au paiement</a>
+                            
+                            <span class="choice d-flex justify-content-center my-3">ou</span>
+                            
+                            <a href="{{ path('shop_index')}}" class="nav-link fw-bold text-color-custom">Continuer mes achats</a>
+
                         </div>
                         
                     </div>

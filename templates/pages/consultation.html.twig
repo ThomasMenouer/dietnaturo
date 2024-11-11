@@ -4,13 +4,13 @@
 
 {% block body %}
 
-<main>
+<main class="flex-grow-1">
     <section class="consultation py-5">
         <div class="container">
             <div class="row row-consultation">
                 {% for consultation in consultations %}
-                    <h5 class="title text-center text-white">{{ consultation.title }}</h5>
-                    <div class="consultation-content text-center text-white">{{ consultation.content | raw }}</div>
+                    <h3 class="title text-center text-white">{{ consultation.title }}</h3>
+                    <div class="fs-4 text-center text-white">{{ consultation.content | raw }}</div>
                 {% endfor %}
             </div>
         </div>

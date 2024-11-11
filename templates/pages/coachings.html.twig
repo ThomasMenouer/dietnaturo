@@ -4,16 +4,16 @@
 
 {% block body %}
 
-<main>
+<main class="flex-grow-1">
     <section class="coaching">
 
         <div class="container my-5">
             <div class="row">
-                {# Changer le for pour un if #}
-                {% for coaching in coachings_page %}
-                    <h1 class="title text-center">{{ coaching.title }}</h5>
-                    <p class="text">{{ coaching.content | raw }}</p>
-                {% endfor %}
+
+                {% if coachings_page[0]|length > 0 %}
+                    <h1 class="title text-center">{{ coachings_page[0].title }}</h1>
+                    <div class="text">{{ coachings_page[0].content | raw }}</div>
+                {% endif %}
             </div>
 
             <div class="row row-cols-1 row-cols-md-3 g-4 my-5">
@@ -21,7 +21,7 @@
                 
                 <div class="col">
         
-                    <div class="card h-100">
+                    <div class="card h-100 border-0">
         
                         <div class="card-body">
                             <h5 class="card-title">{{ cycle.title }}</h5>
@@ -29,15 +29,28 @@
                             {# <img class="img-fluid" src="{{ asset('/images/ateliers/') ~ ateliers.imageName }}"> #}
                         </div>
                         <div class="card-footer text-center border-0">
-                             <p class="text">{{ cycle.price }} €</p>
+                             <p class="text">{{ (cycle.price / 100) | format_currency('EUR') }}</p>
                         </div>
         
                     </div>
                 </div>
                 {% endfor %}
             </div>
+
+        </div>
+    </section>
+
+    <section class="coaching-remarque py-5">
+        <div class="container">
+            <div class="row text-white">
+                {% if coachings_page[1]|length > 0 %}
+                    <h3 class="text-center">{{ coachings_page[1].title }}</h3>
+                    <div class="text-center fs-4">{{ coachings_page[1].content | raw }}</div>
+                {% endif %}
+            
+            </div>
         </div>
 
-    </section>
+    </div>
 </main>
 {% endblock %}

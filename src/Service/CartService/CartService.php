@@ -41,7 +41,8 @@ class CartService{
             $cart[$id]++;
         }
 
-        $this->getSession()->set('cart', $cart);
+        // $this->getSession()->set('cart', $cart);
+        $this->updateCart($cart);
 
     }
 
@@ -64,7 +65,8 @@ class CartService{
             }
         }
 
-        $this->getSession()->set('cart', $cart);
+        // $this->getSession()->set('cart', $cart);
+        $this->updateCart($cart);
     }
 
     /**
@@ -80,7 +82,8 @@ class CartService{
             unset($cart[$id]);
         }
 
-        $this->getSession()->set('cart', $cart);
+        // $this->getSession()->set('cart', $cart);
+        $this->updateCart($cart);
     }
 
     /**
@@ -130,6 +133,24 @@ class CartService{
 
         return $total;
     }
+
+    private function getItemCount(): int{
+
+        $total = 0;
+
+        foreach($this->getCart() as $item){
+            $total += $item['quantity'];
+        }
+
+        return $total;
+    }
+
+    private function updateCart(array $cart): void{
+
+        $this->getSession()->set('cart', $cart);
+        $this->getSession()->set('totalItemCount', $this->getItemCount());
+    }
+    
 
     /**
      * Return the session

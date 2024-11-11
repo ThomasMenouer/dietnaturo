@@ -13,5 +13,5 @@ import './styles/about.css';
 import './styles/home.css';
 import './styles/consultation.css';
 import './styles/activities.css';
-
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+import './styles/cart.css';
+import './styles/coaching.css';

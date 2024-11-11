@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<main>
+<main class="flex-grow-1">
 
     <section class="atelier">
 
@@ -32,8 +32,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ atelier.title }}</h5>
                                     <span class="badge-atelier badge text-bg-success py-2 my-1">{{ atelier.theme }}</span>
-                                    {# <img class="img-fluid" src="{{ asset('/images/ateliers/') ~ ateliers.imageName }}"> #}
-                                    {# <p class="card-text">{{ ateliers.content | raw }}</p> #}
+                                    <img class="img-fluid" src="{{ asset('/images/ateliers/') ~ atelier.imageName }}">
                                 </div>
                                 <div class="card-footer text-center border-0">
                                     <a href="{{ path('ateliers_detail', { "slug": atelier.slug }) }}" class="btn btn-primary">Voir</a>

@@ -22,7 +22,7 @@ class ParticipantsType extends AbstractType
         ->add('email', EmailType::class, [
             'label' => false,
             'attr' => [
-                'class' => 'form-control',
+                'class' => 'form-control mb-3',
                 'placeholder' => 'Email',
             ],
             'required' => true,
@@ -36,7 +36,7 @@ class ParticipantsType extends AbstractType
             },
             'placeholder' => 'Choisir une date : ',
             'attr' => [
-                'class' => 'form-control'
+                'class' => 'form-control mb-3'
             ],
             'required' => true,
 

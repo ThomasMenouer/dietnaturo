@@ -2,48 +2,55 @@
     <ul class="nav justify-content-end py-3 fs-5">
 
         <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'home' %}active {% endif %}" aria-current="#" href="{{ path('home') }}">Accueil</a>
+            <a class="nav-link {% if app.request.attributes.get('_route') == 'home' %} active {% endif %}" aria-current="#" href="{{ path('home') }}">Accueil</a>
         </li>
 
             <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'about' %}active {% endif %}" href="{{ path('about') }}">A propos</a>
+            <a class="nav-link {% if app.request.attributes.get('_route') == 'about' %} active {% endif %}" href="{{ path('about') }}">A propos</a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'consultation' %}active {% endif %}" href="{{ path('consultation') }}">Consultation</a>
+            <a class="nav-link {% if app.request.attributes.get('_route') == 'consultation' %} active {% endif %}" href="{{ path('consultation') }}">Consultation</a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'activities' %}active {% endif %}" href="{{ path('activities') }}">Activités</a>
+            <a class="nav-link {% if app.request.attributes.get('_route') == 'activities' %} active {% endif %}" href="{{ path('activities') }}">Activités</a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'ateliers_index' %} ctive {% endif %}" href="{{ path('ateliers_index') }}">Ateliers</a>
+            <a class="nav-link {% if app.request.attributes.get('_route') == 'ateliers_index' %} active {% endif %}" href="{{ path('ateliers_index') }}">Ateliers</a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'coachings' %}active {% endif %}" href="{{ path('coachings') }}">Coaching</a>
+            <a class="nav-link {% if app.request.attributes.get('_route') == 'coachings' %} active {% endif %}" href="{{ path('coachings') }}">Coaching</a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'contact' %}active {% endif %}" href="{{ path('contact') }}">Contact</a>
+            <a class="nav-link {% if app.request.attributes.get('_route') == 'contact' %} active {% endif %}" href="{{ path('contact') }}">Contact</a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'faq' %}active {% endif %}" href="{{ path('faq') }}">FAQ</a>
+            <a class="nav-link {% if app.request.attributes.get('_route') == 'faq' %} active {% endif %}" href="{{ path('faq') }}">FAQ</a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'blog_index' %}active {% endif %}" href="{{ path('blog_index') }}">Blog</a>
+            <a class="nav-link {% if app.request.attributes.get('_route') == 'blog_index' %} active {% endif %}" href="{{ path('blog_index') }}">Blog</a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'shop_index' %}active {% endif %}" href="{{ path('shop_index') }}">Boutique</a>
+            <a class="nav-link {% if app.request.attributes.get('_route') == 'shop_index' %} active {% endif %}" href="{{ path('shop_index') }}">Boutique</a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'cart_index' %}active {% endif %}" href="{{ path('cart_index') }}">
-                <i class="fa-solid fa-cart-shopping"></i>
+            <a class="nav-link cart-icon {% if app.request.attributes.get('_route') == 'cart_index' %} active {% endif %}" href="{{ path('cart_index') }}">
+                {{ ux_icon('bi:cart3') }}
+
+                {% if app.session.get('cart') %}
+                    <span class="position-absolute translate-middle badge rounded-pill bg-danger">
+                        {{ app.session.get('totalItemCount') }}
+                    </span>
+                {% endif %}
+              
             </a>
         </li>
 

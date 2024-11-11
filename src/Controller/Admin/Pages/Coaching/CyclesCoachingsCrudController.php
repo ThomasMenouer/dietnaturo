@@ -4,9 +4,9 @@ namespace App\Controller\Admin\Pages\Coaching;
 
 use App\Entity\Pages\Coaching\CycleCoachings;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 
 class CyclesCoachingsCrudController extends AbstractCrudController
 {
@@ -20,7 +20,8 @@ class CyclesCoachingsCrudController extends AbstractCrudController
         return [
             TextField::new('title'),
             TextEditorField::new('content')->hideOnIndex(),
-            IntegerField::new('price')
+            MoneyField::new('price', 'Prix')
+            ->setCurrency('EUR'),
         ];
     }
 }
