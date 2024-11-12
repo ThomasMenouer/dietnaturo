@@ -14,10 +14,13 @@
                         {% for category in allCategories %}
 
                         <li class="nav-item">
-                            <a class="nav-link {% if app.request.attributes.get('_route') == 'blog_category' and app.request.attributes.get('slug') == category.slug %}active{% endif %}" aria-current="page" href="{{ path('blog_category', { "slug": category.slug }) }}">{{ category.name }}</a>
+                            <a class="nav-link {% if app.request.attributes.get('_route') == 'blog_category' and app.request.attributes.get('slug') == category.slug %} active {% endif %}" aria-current="page" href="{{ path('blog_category', { "slug": category.slug }) }}">{{ category.name }}</a>
                         </li>
 
                         {% endfor %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if app.request.attributes.get('_route') == 'blog_category' %} active {% endif %}" aria-current="page" href="{{ path('blog_index') }}">Tout</a>
+                        </li>
                     </ul>
                 </nav>
             </div>

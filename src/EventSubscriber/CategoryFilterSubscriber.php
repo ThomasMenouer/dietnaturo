@@ -16,18 +16,13 @@ class CategoryFilterSubscriber implements EventSubscriberInterface
         private CategoriesRepository $categoriesRepository,
         private Environment $twig
 
-    )
-    {
-        
-    }
+    ){}
     public function injectGlobalVariable(RequestEvent $event): void
     {
-        //dd($event->getRequest());
         $route = $event->getRequest()->get('_route');
         if (in_array($route, CategoryFilterSubscriber::ROUTES)){
 
             $categories = $this->categoriesRepository->findAll();
-            //($categories);
             $this->twig->addGlobal('allCategories', $categories);
         }
     }
