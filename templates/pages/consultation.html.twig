@@ -19,39 +19,43 @@
     <section>
 
         <div class="container my-5">
-            <div class="row">
+
             {% for deroulement in deroulements %}
                 
-                <div class="row">
+                <div class="row mb-5">
                 
-                    <div class="card mb-3 g-0 border-0">
-                        <div class="row g-0">
-                            {% if loop.index is odd %}
-                                    <!-- Image à gauche pour les itérations impaires -->
-                                    <div class="col-md-3">
-                                        <img src="{{ asset('/images/consultations/') ~ deroulement.imageName }}" class="img-fluid rounded-start" alt="{{ deroulement.imageName }}">
-                                    </div>
-                                    <div class="col-md-9">
-                                        <div class="card-body">
-                                            <p class="card-text">{{ deroulement.step }}</p>
-                                            <h5 class="card-title">{{ deroulement.title }}</h5>
-                                            <p class="card-text">{{ deroulement.content | raw }}</p>
-                                        </div>
-                                    </div>
-                                {% else %}
-                                    <!-- Image à droite pour les itérations paires -->
-                                    <div class="col-md-9">
-                                        <div class="card-body">
-                                            <p class="card-text">{{ deroulement.step }}</p>
-                                            <h5 class="card-title">{{ deroulement.title }}</h5>
-                                            <p class="card-text">{{ deroulement.content | raw }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <img src="{{ asset('/images/consultations/') ~ deroulement.imageName }}" class="img-fluid rounded-end" alt="{{ deroulement.imageName }}">
-                                    </div>
-                                {% endif %}
-                        </div>
+                    <div class="card p-5 border-0 rounded-4 d-flex flex-row justify-content-between">
+                    
+                        {% if loop.index is odd %}
+                            <!-- Image à gauche pour les itérations impaires -->
+                            <div class="col-md-3">
+                                <img src="{{ asset('/images/consultations/') ~ deroulement.imageName }}" class="img-fluid object-fit-cover shadow rounded-4" style="transform: translateX(-80px);" alt="{{ deroulement.imageName }}">
+                            </div>
+                            
+                            <div class="col-md-9">
+                                <div class="card-body">
+                                    <span class="card-text fw-bold fs-5">{{ "%02d"|format(deroulement.step) }}</span>
+                                    <h3 class="card-title">{{ deroulement.title }}</h3>
+                                    <p class="card-text">{{ deroulement.content | raw }}</p>
+                                </div>
+                            </div>
+
+                        {% else %}
+                            <!-- Image à droite pour les itérations paires -->
+                            <div  class="col-md-9">
+                                <div class="card-body">
+                                    <span class="card-text fw-bold fs-5">{{ "%02d"|format(deroulement.step) }}</span>
+                                    <h3 class="card-title">{{ deroulement.title }}</h3>
+                                    <p class="card-text">{{ deroulement.content | raw }}</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <img src="{{ asset('/images/consultations/') ~ deroulement.imageName }}" class="img-fluid object-fit-cover shadow rounded-4"  style="transform: translateX(80px);" alt="{{ deroulement.imageName }}">
+                            </div>
+
+                        {% endif %}
+                        
                     </div>
                 </div>
 
