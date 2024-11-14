@@ -2,7 +2,6 @@
 
 namespace App\Service\CartService;
 
-use App\Entity\Shop\Products;
 use App\Repository\Shop\ProductsRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -10,15 +9,12 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CartService{
 
-    private RequestStack $requestStack;
-    private ProductsRepository $productsRepository;
-
     /**
      * CartService's constructor
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \App\Repository\Shop\ProductsRepository $productsRepository
      */
-    public function __construct(RequestStack $requestStack, ProductsRepository $productsRepository) {
+    public function __construct(private RequestStack $requestStack, private ProductsRepository $productsRepository) {
 
         $this->requestStack = $requestStack;
         $this->productsRepository = $productsRepository;

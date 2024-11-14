@@ -9,9 +9,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 class EmailSendService
 {
-    private $mailer;
-
-    public function __construct(MailerInterface $mailer)
+    public function __construct(private MailerInterface $mailer)
     {
         $this->mailer = $mailer;
     }
@@ -48,9 +46,31 @@ class EmailSendService
 
     public function sendEmailToAllParticipants(array $participants, string $subject, string $content): void
     {
+
         foreach ($participants as $participant) {
-            $this->sendEmail($participant, $participant->getEmail(), $subject, $content);
+            $email = (new Email())
+            ->from('dietnaturo@gmail.com')
+            ->to($participant->getEmail())
+            ->subject($subject)
+            ->html($content);
+        
+            $this->mailer->send($email);
         }
+    }
+
+    public function sendEmailContact(array $data): void
+    {
+        $email = (new TemplatedEmail())
+        ->from($data['Email'])
+        ->to ('dietnaturo@gmail.com')
+        ->subject('Demande de contact via site web')
+        ->htmlTemplate('mails/contact.html.twig')
+        ->context([
+            'data' => $data
+        ]);
+
+
+        $this->mailer->send($email);
     }
 
 }

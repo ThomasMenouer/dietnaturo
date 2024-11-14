@@ -31,7 +31,7 @@ class ProductsCrudController extends AbstractCrudController
             TextField::new('imageFile')->setFormType(VichImageType::class)->hideOnIndex(),
             ImageField::new('imageName')->setBasePath('/images/products')->setUploadDir('public/images')->hideOnForm(),
             AssociationField::new('categories', 'Catégorie'),
-            SlugField::new('slug', 'Slug')->setTargetFieldName('name'),
+            SlugField::new('slug', 'Slug')->setTargetFieldName('name')->hideOnIndex(),
         ];
     }
 }

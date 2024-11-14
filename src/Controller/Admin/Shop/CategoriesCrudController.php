@@ -19,7 +19,7 @@ class CategoriesCrudController extends AbstractCrudController
     {
         return [
             TextField::new('name'),
-            SlugField::new('slug')->setTargetFieldName('name'),
+            SlugField::new('slug')->setTargetFieldName('name')->hideOnIndex(),
         ];
     }
 }

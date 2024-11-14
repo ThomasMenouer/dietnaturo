@@ -30,7 +30,7 @@ class ArticlesCrudController extends AbstractCrudController
             TextField::new('imageFile')->setFormType(VichImageType::class)->hideOnIndex(),
             ImageField::new('imageName')->setBasePath('/images/articles')->setUploadDir('public/images')->hideOnForm(),
             AssociationField::new('categories'),
-            SlugField::new('slug')->setTargetFieldName('title'),
+            SlugField::new('slug')->setTargetFieldName('title')->hideOnIndex(),
         ];
     }
 }
