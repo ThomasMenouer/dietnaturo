@@ -18,7 +18,12 @@ class CoachingsCrudController extends AbstractCrudController
     {
         return [
             TextField::new('title'),
-            TextEditorField::new('content')->hideOnIndex(),
+            TextEditorField::new('content')->hideOnIndex()->setTrixEditorConfig([
+                'blockAttributes' => [
+                    'default' => ['tagName' => 'p', 'class' => ''],
+                ],
+
+            ]),
         ];
     }
 }

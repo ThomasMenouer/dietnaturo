@@ -30,6 +30,9 @@ class Ateliers
     #[ORM\Column(type: Types::TEXT)]
     private string $content;
 
+    #[ORM\Column]
+    private int $price;
+
     #[ORM\Column(length: 255)]
     private string $slug;
 
@@ -148,6 +151,18 @@ class Ateliers
         return $this;
     }
 
+    public function getPrice(): int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(int $price): static
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
     public function getSlug(): string
     {
         return $this->slug;
@@ -190,7 +205,7 @@ class Ateliers
         return $this;
     }
 
-    public function isIsAvailable(): bool
+    public function getIsAvailable(): bool
     {
         return $this->isAvailable;
     }

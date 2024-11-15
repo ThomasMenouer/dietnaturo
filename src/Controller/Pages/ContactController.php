@@ -26,7 +26,6 @@ class ContactController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            
             $this->emailSendService->sendEmailContact($data);
 
             $this->addFlash('success', 'Votre message a bien été envoyé !'); 
@@ -35,7 +34,6 @@ class ContactController extends AbstractController
         }
 
         return $this->render('pages/contact.html.twig', [
-
             'form' => $form->createView()
         ]);
     }

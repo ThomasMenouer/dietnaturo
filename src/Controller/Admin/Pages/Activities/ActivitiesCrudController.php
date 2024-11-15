@@ -21,9 +21,14 @@ class ActivitiesCrudController extends AbstractCrudController
     {
         return [
             TextField::new('title'),
-            TextEditorField::new('content')->hideOnIndex(),
-            TextField::new('imageFile')->setFormType(VichImageType::class),
-            ImageField::new('imageName')->setBasePath('/images/activities')->setUploadDir('public/images'),
+            TextEditorField::new('content')->hideOnIndex()->setTrixEditorConfig([
+                'blockAttributes' => [
+                    'default' => ['tagName' => 'p', 'class' => ''],
+                ],
+
+            ]),
+            TextField::new('imageFile')->setFormType(VichImageType::class)->hideOnIndex(),
+            ImageField::new('imageName', 'Image')->setBasePath('/images/activities')->setUploadDir('public/images')->hideOnForm(),
         ];
     }
 }

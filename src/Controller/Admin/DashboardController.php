@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Faqs;
 use App\Entity\Blog\Articles;
 use App\Entity\Shop\Products;
 use App\Entity\Blog\Categories;
@@ -17,7 +18,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use App\Entity\Pages\Consultation\DeroulementConsultation;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('ROLE_ADMIN')]
 class DashboardController extends AbstractDashboardController
 {
     #[Route('/admin', name: 'admin')]
@@ -37,6 +40,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
 
         yield MenuItem::linkToCrud('Activités', 'fa-solid fa-list-ol', Activities::class);
+
+        yield MenuItem::linkToCrud('FAQs', 'fa-solid fa-question', Faqs::class);
 
         yield MenuItem::subMenu('Consultation', 'fa-solid fa-hand-holding-heart')->setSubItems([
             MenuItem::linkToCrud('Voir consultations', 'fa-solid fa-pencil', Consultations::class),

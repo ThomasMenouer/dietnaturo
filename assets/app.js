@@ -15,3 +15,4 @@ import './styles/consultation.css';
 import './styles/activities.css';
 import './styles/cart.css';
 import './styles/coaching.css';
+import './styles/faqs.css';

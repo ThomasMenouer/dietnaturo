@@ -56,9 +56,14 @@ class DatesAteliers
         return $this;
     }
 
-    public function __toString(): string
+    // public function __toString(): string
+    // {
+    //     return $this->getDate()->format('d/m/Y H:i'); 
+    // }
+
+    public function __tostring(): string
     {
-        return $this->getDate()->format('d/m/Y H:i'); 
+        return $this->date->format('d/m/Y H:i');
     }
     
 }

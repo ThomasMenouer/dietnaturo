@@ -18,26 +18,34 @@ class ContactType extends AbstractType
             ->add('Prenom', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'prénom'
-                ]
+                    'placeholder' => 'Prénom'
+                ],
+                'required' => false,
+                'label' => false
             ])
             ->add('Nom', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Nom de famille'
-                ]
+                ],
+                'required' => false,
+                'label' => false
             ])
             ->add('Email', EmailType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Email'
-                ]
+                    'placeholder' => 'Email*',
+                ],
+                'label' => false,
+                'required' => true,
             ])
             ->add('Message', TextareaType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Message'
-                ]
+                    'placeholder' => 'Message*'
+                ],
+                'label' => false,
+                'required' => true,
             ])
             ->add('Envoyer', SubmitType::class, [
                 'attr' => [

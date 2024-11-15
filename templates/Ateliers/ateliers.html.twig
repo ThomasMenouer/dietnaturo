@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AteliersController!{% endblock %}
+{% block title %}Ateliers{% endblock %}
 
 {% block body %}
 
@@ -29,15 +29,20 @@
 
                         <div class="col">
                 
-                            <div class="card border-0  h-100">
-                
+                            <div class="card border-0 h-100">
+                                <img class="card-img-top" src="{{ asset('/images/ateliers/') ~ atelier.imageName }}">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ atelier.title }}</h5>
-                                    <span class="badge-atelier badge text-bg-success py-2 my-1">{{ atelier.theme }}</span>
-                                    <img class="img-fluid" src="{{ asset('/images/ateliers/') ~ atelier.imageName }}">
+                                    {# <span class="badge-atelier badge text-bg-success py-2 my-1">{{ atelier.theme }}</span> #}
+                                    <p class="card-text">
+                                        {% for date in atelier.datesDisponibles %}
+                                           Atelier du {{ date.date | format_datetime('long', 'short', locale: 'fr') }} <br>
+                                        {% endfor %}
+                                    </p>
+                                    <p class="card-text">{{ (atelier.price / 100) | format_currency('EUR') }}</p>
                                 </div>
                                 <div class="card-footer text-center border-0">
-                                    <a href="{{ path('ateliers_detail', { "slug": atelier.slug }) }}" class="btn btn-primary">Voir</a>
+                                    <a href="{{ path('ateliers_detail', { "slug": atelier.slug }) }}" class="btn btn-custom-color text-white">Voir</a>
                                 </div>
                 
                             </div>

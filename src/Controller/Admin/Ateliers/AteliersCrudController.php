@@ -16,6 +16,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
@@ -59,9 +60,9 @@ class AteliersCrudController extends AbstractCrudController
             TextField::new('title', 'Titre'),
             TextField::new('theme', 'Thème'),
             TextField::new('imageFile', 'Image')->setFormType(VichImageType::class)->hideOnIndex(),
-            ImageField::new('imageName', 'Image')->setBasePath('/images/products')->setUploadDir('public/images')->hideOnForm(),
+            ImageField::new('imageName', 'Image')->setBasePath('/images/ateliers')->setUploadDir('public/images')->hideOnForm(),
             TextEditorField::new('content', 'Au programme')->hideOnIndex(),
-            //MoneyField::new('price')->setCurrency('EUR'),
+            MoneyField::new('price', 'Prix')->setCurrency('EUR'),
             SlugField::new('slug')->setTargetFieldName('title')->hideOnIndex(),
             BooleanField::new('isAvailable', 'Atelier disponible'),
 

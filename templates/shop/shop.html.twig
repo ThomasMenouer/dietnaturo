@@ -8,6 +8,9 @@
 
     <section class="section-shop my-5">
         <div class="container">
+            <div class="row">
+                <h1 class="text-center">Boutique</h1>
+            </div>
 
             {# <div class="row">
                 <nav>
@@ -28,16 +31,19 @@
 
                 {% for product in products %}
 
+
+
                     <div class="col">
 
                         <div class="card border-0 h-100">
-
+                            <img class="img-fluid" src="{{ asset('/images/products/') ~ product.imageName }}">
                             <div class="card-body">
                                 <h5 class="card-title">{{ product.name }}</h5>
-                                <span class="badge-article badge text-bg-warning py-2 my-1">{{ product.categories }}</span>
-                                <img class="img-fluid" src="{{ asset('/images/products/') ~ product.imageName }}">
+                                <p class="card-text">{{ (product.price / 100) | format_currency('EUR') }}</p>
+                                {# <span class="badge-article badge text-bg-warning py-2 my-1">{{ product.categories }}</span> #}
                             </div>
-                            <div class="card-footer text-center border-0">
+
+                            <div class="card-footer text-center border-0 mb-3">
                                 <a href="{{ path('shop_product', { "slug": product.slug }) }}" class="btn btn-custom-color text-white">Lire</a>
                                 <a href="{{ path('cart_add', { "id": product.id }) }}" class="btn btn-primary">Ajouter au panier</a>
                             </div>
@@ -48,11 +54,8 @@
                 {% endfor %}
             </div>
         </div>
-    </div>
-                
-
-
-
+    </section>
+        
 </main>
 
 {% endblock %}
