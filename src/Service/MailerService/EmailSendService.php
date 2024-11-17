@@ -24,7 +24,7 @@ class EmailSendService
             ->htmlTemplate('mails/inscription_atelier.html.twig')
             ->context([
                 'atelier' => $participants->getAteliers()->getTitle(),
-                'date' => $participants->getDateDisponible(),
+                'date' => $participants->getFormattedDate(),
             ]);
 
 

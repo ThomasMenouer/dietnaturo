@@ -2,6 +2,7 @@
 
 namespace App\Form\Admin;
 
+use App\Entity\Ateliers\Ateliers;
 use App\Entity\Ateliers\Participants;
 use App\Entity\Ateliers\DatesAteliers;
 use Symfony\Component\Form\AbstractType;
@@ -26,21 +27,21 @@ class ParticipantsAdminType extends AbstractType
                 'placeholder' => 'Email',
             ],
             'required' => true,
-        ])
-        ->add('dateDisponible', EntityType::class, [
-            'class' => DatesAteliers::class,
-            'label' => false,
-            'choices' => $atelier->getDatesDisponibles(),
-            'choice_label' => function(DatesAteliers $date) {
-                return $date->getDate()->format('d/m/Y H:i');
-            },
-            'placeholder' => 'Modifier la date pour le participant : ',
-            'attr' => [
-                'class' => 'form-control'
-            ],
-            'required' => true,
-
         ]);
+        // ->add('date', EntityType::class, [
+        //     'class' => Ateliers::class,
+        //     'label' => false,
+        //     'choices' => $atelier->getDate(),
+        //     'choice_label' => function(Ateliers $date) {
+        //         return $date->getDate()->format('d/m/Y H:i');
+        //     },
+        //     'placeholder' => 'Modifier la date pour le participant : ',
+        //     'attr' => [
+        //         'class' => 'form-control'
+        //     ],
+        //     'required' => true,
+
+        // ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -5,7 +5,7 @@ namespace App\Controller\Admin\Ateliers;
 use App\Form\SendEmailType;
 use App\Entity\Ateliers\Ateliers;
 use App\Form\Admin\ParticipantsAdminType;
-use App\Form\Admin\DatesAteliersAdminType;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\MailerService\EmailSendService;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -70,12 +70,14 @@ class AteliersCrudController extends AbstractCrudController
             FormField::addTab('Date Ateliers')
             ->setHelp('⚠️ Lors de la suppression d\'une date, vous supprimez également tous les participants inscrits à cette date.'),
             
-            CollectionField::new('datesDisponibles', 'Dates disponibles')
-                ->setHelp('📅 Vous pouvez ajouter plusieurs dates pour un même atelier.')
-                ->allowAdd(true)
-                ->allowDelete(true)
-                ->setEntryType(DatesAteliersAdminType::class)
-                ->setFormTypeOption('by_reference', false),
+            // CollectionField::new('date', 'Date')
+            //     ->setHelp('📅 Vous pouvez une seuled    te pour un même atelier.')
+            //     ->allowAdd(true)
+            //     ->allowDelete(true)
+            //     ->setEntryType(DatesAteliersAdminType::class)
+            //     ->setFormTypeOption('by_reference', false),
+
+            DateTimeField::new('date', 'date'),
             
             FormField::addTab('Inscriptions'),
             

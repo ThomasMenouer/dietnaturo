@@ -39,28 +39,25 @@ class AteliersRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Ateliers[] Returns an array of Ateliers objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function countAllAteliers() {
+        
+        $qb = $this->createQueryBuilder('a')
+        ->select('COUNT(a.id) as Value');
 
-//    public function findOneBySomeField($value): ?Ateliers
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $query = $qb->getQuery();
+
+        return $query->getSingleResult();
+
+        
+    }
+
+    public function countParticipantsByAtelierWithDate()
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('a.title, a.date, a.price, COUNT(p.id) AS participant_count, (COUNT(p.id)*a.price) AS montant')
+            ->leftJoin('a.participants', 'p')
+            ->groupBy('a.id');
+    
+        return $qb->getQuery()->getResult();
+    }
 }

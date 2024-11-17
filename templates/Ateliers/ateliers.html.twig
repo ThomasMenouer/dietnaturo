@@ -34,10 +34,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ atelier.title }}</h5>
                                     {# <span class="badge-atelier badge text-bg-success py-2 my-1">{{ atelier.theme }}</span> #}
-                                    <p class="card-text">
-                                        {% for date in atelier.datesDisponibles %}
-                                           Atelier du {{ date.date | format_datetime('long', 'short', locale: 'fr') }} <br>
-                                        {% endfor %}
+                                    <p class="card-text">Atelier du {{ atelier.date | format_datetime('long', 'short', locale: 'fr') }} <br>
                                     </p>
                                     <p class="card-text">{{ (atelier.price / 100) | format_currency('EUR') }}</p>
                                 </div>

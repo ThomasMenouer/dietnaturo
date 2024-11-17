@@ -5,7 +5,6 @@ namespace App\Entity\Ateliers;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Ateliers\Participants;
-use App\Entity\Ateliers\DatesAteliers;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\Ateliers\AteliersRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -30,6 +29,9 @@ class Ateliers
     #[ORM\Column(type: Types::TEXT)]
     private string $content;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $date = null;
+
     #[ORM\Column]
     private int $price;
 
@@ -39,9 +41,6 @@ class Ateliers
     #[ORM\OneToMany(mappedBy: 'ateliers', targetEntity: Participants::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $participants;
 
-    #[ORM\OneToMany(mappedBy: 'ateliers', targetEntity: DatesAteliers::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
-    private Collection $datesDisponibles;
-
     #[ORM\Column]
     private ?bool $isAvailable = null;
 
@@ -49,7 +48,6 @@ class Ateliers
     public function __construct()
     {
         $this->participants = new ArrayCollection();
-        $this->datesDisponibles = new ArrayCollection();
     }
 
     #[Vich\UploadableField(mapping: 'ateliers', fileNameProperty: 'imageName', size: 'imageSize')]
@@ -151,6 +149,18 @@ class Ateliers
         return $this;
     }
 
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(?\DateTimeInterface $date): static
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
     public function getPrice(): int
     {
         return $this->price;
@@ -217,33 +227,9 @@ class Ateliers
         return $this;
     }
 
-    /**
-     * @return Collection<int, DatesAteliers>
-     */
-    public function getDatesDisponibles(): Collection
-    {
-        return $this->datesDisponibles;
-    }
 
-    public function addDatesDisponible(DatesAteliers $datesDisponibles): static
-    {
-        if (!$this->datesDisponibles->contains($datesDisponibles)) {
-            $this->datesDisponibles->add($datesDisponibles);
-            $datesDisponibles->setAtelier($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDatesDisponible(DatesAteliers $datesDisponibles): static
-    {
-        if ($this->datesDisponibles->removeElement($datesDisponibles)) {
-            // set the owning side to null (unless already changed)
-            if ($datesDisponibles->getAtelier() === $this) {
-                $datesDisponibles->setAtelier(null);
-            }
-        }
-
-        return $this;
-    }
+    // public function __tostring(): string
+    // {
+    //     return $this->date->format('d/m/Y H:i');
+    // }
 }

@@ -47,7 +47,6 @@ class AteliersController extends AbstractController
             // Vérifier que le participant n'est pas déjà inscrit
             $participantExist = $em->getRepository(Participants::class)->findOneBy([
             'email' => $participant->getEmail(),
-            'dateDisponible' => $participant->getDateDisponible(),
             'ateliers' => $participant->getAteliers()
             
             ]);
@@ -57,6 +56,7 @@ class AteliersController extends AbstractController
                 $this->addFlash('danger', 'Vous êtes déjà inscrit à cet atelier.');
             }
             else{
+                $participant->setDate($ateliers->getDate());
 
                 $em->persist($participant);
                 $em->flush();

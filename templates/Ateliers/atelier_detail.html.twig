@@ -9,9 +9,7 @@
         <div class="container">
             <div class="row">
                 <h1 class="">
-                    {% for date in atelier.datesDisponibles %}
-                        Atelier du {{ date.date | format_datetime('long', 'short', locale: 'fr') }} <br>
-                    {% endfor %}
+                        Atelier du {{ atelier.date | format_datetime('long', 'short', locale: 'fr') }} <br>
                 </h1>
                 <p class=" mb-5"> {{ atelier.title }}</p>
             </div>
@@ -40,7 +38,7 @@
 
                                 {{ form_row(form.email) }}
                                 
-                                {{ form_row(form.dateDisponible)}}
+                                {{ form_row(form.date)}}
                                 
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                     {{ form_row(form.Inscription) }}

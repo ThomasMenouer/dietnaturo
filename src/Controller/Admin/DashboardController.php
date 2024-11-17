@@ -17,16 +17,26 @@ use App\Entity\Pages\Consultation\Consultations;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use App\Entity\Pages\Consultation\DeroulementConsultation;
+use App\Repository\Ateliers\AteliersRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ADMIN')]
 class DashboardController extends AbstractDashboardController
 {
+
+    public function __construct(private AteliersRepository $ateliersRepository){
+
+        $this->ateliersRepository = $ateliersRepository;
+    }
+    
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-        return $this->render('admin/dashboard.html.twig');
+        return $this->render('admin/dashboard.html.twig', [
+            'countAllAteliers' => $this->ateliersRepository->countAllAteliers(),
+            'countParticipantsByAtelierWithDate' => $this->ateliersRepository->countParticipantsByAtelierWithDate(),
+        ]);
     }
 
     public function configureDashboard(): Dashboard
