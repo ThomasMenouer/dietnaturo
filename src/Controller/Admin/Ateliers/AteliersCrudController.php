@@ -5,9 +5,13 @@ namespace App\Controller\Admin\Ateliers;
 use App\Form\SendEmailType;
 use App\Entity\Ateliers\Ateliers;
 use App\Form\Admin\ParticipantsAdminType;
+use App\Repository\Ateliers\AteliersRepository;
+use App\Repository\Ateliers\ParticipantsRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\MailerService\EmailSendService;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -47,8 +51,13 @@ class AteliersCrudController extends AbstractCrudController
         ->linkToCrudAction('sendEmailsToParticipants')
         ->addCssClass('btn btn-primary');
 
+        $deleteParticipants = Action::new('deleteParticipants', 'Supprimer les participants')
+        ->linkToCrudAction('DeleteParticipants')
+        ->setCssClass('btn btn-danger');
+
         return $actions
-            ->add(Crud::PAGE_EDIT, $sendEmails);
+            ->add(Crud::PAGE_EDIT, $sendEmails)
+            ->add(Crud::PAGE_EDIT, $deleteParticipants);
     }
 
     public function configureFields(string $pageName): iterable
@@ -148,5 +157,31 @@ class AteliersCrudController extends AbstractCrudController
             'form' => $form->createView(),
             'atelier' => $atelier,
         ]);
+    }
+
+    public function DeleteParticipants(AdminContext $context, EntityManagerInterface $em){
+
+        $atelier = $context->getEntity()->getInstance();
+
+        if (!$atelier instanceof Ateliers) {
+            $this->addFlash('danger', 'Cette entité n\'est pas un atelier.');
+            return $this->redirect($context->getReferrer());
+        }
+        
+        // Supprimer tous les participants liés à cet atelier
+        foreach ($atelier->getParticipants() as $participant) {
+            $em->remove($participant);
+        }
+
+        $em->flush();
+
+        $this->addFlash('success', 'Tous les participants associés à cet atelier ont été supprimés.');
+    
+        $url = $this->adminUrlGenerator
+        ->setController(AteliersCrudController::class)
+        ->setAction(Action::INDEX)
+        ->generateUrl();
+
+        return $this->redirect($url);
     }
 }
