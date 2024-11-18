@@ -5,12 +5,9 @@ namespace App\Controller\Admin\Ateliers;
 use App\Form\SendEmailType;
 use App\Entity\Ateliers\Ateliers;
 use App\Form\Admin\ParticipantsAdminType;
-use App\Repository\Ateliers\AteliersRepository;
-use App\Repository\Ateliers\ParticipantsRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\MailerService\EmailSendService;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -75,7 +72,6 @@ class AteliersCrudController extends AbstractCrudController
             SlugField::new('slug')->setTargetFieldName('title')->hideOnIndex(),
             BooleanField::new('isAvailable', 'Atelier disponible'),
 
-            
             FormField::addTab('Date Ateliers')
             ->setHelp('⚠️ Lors de la suppression d\'une date, vous supprimez également tous les participants inscrits à cette date.'),
             
@@ -97,10 +93,7 @@ class AteliersCrudController extends AbstractCrudController
                 ->setFormTypeOption('entry_options', [
                     'atelier' => $this->getContext()->getEntity()->getInstance(),
                 ]
-
-                
             ),
-
         ];
     }
 
