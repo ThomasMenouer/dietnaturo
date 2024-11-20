@@ -2,7 +2,10 @@
 
 namespace App\Entity\Shop;
 
+use App\Entity\Shop\OrderDetails;
 use App\Repository\Shop\OrdersRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrdersRepository::class)]
@@ -14,26 +17,39 @@ class Orders
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $email = null;
+    private string $email;
 
     #[ORM\Column]
     private ?int $totalPrice = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $status = null;
+    private string $status;
 
     #[ORM\Column(type: 'string', length: 20, unique: true)]
     private string $reference;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private \DateTimeImmutable $createdAt;
+
+    /**
+     * @var Collection<int, OrderDetails>
+     */
+    #[ORM\OneToMany(targetEntity: OrderDetails::class, mappedBy: 'orders', cascade: ['persist'])]
+    private Collection $orderDetails;
+
+    public function __construct()
+    {
+        $this->orderDetails = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
+        $this->status = 'pending';
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -77,7 +93,7 @@ class Orders
         $this->reference = $reference;
     }
     
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -85,6 +101,36 @@ class Orders
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderDetails>
+     */
+    public function getOrderDetails(): Collection
+    {
+        return $this->orderDetails;
+    }
+
+    public function addOrderDetail(OrderDetails $orderDetail): static
+    {
+        if (!$this->orderDetails->contains($orderDetail)) {
+            $this->orderDetails->add($orderDetail);
+            $orderDetail->setOrders($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderDetail(OrderDetails $orderDetail): static
+    {
+        if ($this->orderDetails->removeElement($orderDetail)) {
+            // set the owning side to null (unless already changed)
+            if ($orderDetail->getOrders() === $this) {
+                $orderDetail->setOrders(null);
+            }
+        }
 
         return $this;
     }

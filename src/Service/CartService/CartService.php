@@ -28,7 +28,7 @@ class CartService{
      */
     public function addProduct(int $id){
 
-        $cart = $this->requestStack->getSession()->get('cart', []);
+        $cart = $this->getCart();
 
         if(empty($cart[$id])){
             $cart[$id] = 1;
@@ -37,7 +37,6 @@ class CartService{
             $cart[$id]++;
         }
 
-        // $this->getSession()->set('cart', $cart);
         $this->updateCart($cart);
 
     }
@@ -48,7 +47,7 @@ class CartService{
      */
     public function deleteProduct(int $id){
 
-        $cart = $this->requestStack->getSession()->get('cart', []);
+        $cart = $this->getCart();
 
         if(!empty($cart[$id])){
             
@@ -61,7 +60,6 @@ class CartService{
             }
         }
 
-        // $this->getSession()->set('cart', $cart);
         $this->updateCart($cart);
     }
 
@@ -71,14 +69,13 @@ class CartService{
      */
     public function removeProduct(int $id){
 
-        $cart = $this->requestStack->getSession()->get('cart', []);
+        $cart = $this->getCart();
 
         if(!empty($cart[$id])){
             
             unset($cart[$id]);
         }
 
-        // $this->getSession()->set('cart', $cart);
         $this->updateCart($cart);
     }
 
@@ -92,12 +89,12 @@ class CartService{
     }
 
     /**
-     * Return the cart
+     * Return the cart data
      * @return array
      */
-    public function getCart(): array{
+    public function getCartData(): array{
 
-        $cart = $this->getSession()->get('cart', []);
+        $cart = $this->getCart();
         $cartData = [];
 
         foreach($cart as $id => $quantity){
@@ -121,7 +118,7 @@ class CartService{
 
         $total = 0;
 
-        foreach ($this->getCart() as $item) {
+        foreach ($this->getCartData() as $item) {
             
             $total += $item['product']->getPrice() * $item['quantity'];
 
@@ -130,21 +127,41 @@ class CartService{
         return $total;
     }
 
+    /**
+     * Summary of getItemCount
+     * @return int
+     */
     private function getItemCount(): int{
 
         $total = 0;
 
-        foreach($this->getCart() as $item){
+        foreach($this->getCartData() as $item){
             $total += $item['quantity'];
         }
 
         return $total;
     }
 
+    /**
+     * Summary of updateCart
+     * @param array $cart
+     * @return void
+     */
     private function updateCart(array $cart): void{
 
         $this->getSession()->set('cart', $cart);
         $this->getSession()->set('totalItemCount', $this->getItemCount());
+    }
+
+    /**
+     * return the cart
+     * @return mixed
+     */
+    private function getCart(){
+
+        $cart = $this->getSession()->get('cart', []);
+
+        return $cart;
     }
     
 

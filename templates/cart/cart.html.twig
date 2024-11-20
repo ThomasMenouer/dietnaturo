@@ -12,6 +12,7 @@
                 
                 <div class="col-6">
                     <h3 class="my-3">Panier</h3>
+                    
                     {% if cart | length > 0 %}
                         {% for item in cart %}
                         
@@ -74,7 +75,7 @@
                         </div>
 
                         <div class="card-footer text-center border-0">
-                            <a href="#" class="btn btn-custom-color text-white">Passer au paiement</a>
+                            <a href="{{ path('checkout') }}" class="btn btn-custom-color text-white">Passer au paiement</a>
                             
                             <span class="choice d-flex justify-content-center my-3">ou</span>
                             

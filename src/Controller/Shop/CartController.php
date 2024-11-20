@@ -16,7 +16,7 @@ class CartController extends AbstractController
     public function index(CartService $cartService): Response
     {
         return $this->render('cart/cart.html.twig', [
-            'cart' => $cartService->getCart(),
+            'cart' => $cartService->getCartData(),
             'TotalHTC' => $cartService->getPriceHTC()
         ]);
     }
