@@ -2,11 +2,12 @@
 
 namespace App\Entity\Shop;
 
+use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Shop\OrderDetails;
 use App\Repository\Shop\OrdersRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OrdersRepository::class)]
 class Orders
@@ -17,10 +18,23 @@ class Orders
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    private string $firstname;
+
+    #[ORM\Column(length: 255)]
+    private string $lastname;
+
+    #[ORM\Column(length: 255)]
     private string $email;
 
+    #[ORM\Column(length: 255)]
+    #[Assert\Regex('/^\+?[1-9]\d{1,14}$/')]
+    #[Assert\Type('numeric', 'The value {{ value }} is not a valid {{ type }}.',
+)]
+     private string $phoneNumber;
+
+
     #[ORM\Column]
-    private ?int $totalPrice = null;
+    private int $totalPrice;
 
     #[ORM\Column(length: 50)]
     private string $status;
@@ -49,6 +63,30 @@ class Orders
         return $this->id;
     }
 
+    public function getFirstname(): string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(string $firstname): static
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): static
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
     public function getEmail(): string
     {
         return $this->email;
@@ -61,7 +99,20 @@ class Orders
         return $this;
     }
 
-    public function getTotalPrice(): ?int
+
+    public function getPhoneNumber(): string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(string $phoneNumber): static
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    public function getTotalPrice(): int
     {
         return $this->totalPrice;
     }

@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class ContactType extends AbstractType
 {
@@ -36,6 +37,9 @@ class ContactType extends AbstractType
                     'class' => 'form-control',
                     'placeholder' => 'Email*',
                 ],
+                'constraints' =>[new Assert\Email([
+                    'message' => 'L\'email {{ value }} n\'est pas valide.']
+                    )],
                 'label' => false,
                 'required' => true,
             ])
@@ -44,6 +48,8 @@ class ContactType extends AbstractType
                     'class' => 'form-control',
                     'placeholder' => 'Message*'
                 ],
+                'constraints' => [new Assert\NotBlank(['message' => 'Le message ne peut pas etre vide.']
+                )],
                 'label' => false,
                 'required' => true,
             ])

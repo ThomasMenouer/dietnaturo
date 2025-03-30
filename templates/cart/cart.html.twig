@@ -13,8 +13,8 @@
                 <div class="col-6">
                     <h3 class="my-3">Panier</h3>
                     
-                    {% if cart | length > 0 %}
-                        {% for item in cart %}
+                    {% if cartData | length > 0 %}
+                        {% for item in cartData %}
                         
                             <div class="card mb-3 g-0 border-0">
                                 <div class="row g-0">
@@ -75,8 +75,16 @@
                         </div>
 
                         <div class="card-footer text-center border-0">
-                            <a href="{{ path('checkout') }}" class="btn btn-custom-color text-white">Passer au paiement</a>
+                        {% if cartData is same as [] %}
                             
+                            <a href="{{ path('checkout_resume') }}" class="btn btn-custom-color disabled">Passer au paiement</a>
+                        
+                        {% else %}
+
+                            <a href="{{ path('checkout_resume') }}" class="btn btn-custom-color text-white">Passer au paiement</a>
+                        
+                        {% endif %}
+
                             <span class="choice d-flex justify-content-center my-3">ou</span>
                             
                             <a href="{{ path('shop_index')}}" class="nav-link fw-bold text-color-custom my-3">Continuer mes achats</a>

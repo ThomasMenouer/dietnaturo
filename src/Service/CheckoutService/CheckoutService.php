@@ -15,12 +15,15 @@ class CheckoutService{
         $this->cartService = $cartService;
     }
 
-    public function processCheckout(string $email){
+    public function processCheckout(string $firstname, string $lastname, string $email, string $phoneNumber): void{
 
         # 1. Create order
 
         $order = new Orders();
+        $order->setFirstname($firstname);
+        $order->setLastname($lastname);
         $order->setEmail($email);
+        $order->setPhoneNumber($phoneNumber);
         $order->setTotalPrice($this->cartService->getPriceHTC()); # REVOIR
 
         # Générer la référence ...
@@ -28,11 +31,12 @@ class CheckoutService{
 
 
         foreach ($this->cartService->getCartdata() as $product) {
+            // dd($product);
             $orderDetail = new OrderDetails();
             $orderDetail->setOrders($order);
-            $orderDetail->setProductName($product->getProduct()->getName());
-            $orderDetail->setQuantity($product->getQuantity());
-            $orderDetail->setPrice($product->getPrice());
+            $orderDetail->setProductName($product['product']->getName());
+            $orderDetail->setQuantity($product['quantity']);
+            $orderDetail->setPrice($product['product']->getPrice());
 
             $order->addOrderDetail($orderDetail);
             
