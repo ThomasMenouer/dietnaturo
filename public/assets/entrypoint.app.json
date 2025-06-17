@@ -1,0 +1,20 @@
+[
+    "\/assets\/bootstrap.js",
+    "bootstrap",
+    "bootstrap\/dist\/css\/bootstrap.min.css",
+    "\/assets\/styles\/app.css",
+    "\/assets\/styles\/about.css",
+    "\/assets\/styles\/home.css",
+    "\/assets\/styles\/consultation.css",
+    "\/assets\/styles\/activities.css",
+    "\/assets\/styles\/cart.css",
+    "\/assets\/styles\/coaching.css",
+    "\/assets\/styles\/faqs.css",
+    "@symfony\/stimulus-bundle",
+    "@popperjs\/core",
+    "@hotwired\/stimulus",
+    "\/assets\/@symfony\/stimulus-bundle\/controllers.js",
+    "\/assets\/@symfony\/ux-turbo\/turbo_controller.js",
+    "\/assets\/controllers\/hello_controller.js",
+    "@hotwired\/turbo"
+]

@@ -2,8 +2,9 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Blog\Articles;
+
 use Faker;
+use App\Domain\Blog\Entity\Articles;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -23,7 +24,7 @@ class ArticlesFixtures extends Fixture implements DependentFixtureInterface
             $article->setTitle($faker->words(3, true));
             $article->setContent($faker->text());
             
-            $category = $this->getReference('cat-'. rand(1, 3));
+            $category = $this->getReference('cat-'. rand(1, 3), "category");
             $article->setCategories($category);
 
             $article->setDatePublished($faker->datetime());
@@ -35,7 +36,7 @@ class ArticlesFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             CategoriesFixtures::class,
