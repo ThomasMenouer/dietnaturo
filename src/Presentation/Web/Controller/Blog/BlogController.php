@@ -2,36 +2,26 @@
 
 namespace App\Presentation\Web\Controller\Blog;
 
-
 use App\Domain\Blog\Entity\Articles;
 use App\Domain\Blog\Entity\Categories;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Infrastructure\Persistence\Doctrine\Repository\Blog\ArticlesRepository;
+use App\Application\Blog\Articles\UseCase\GetArticleByCategoryUseCase;
+use App\Application\Blog\Articles\UseCase\GetPaginatedArticlesUseCase;
 
 #[Route('/blog', name: 'blog_')]
 class BlogController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(ArticlesRepository $articlesRepository, Request $request, PaginatorInterface $paginator): Response
+    public function index(Request $request, GetPaginatedArticlesUseCase $getPaginatedArticlesUseCase): Response
     {
-        $pagination = $paginator->paginate(
-            $articlesRepository->paginationQuery(),
-            $request->query->get('page', 1),
-        );
-
-        // set an array of custom parameters
-        $pagination->setCustomParameters([
-            'align' => 'center', # center|right (for template: twitter_bootstrap_v4_pagination and foundation_v6_pagination)
-            'size' => 'medium', # small|large (for template: twitter_bootstrap_v4_pagination)
-        ]);
+        $pagination = $getPaginatedArticlesUseCase->execute($request);
 
         return $this->render('blog/blog.html.twig', [
-        'pagination' => $pagination
+            'pagination' => $pagination
         ]);
     }
 
@@ -41,17 +31,19 @@ class BlogController extends AbstractController
         return $this->render('blog/article.html.twig', [
             'article' => $article
         ]);
-    
     }
 
     #[Route('/category/{slug}', name: 'category')]
-    public function categoryFilter(#[MapEntity(mapping: ['slug' => 'slug'])] Categories $categories, ArticlesRepository $articlesRepository, Request $request): Response
+    public function categoryFilter(
+        #[MapEntity(mapping: ['slug' => 'slug'])] Categories $category,
+        Request $request,
+        GetArticleByCategoryUseCase $getArticleByCategoryUseCase
+    ): Response
     {
+        $articles = $getArticleByCategoryUseCase->execute($category, $request);
 
-        $articles = $articlesRepository->findArticleByCategory($request->query->getInt('page', 1), $categories);
-        
         return $this->render('blog/blog.html.twig', [
-            'categories' => $categories,
+            'categories' => $category,
             'pagination' => $articles
         ]);
     }

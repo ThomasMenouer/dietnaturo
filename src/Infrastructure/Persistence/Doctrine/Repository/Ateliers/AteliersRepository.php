@@ -4,8 +4,10 @@ namespace App\Infrastructure\Persistence\Doctrine\Repository\Ateliers;
 
 
 use App\Domain\Ateliers\Entity\Ateliers;
+use App\Domain\Ateliers\Repository\AteliersRepositoryInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @extends ServiceEntityRepository<Ateliers>
@@ -15,29 +17,35 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  * @method Ateliers[]    findAll()
  * @method Ateliers[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class AteliersRepository extends ServiceEntityRepository
+class AteliersRepository extends ServiceEntityRepository implements AteliersRepositoryInterface
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private EntityManagerInterface $em)
     {
         parent::__construct($registry, Ateliers::class);
+        $this->em  = $em;
     }
 
-    public function save(Ateliers $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->persist($entity);
 
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+    public function getAllAteliers(): array
+    {
+        return $this->findAll();
     }
 
-    public function remove(Ateliers $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
+    // public function getAtelierBySlug()
+    // {
 
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+    // }
+
+    public function save(Ateliers $atelier): void
+    {
+        $this->em->persist($atelier);
+        $this->em->flush();
+
+    }
+
+    public function remove(Ateliers $atelier): void
+    {
+        $this->em->remove($atelier);
     }
 
     public function countAllAteliers() {

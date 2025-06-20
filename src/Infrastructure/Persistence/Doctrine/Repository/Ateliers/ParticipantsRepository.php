@@ -4,9 +4,11 @@ namespace App\Infrastructure\Persistence\Doctrine\Repository\Ateliers;
 
 
 use App\Domain\Ateliers\Entity\Ateliers;
+use App\Domain\Ateliers\Repository\ParticipantsRepositoryInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Domain\Ateliers\Entity\Participants;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @extends ServiceEntityRepository<Participants>
@@ -16,29 +18,23 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  * @method Participants[]    findAll()
  * @method Participants[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ParticipantsRepository extends ServiceEntityRepository
+class ParticipantsRepository extends ServiceEntityRepository implements ParticipantsRepositoryInterface
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private EntityManagerInterface $em)
     {
         parent::__construct($registry, Participants::class);
     }
 
-    public function save(Participants $entity, bool $flush = false): void
+    public function save(Participants $participant): void
     {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        $this->getEntityManager()->persist($participant);
+        $this->getEntityManager()->flush();
     }
 
-    public function remove(Participants $entity, bool $flush = false): void
+    public function remove(Participants $participants): void
     {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        $this->getEntityManager()->remove($participants);
+        $this->getEntityManager()->flush();
     }
 
    /**
@@ -68,5 +64,13 @@ class ParticipantsRepository extends ServiceEntityRepository
             ->setParameter('ateliers', $ateliers);
 
         return array_column($qb->getQuery()->getResult(), 'email');
+    }
+
+    public function findOneByEmailAndAtelier(string $email, Ateliers $atelier): ?Participants
+    {
+        return $this->findOneBy([
+            'email' => $email,
+            'ateliers' => $atelier,
+        ]);
     }
 }

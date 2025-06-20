@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Persistence\Doctrine\Repository\Pages\Activities;
 
 
+use App\Domain\Pages\Repository\ActivitiesRepositoryInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Domain\Pages\Entity\Activities\Activities;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -10,35 +11,16 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 /**
  * @extends ServiceEntityRepository<Activities>
  */
-class ActivitiesRepository extends ServiceEntityRepository
+class ActivitiesRepository extends ServiceEntityRepository implements ActivitiesRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Activities::class);
     }
 
-    //    /**
-    //     * @return Activities[] Returns an array of Activities objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('d')
-    //            ->andWhere('d.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('d.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function getAllActivities(): array
+    {
+        return $this->findAll();
+    }
 
-    //    public function findOneBySomeField($value): ?Activities
-    //    {
-    //        return $this->createQueryBuilder('d')
-    //            ->andWhere('d.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

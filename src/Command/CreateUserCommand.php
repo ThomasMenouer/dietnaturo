@@ -2,7 +2,8 @@
 
 namespace App\Command;
 
-use App\Entity\Users;
+
+use App\Domain\Users\Entity\Users;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;

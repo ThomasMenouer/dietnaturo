@@ -2,18 +2,18 @@
 
 namespace App\Infrastructure\EventSubscriber;
 
+use App\Domain\Blog\Repository\CategoriesRepositoryInterface;
 use Twig\Environment;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use App\Infrastructure\Persistence\Doctrine\Repository\Blog\CategoriesRepository;
 
 class CategoryFilterSubscriber implements EventSubscriberInterface
 {
     const ROUTES = ['blog_index', 'blog_category'];
 
     public function __construct(
-        private CategoriesRepository $categoriesRepository,
+        private CategoriesRepositoryInterface $categoriesRepositoryInterface,
         private Environment $twig
 
     ){}
@@ -22,7 +22,7 @@ class CategoryFilterSubscriber implements EventSubscriberInterface
         $route = $event->getRequest()->get('_route');
         if (in_array($route, CategoryFilterSubscriber::ROUTES)){
 
-            $categories = $this->categoriesRepository->findAll();
+            $categories = $this->categoriesRepositoryInterface->getAllCategories();
             $this->twig->addGlobal('allCategories', $categories);
         }
     }

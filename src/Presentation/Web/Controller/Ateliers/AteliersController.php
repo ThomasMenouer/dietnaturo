@@ -3,7 +3,6 @@
 namespace App\Presentation\Web\Controller\Ateliers;
 
 use App\Domain\Ateliers\Entity\Ateliers;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Domain\Ateliers\Entity\Participants;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,8 +10,10 @@ use App\Infrastructure\Mailer\EmailSendService;
 use App\Presentation\Web\Form\ParticipantsType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+use App\Domain\Ateliers\Repository\AteliersRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Infrastructure\Persistence\Doctrine\Repository\Ateliers\AteliersRepository;
+use App\Application\Ateliers\UseCase\RegisterParticipantToAtelierUseCase;
+
 
 #[Route('/ateliers', name: 'ateliers_')]
 class AteliersController extends AbstractController
@@ -23,9 +24,9 @@ class AteliersController extends AbstractController
     }
 
     #[Route('/', name: 'index')]
-    public function index(AteliersRepository $ateliersRepository): Response
+    public function index(AteliersRepositoryInterface $ateliersRepositoryInterface): Response
     {
-        $ateliers = $ateliersRepository->findAll();
+        $ateliers = $ateliersRepositoryInterface->getAllAteliers();
 
         return $this->render('Ateliers/ateliers.html.twig', [
             'ateliers' => $ateliers,
@@ -33,47 +34,30 @@ class AteliersController extends AbstractController
     }
 
     #[Route('/{slug}', name: 'detail')]
-    public function showAtelier(#[MapEntity(mapping: ['slug' => 'slug'])] Ateliers $ateliers, EntityManagerInterface $em, Request $request): Response
+    public function showAtelier(#[MapEntity(mapping: ['slug' => 'slug'])] Ateliers $atelier, Request $request,
+        RegisterParticipantToAtelierUseCase $useCase ): Response 
     {
-
+        
         $participant = new Participants();
-        $participant->setAteliers($ateliers);
-
-        $form = $this->createForm(ParticipantsType::class, $participant, ['atelier' => $ateliers]);
+        
+        $form = $this->createForm(ParticipantsType::class, $participant, ['atelier' => $atelier]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $result = $useCase->execute($participant, $atelier);
 
-            // Vérifier que le participant n'est pas déjà inscrit
-            $participantExist = $em->getRepository(Participants::class)->findOneBy([
-            'email' => $participant->getEmail(),
-            'ateliers' => $participant->getAteliers()
-            
-            ]);
-
-            if ($participantExist) {
+            if ($result === 'already_registered') {
                 
                 $this->addFlash('danger', 'Vous êtes déjà inscrit à cet atelier.');
-            }
-            else{
-                $participant->setDate($ateliers->getDate());
-
-                $em->persist($participant);
-                $em->flush();
-    
+            } else {
                 $this->addFlash('success', 'Votre inscription a été enregistrée avec succès. Un mail vous sera envoyé.');
-
-                // Envoi d'un mail de confirmation
-                $this->emailService->sendMailInscriptionAtelier($participant);
-        
             }
-            
-            return $this->redirectToRoute('ateliers_index');
 
+            return $this->redirectToRoute('ateliers_index');
         }
 
         return $this->render('Ateliers/atelier_detail.html.twig', [
-            'atelier' => $ateliers,
+            'atelier' => $atelier,
             'form' => $form->createView(),
         ]);
     }

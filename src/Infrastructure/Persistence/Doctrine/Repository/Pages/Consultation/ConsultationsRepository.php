@@ -5,6 +5,7 @@ namespace App\Infrastructure\Persistence\Doctrine\Repository\Pages\Consultation;
 
 use Doctrine\Persistence\ManagerRegistry;
 use App\Domain\Pages\Entity\Consultation\Consultations;
+use App\Domain\Pages\Repository\ConsultationsRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
@@ -15,7 +16,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  * @method Consultations[]    findAll()
  * @method Consultations[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ConsultationsRepository extends ServiceEntityRepository
+class ConsultationsRepository extends ServiceEntityRepository implements ConsultationsRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -40,28 +41,11 @@ class ConsultationsRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Consultations[] Returns an array of Consultations objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Consultations
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * @return Consultations[]
+     */
+    public function getAllConsultations(): array
+    {
+        return $this->findAll();
+    }
 }

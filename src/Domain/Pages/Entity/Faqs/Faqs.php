@@ -2,9 +2,9 @@
 
 namespace App\Domain\Pages\Entity\Faqs;
 
-use App\Repository\FaqsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Infrastructure\Persistence\Doctrine\Repository\Pages\Faqs\FaqsRepository;
 
 #[ORM\Entity(repositoryClass: FaqsRepository::class)]
 class Faqs

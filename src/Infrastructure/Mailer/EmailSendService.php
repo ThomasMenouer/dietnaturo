@@ -3,11 +3,12 @@
 namespace App\Infrastructure\Mailer;
 
 use Symfony\Component\Mime\Email;
+use App\Domain\Mailer\SendMailInterface;
 use App\Domain\Ateliers\Entity\Participants;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 
-class EmailSendService
+class EmailSendService implements SendMailInterface
 {
     public function __construct(private MailerInterface $mailer)
     {

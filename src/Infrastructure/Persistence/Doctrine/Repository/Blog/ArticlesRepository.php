@@ -3,6 +3,8 @@
 namespace App\Infrastructure\Persistence\Doctrine\Repository\Blog;
 
 
+use App\Domain\Blog\Repository\ArticlesRepositoryInterface;
+use Doctrine\ORM\Query;
 use App\Domain\Blog\Entity\Articles;
 use App\Domain\Blog\Entity\Categories;
 use Doctrine\Persistence\ManagerRegistry;
@@ -18,35 +20,31 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  * @method Articles[]    findAll()
  * @method Articles[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ArticlesRepository extends ServiceEntityRepository
+class ArticlesRepository extends ServiceEntityRepository implements ArticlesRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry, private PaginatorInterface $paginatorInterface)
     {
         parent::__construct($registry, Articles::class);
     }
 
-    public function save(Articles $entity, bool $flush = false): void
+    public function save(Articles $articles): void
     {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        $this->getEntityManager()->persist($articles);
+        $this->getEntityManager()->flush();
     }
 
-    public function remove(Articles $entity, bool $flush = false): void
+    public function remove(Articles $articles): void
     {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        $this->getEntityManager()->remove($articles);
+        $this->getEntityManager()->flush();
     }
 
-    /**
-    * @return Articles[] Returns an array of Articles objects
+
+   /**
+    * Summary of paginationQuery
+    * @return Query
     */
-   public function paginationQuery()
+   public function paginationQuery(): Query
    {
        return $this->createQueryBuilder('a')->where('a.isPublished = 1')
            ->orderBy('a.id', 'ASC')
@@ -86,29 +84,4 @@ class ArticlesRepository extends ServiceEntityRepository
 
         return $article;
     }
-
-//    /**
-//     * @return Articles[] Returns an array of Articles objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Articles
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

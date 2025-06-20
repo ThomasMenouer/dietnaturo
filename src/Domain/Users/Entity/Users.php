@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Domain\Ateliers\Entity;
+namespace App\Domain\Users\Entity;
 
-use App\Repository\UsersRepository;
+
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use App\Infrastructure\Persistence\Doctrine\Repository\Users\UsersRepository;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
 class Users implements UserInterface, PasswordAuthenticatedUserInterface
