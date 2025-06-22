@@ -7,17 +7,18 @@ use App\Domain\Shop\Entity\Products;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+use App\Domain\Shop\Interfaces\ProductsRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Infrastructure\Persistence\Doctrine\Repository\Shop\ProductsRepository;
+
 
 #[Route('/boutique', 'shop_')]
 class ShopController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(ProductsRepository $productsRepository): Response
+    public function index(ProductsRepositoryInterface $productsRepositoryInterface): Response
     {
 
-        $products = $productsRepository->findAll();
+        $products = $productsRepositoryInterface->getAllProducts();
 
         return $this->render('shop/shop.html.twig', [
             'products' => $products

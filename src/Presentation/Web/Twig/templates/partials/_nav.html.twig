@@ -47,7 +47,7 @@
 
                 {% if app.session.get('cart') %}
                     <span class="position-absolute translate-middle badge rounded-pill bg-danger">
-                        {{ app.session.get('totalItemCount') }}
+                        {{ cartItemCount }}
                     </span>
                 {% endif %}
               

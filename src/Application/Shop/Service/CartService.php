@@ -4,7 +4,7 @@
 namespace App\Application\Shop\Service;
 
 use App\Domain\Shop\Cart\Repository\CartStorageInterface;
-use App\Infrastructure\Persistence\Doctrine\Repository\Shop\ProductsRepository;
+use App\Domain\Shop\Interfaces\ProductsRepositoryInterface;
 
 
 
@@ -12,7 +12,7 @@ class CartService
 {
     public function __construct(
         private CartStorageInterface $cartStorage,
-        private ProductsRepository $productsRepository
+        private ProductsRepositoryInterface $productsRepositoryInterface
     ) {}
 
     public function addProduct(int $id): void
@@ -57,7 +57,7 @@ class CartService
         $cartData = [];
 
         foreach ($cart as $id => $quantity) {
-            $product = $this->productsRepository->find($id);
+            $product = $this->productsRepositoryInterface->findById($id);
             if ($product) {
                 $cartData[] = [
                     'product' => $product,
@@ -69,15 +69,35 @@ class CartService
         return $cartData;
     }
 
+    /**
+     * Return the total price (HTC) of the cart
+     * @return int
+     */
     public function getPriceHTC(): int
     {
-        return array_reduce($this->getCartData(), function ($total, $item) {
-            return $total + $item['product']->getPrice() * $item['quantity'];
-        }, 0);
+        $total = 0;
+
+        foreach ($this->getCartData() as $item) {
+            
+            $total += $item['product']->getPrice() * $item['quantity'];
+
+        }
+
+        return $total;
     }
 
-    public function getItemCount(): int
-    {
-        return array_reduce($this->getCartData(), fn ($sum, $item) => $sum + $item['quantity'], 0);
+    /**
+     * Summary of getItemCount
+     * @return int
+     */
+    public function getItemCount(): int{
+
+        $total = 0;
+
+        foreach($this->getCartData() as $item){
+            $total += $item['quantity'];
+        }
+
+        return $total;
     }
 }

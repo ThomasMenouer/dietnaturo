@@ -2,8 +2,9 @@
 
 namespace App\Infrastructure\Shop\Cart;
 
-use App\Domain\Shop\Cart\Repository\CartStorageInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use App\Domain\Shop\Cart\Repository\CartStorageInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SessionCartStorage implements CartStorageInterface
 {
@@ -24,7 +25,7 @@ class SessionCartStorage implements CartStorageInterface
         $this->getSession()->remove('cart');
     }
 
-    private function getSession()
+    private function getSession(): SessionInterface
     {
         return $this->requestStack->getSession();
     }
