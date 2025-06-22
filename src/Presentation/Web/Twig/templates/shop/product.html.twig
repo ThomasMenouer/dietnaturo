@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ product.name }} {% endblock %}
+
+{% block body %}
+
+<main class="flex-grow-1">
+    <section class="product-section my-5">
+        <div class="container">
+
+            <div class="row">
+                <h1 class="text-center mb-5"> {{ product.name }}</h1>
+
+                <div class="">{{ product.description | raw }}<div>
+        
+                <p>{{ (product.price / 100) | format_currency('EUR') }}</p>
+
+                <div class="btn"></div>
+                <a href="{{ path('cart_add', { "id": product.id }) }}" class="btn btn-primary">Ajouter au panier</a>
+            
+            </div>
+        
+        </div>
+
+    </section>
+</main>
+
+
+
+
+{% endblock %}

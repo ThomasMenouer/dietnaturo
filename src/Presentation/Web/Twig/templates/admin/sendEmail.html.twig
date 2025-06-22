@@ -1,0 +1,21 @@
+{% extends '@!EasyAdmin/page/content.html.twig' %}
+
+{% block main %}
+
+<div class="container">
+
+    <div class="row">
+        <h4><u>Envoyer un email aux participants de l'atelier </u>: {{ atelier.title }}</h4>
+
+    {{ form_start(form) }}
+        {{ form_row(form.subject) }}
+        {{ form_row(form.content) }}
+
+        <button class="btn btn-primary">Envoyer les emails</button>
+    {{ form_end(form) }}
+    
+    </div>
+</div>
+
+
+{% endblock %}

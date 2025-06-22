@@ -1,0 +1,52 @@
+body{
+    background-color: #FCFAEE;
+}
+
+nav {
+
+    background-color: #A5B68D;
+}
+
+nav .nav-link{
+    color: white;
+}
+
+nav .active{
+    color: #DA8359;
+}
+
+nav .nav-link:hover{
+    color: #DA8359;
+}
+
+footer {
+    background-color: #A5B68D;
+}
+
+.card{
+    background-color: #ECDFCC;
+}
+
+.card-footer{
+
+    background: unset;
+}
+
+.btn-custom-color{
+
+    background-color: #DA8359;
+}
+
+.btn-custom-color:hover{
+
+    background-color: #DA8359;
+}
+
+.btn-remove-cart-color{
+    background-color: #F95454;
+}
+
+.btn-delete-product-color{
+
+    background-color: #FFB0B0;
+}

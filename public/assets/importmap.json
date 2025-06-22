@@ -1,0 +1,78 @@
+{
+    "app": {
+        "path": "\/assets\/app-bdbe814f435d6aac6d6c371f381e6353.js",
+        "type": "js"
+    },
+    "\/assets\/bootstrap.js": {
+        "path": "\/assets\/bootstrap-c423b8bbc1f9cae218c105ca8ca9f767.js",
+        "type": "js"
+    },
+    "\/assets\/@symfony\/stimulus-bundle\/controllers.js": {
+        "path": "\/assets\/@symfony\/stimulus-bundle\/controllers-9d42643c079ab11f27a3a9614f81cc2f.js",
+        "type": "js"
+    },
+    "\/assets\/@symfony\/ux-turbo\/turbo_controller.js": {
+        "path": "\/assets\/@symfony\/ux-turbo\/turbo_controller-ce5e32dafdec0b7752f02e3e2cb25751.js",
+        "type": "js"
+    },
+    "\/assets\/controllers\/hello_controller.js": {
+        "path": "\/assets\/controllers\/hello_controller-55882fcad241d2bea50276ea485583bc.js",
+        "type": "js"
+    },
+    "\/assets\/styles\/app.css": {
+        "path": "\/assets\/styles\/app-3e8ae80387f57a21297978307c4ceab5.css",
+        "type": "css"
+    },
+    "\/assets\/styles\/about.css": {
+        "path": "\/assets\/styles\/about-b5b17f9380ae9f17c314a8c9c5294b9c.css",
+        "type": "css"
+    },
+    "\/assets\/styles\/home.css": {
+        "path": "\/assets\/styles\/home-475a03e851f469c0d8daba34874d21bf.css",
+        "type": "css"
+    },
+    "\/assets\/styles\/consultation.css": {
+        "path": "\/assets\/styles\/consultation-e28a23b99635d03849f2a4d41fab6443.css",
+        "type": "css"
+    },
+    "\/assets\/styles\/activities.css": {
+        "path": "\/assets\/styles\/activities-7c85e15740620900f8e03f751860c32e.css",
+        "type": "css"
+    },
+    "\/assets\/styles\/cart.css": {
+        "path": "\/assets\/styles\/cart-ec0942d530a812295d3d55a8322618ae.css",
+        "type": "css"
+    },
+    "\/assets\/styles\/coaching.css": {
+        "path": "\/assets\/styles\/coaching-76356b5a81c796ca350f790a7d4f6f53.css",
+        "type": "css"
+    },
+    "\/assets\/styles\/faqs.css": {
+        "path": "\/assets\/styles\/faqs-55ff04564751fd10a2acd8d1f89e40ab.css",
+        "type": "css"
+    },
+    "@hotwired\/stimulus": {
+        "path": "\/assets\/vendor\/@hotwired\/stimulus\/stimulus.index-b5b1d00e42695b8959b4a1e94e3bc92a.js",
+        "type": "js"
+    },
+    "@symfony\/stimulus-bundle": {
+        "path": "\/assets\/@symfony\/stimulus-bundle\/loader-870999a02e9fc147c034d522826ea70d.js",
+        "type": "js"
+    },
+    "@hotwired\/turbo": {
+        "path": "\/assets\/vendor\/@hotwired\/turbo\/turbo.index-810f44ef1a202a441e4866b7a4c72d11.js",
+        "type": "js"
+    },
+    "bootstrap": {
+        "path": "\/assets\/vendor\/bootstrap\/bootstrap.index-c0423c99f6075e6b1cef7579b5c00d32.js",
+        "type": "js"
+    },
+    "@popperjs\/core": {
+        "path": "\/assets\/vendor\/@popperjs\/core\/core.index-ceb5b6c0f9e1d3f6c78ef733facfdcda.js",
+        "type": "js"
+    },
+    "bootstrap\/dist\/css\/bootstrap.min.css": {
+        "path": "\/assets\/vendor\/bootstrap\/dist\/css\/bootstrap.min-1712f0378f8675ca7cd423d6262fcccf.css",
+        "type": "css"
+    }
+}

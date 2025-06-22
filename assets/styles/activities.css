@@ -1,0 +1,15 @@
+/* .activities .section-activities img {
+    
+    height: 100%;
+    width: auto;
+} */
+
+.activities .card-header {
+    background-color: unset;
+    border-bottom: unset;
+}
+
+/* .activities .section-activities .container .row .col-6 .card{
+    
+    height: 100%;
+} */

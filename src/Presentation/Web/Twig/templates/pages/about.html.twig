@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AboutController!{% endblock %}
+
+{% block body %}
+
+<main class="about flex-grow-1">
+    <section class="section-valeurs">
+        <div class="container my-5">
+            <div class="row">
+                <div class="col-6">
+                    
+                    <div class="card border-0 h-100">
+                        <img src="{{asset('/images/about/orange.webp') }}"  class="img-fluid rounded" alt="">
+                    </div>
+                </div>
+                <div class="col-6">
+
+                    <div class="card border-0 text-center h-100">
+                        <div class="card-header my-3">
+                            <h3 class="card-title">Mes valeurs en diététique et naturopathie</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"><b><u>L'écoute</u> :</b> Je ne serai pas là pour simplement vous donner des conseils mais aussi pour vous écouter me faire part de vos sensations alimentaires, vos difficultés, vos petites victoires …</p>
+                            <p class="card-text"><b><u>La bienveillance</u> :</b> Envers vous-même et envers cette prise en charge qui englobe la totalité de votre personne : le corps et l'esprit.</p>
+                            <p class="card-text"><b><u>Le plaisir</u> :</b> Que serait manger sans prendre plaisir ? Plus on apprécie ce qu'on mange sans culpabiliser, plus on se réconcilie avec l'alimentation !</p>
+                            <p class="card-text"><b><u>L'accompagnement sans culpabilité</u> :</b> Comme tout au long de notre vie, il y a des jours avec et des jours sans. 
+                            L'accompagnement est sur le même principe et je suis là pour écouter vos craintes, vos frustrations et pour réadapter le programme pour que le chemin soit plus serein !</p>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section  class="section-metiers">
+        <div class="container">
+            <h2 class="text-center my-3">Mon approche</h2>
+            <div class="row row-cols-4 g-4">
+
+                <div class="col d-flex align-items-stretch">
+                    <div class="card border-0 text-center">
+                        <div class="card-header">
+                            <h3 class="card-title my-3">Diététicienne et Naturopathe</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Le diététicien est un professionnel de santé expert en alimentation et nutrition. 
+                            C'est la seule personne habilité avec le médecin-nutritionniste à délivrer des conseils diététiques individualisés avec une éducation nutritionnelle.</p>
+                            <p class="card-text">La naturopathie regroupe différentes méthodes telles que l'alimentation, la phytothérapie, les respirations, l'aromathérapie, le massage, la réflexologie... 
+                            qui permettront la prévention de la santé et qui serviront d'accompagnement de fond pour la prise en charge de diverses pathologies. 
+                            Cependant, elle ne se substitue jamais à un traitement médical mais est très souvent utilisée en accompagnement.</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col d-flex align-items-stretch">
+                    <div class="card border-0 text-center">
+                        <div class="card-header">
+                            <h3 class="card-title my-3">Soins énergétiques</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Nous avons tous entendu parler de magnétiseur, coupeur de feu, énergéticien, reiki... 
+                            De par mon vécu, j'ai eu la chance d'expérimenter certaines de ces pratique et selon moi une bonne santé passe par l'énergie de notre corps.</p>
+                            <p class="card-text">Afin de transmettre ces bienfaits aux autres, j'ai suivi des formations aux soins énergétiques. 
+                            Ce sont des énergies permettant de diminuer la fatigue, de créer davantage d'apaisement, de vous aider à éclaircir les pensées...</p>
+                            <p class="card-text">Les soins énergétiques se font à distance ou en présentiel au cabinet.</p>
+                            <p class="card-text">Si vous êtes intéressé(e) n'hésitez pas à me contacter afin de prévoir une séance (durée d'environ 1h).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col d-flex align-items-stretch">
+                    <div class="card border-0 text-center">
+                        <div class="card-header">
+                            <h3 class="card-title my-3">Les plus</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Passionnée du développement personnel, 
+                            j'approfondis mes acquis avec diverses lectures et formations : PNL (programmation neurolinguistique), alimentation émotionnelle, pleine conscience, gestion du stress... 
+                            afin de vous accompagner en globalité que ce soit sur le plan physique et émotionnel.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col d-flex align-items-stretch">
+                    <div class="card border-0">
+                        <img src="{{asset('/images/about/woman.webp') }}" class="rounded" alt="">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="section-diplomes">
+        <div class="container my-5">
+            <div class="row">
+                <div class="col-6">
+
+                    <div class="card border-0 h-100">
+                        <img src="{{asset('/images/about/fruits.webp') }}"  class="img-fluid rounded" alt="">
+                    </div>
+                </div>
+                <div class="col-6">
+
+                    <div class=" card text-center border-0 h-100">
+
+                        <div class="card-header text-center">
+                            <h3 class="card-title my-3">Diplômes et formations</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">BTS diététique</p>
+                            <p class="card-text">Formation en naturopathie (école certifiée FENA)</p>
+                            <p class="card-text">Initiation à l'alimentation en pleine conscience (Mindful eating)</p>
+                            <p class="card-text">Prise en charge des troubles des conduites alimentaires (TCA)</p>
+                            <p class="card-text">Technicienne en Programmation Neuro Linguistique (PNL)</p>
+                            <p class="card-text">Formation nutrition et supplémentation du sportif</p>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</main>
+
+
+
+{% endblock %}

@@ -1,0 +1,32 @@
+body{
+    background-color: #FCFAEE;
+}
+
+nav {
+
+    background-color: #A5B68D;
+}
+
+nav .nav-link{
+    color: white;
+}
+
+nav .active{
+    color: #DA8359;
+}
+
+nav .nav-link:hover{
+    color: #DA8359;
+}
+
+footer {
+    background-color: #A5B68D;
+}
+
+.card{
+    background-color: #ECDFCC;
+}
+
+    /* .card{
+        border-color: #DA8359;
+    } */

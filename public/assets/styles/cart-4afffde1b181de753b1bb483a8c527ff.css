@@ -1,0 +1,19 @@
+.choice:before{
+    background-color: #FFB0B0;
+    content: "";
+    height: 1px;
+    position: relative;
+    top: 12px;
+    width: 100%;
+    margin-right: 10px;
+}
+
+.choice::after{
+    background-color: #FFB0B0;
+    content: "";
+    height: 1px;
+    position: relative;
+    top: 12px;
+    width: 100%;
+    margin-left: 10px
+}

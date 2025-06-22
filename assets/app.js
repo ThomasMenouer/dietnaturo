@@ -1,14 +1,14 @@
+// Stimulus & Bootstrap
 import './bootstrap.js';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-/*
- * Welcome to your app's main JavaScript file!
- *
- * This file will be included onto the page via the importmap() Twig function,
- * which should already be in your base.html.twig.
- */
+// Styles
 import './styles/app.css';
 import './styles/about.css';
-
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+import './styles/home.css';
+import './styles/consultation.css';
+import './styles/activities.css';
+import './styles/cart.css';
+import './styles/coaching.css';
+import './styles/faqs.css';

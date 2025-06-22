@@ -6,6 +6,12 @@
 parameters:
 
 services:
+    App\Domain\Shop\Repository\CartStorageInterface: '@App\Infrastructure\Cart\SessionCartStorage'
+    App\Infrastructure\Persistence\Doctrine\:
+        resource: '../src/Infrastructure/Persistence/Doctrine/*'
+        autowire: true
+        autoconfigure: true
+    
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
@@ -17,8 +23,9 @@ services:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
+            - '../src/Domain/**/Entity'
+            - '../src/Domain/**/ValueObject'
+            - '../src/Infrastructure/Framework/Symfony/Kernel.php'
 
 
     # add more service definitions when explicit configuration is needed

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CoachingsController!{% endblock %}
+
+{% block body %}
+
+<main class="flex-grow-1">
+    <section class="coaching">
+
+        <div class="container">
+            <div class="row">
+
+                {% if coachings_page[0]|length > 0 %}
+                    <h1 class="title text-center my-5">{{ coachings_page[0].title }}</h1>
+                    <div class="text">{{ coachings_page[0].content | raw }}</div>
+                {% endif %}
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-3 g-4 my-5">
+                {% for cycle in cycles %}
+                
+                <div class="col">
+        
+                    <div class="card h-100 border-0">
+        
+                        <div class="card-body">
+                            <h5 class="card-title">{{ cycle.title }}</h5>
+                            {{ cycle.content | raw }}
+                            {# <img class="img-fluid" src="{{ asset('/images/ateliers/') ~ ateliers.imageName }}"> #}
+                        </div>
+                        <div class="card-footer text-center border-0">
+                             <p class="text">{{ (cycle.price / 100) | format_currency('EUR') }}</p>
+                        </div>
+        
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
+
+    <section class="coaching-remarque py-5">
+        <div class="container">
+            <div class="row text-white">
+                {% if coachings_page[1]|length > 0 %}
+                    <h3 class="text-center">{{ coachings_page[1].title }}</h3>
+                    <div class="text-center fs-4">{{ coachings_page[1].content | raw }}</div>
+                {% endif %}
+            
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

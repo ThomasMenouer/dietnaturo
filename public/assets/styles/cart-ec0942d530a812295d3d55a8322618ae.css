@@ -1,0 +1,23 @@
+.choice:before{
+    background-color: #FCFAEE;
+    content: "";
+    height: 1px;
+    position: relative;
+    top: 12px;
+    width: 100%;
+    margin-right: 10px;
+}
+
+.choice::after{
+    background-color: #FCFAEE;
+    content: "";
+    height: 1px;
+    position: relative;
+    top: 12px;
+    width: 100%;
+    margin-left: 10px
+}
+
+.text-color-custom{
+    color: #DA8359;
+}
