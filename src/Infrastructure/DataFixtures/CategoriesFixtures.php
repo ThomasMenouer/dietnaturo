@@ -1,8 +1,9 @@
 <?php
 
-namespace App\DataFixtures;
+namespace App\Infrastructure\DataFixtures;
 
-use App\Entity\Blog\Categories;
+
+use App\Domain\Blog\Entity\Categories;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 

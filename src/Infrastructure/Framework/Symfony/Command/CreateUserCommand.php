@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Command;
+namespace App\Infrastructure\Framework\Symfony\Command;
 
 
 use App\Domain\Users\Entity\Users;

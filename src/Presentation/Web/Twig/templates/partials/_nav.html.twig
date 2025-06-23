@@ -18,10 +18,6 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'ateliers_index' %} active {% endif %}" href="{{ path('ateliers_index') }}">Ateliers</a>
-        </li>
-
-        <li class="nav-item">
             <a class="nav-link {% if app.request.attributes.get('_route') == 'coachings' %} active {% endif %}" href="{{ path('coachings') }}">Coaching</a>
         </li>
 
@@ -31,6 +27,12 @@
 
         <li class="nav-item">
             <a class="nav-link {% if app.request.attributes.get('_route') == 'faq' %} active {% endif %}" href="{{ path('faq') }}">FAQ</a>
+        </li>
+
+        <div class="vr" style="background-color: #DA8359; width: 3px;"></div>
+
+         <li class="nav-item">
+            <a class="nav-link {% if app.request.attributes.get('_route') == 'ateliers_index' %} active {% endif %}" href="{{ path('ateliers_index') }}">Ateliers</a>
         </li>
 
         <li class="nav-item">

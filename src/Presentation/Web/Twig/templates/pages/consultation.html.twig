@@ -5,21 +5,33 @@
 {% block body %}
 
 <main class="flex-grow-1">
-    <section class="consultation py-5">
-        <div class="container">
-            <div class="row row-consultation">
-                {% for consultation in consultations %}
-                    <h3 class="title text-center text-white">{{ consultation.title }}</h3>
-                    <div class="fs-4 text-center text-white">{{ consultation.content | raw }}</div>
-                {% endfor %}
-            </div>
+
+    <div class="row consultation-header mb-5">
+        {% for consultation in consultations %}
+            <h3 class="title text-center text-white">{{ consultation.title }}</h3>
+            <div class="fs-4 text-center text-white">{{ consultation.content | raw }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="container">
+
+        <div class="row justify-content-md-center mb-5">
+            {% for consultation in priceConsultations %}
+
+                <div class="col col-md-auto">
+                    <div class="card border-0" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ consultation.name }}</h5>
+                            <p>{{ (consultation.price / 100) | format_currency('EUR') }}</p>
+                        </div>
+                    </div>
+
+                </div>
+                
+            {% endfor %}
         </div>
-    </section>
 
-    <section>
-
-        <div class="container my-5">
-
+        <div class="row">
             {% for deroulement in deroulements %}
                 
                 <div class="row mb-5">
@@ -60,9 +72,9 @@
                 </div>
 
             {% endfor %}
-
+        
         </div>
-
-    </section>
+    
+    </div>
 </main>
 {% endblock %}

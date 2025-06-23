@@ -19,6 +19,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use App\Domain\Pages\Entity\Consultation\Consultations;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Domain\Pages\Entity\Consultation\DeroulementConsultation;
+use App\Domain\Pages\Entity\Consultation\PriceConsultations;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use App\Infrastructure\Persistence\Doctrine\Repository\Ateliers\AteliersRepository;
 
@@ -57,6 +58,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Consultation', 'fa-solid fa-hand-holding-heart')->setSubItems([
             MenuItem::linkToCrud('Voir consultations', 'fa-solid fa-pencil', Consultations::class),
             MenuItem::linkToCrud('Voir déroulement consultation', 'fa-solid fa-bars-staggered', DeroulementConsultation::class),
+            MenuItem::linkToCrud('Voir prix consultations', 'fa-solid fa-money-bill', PriceConsultations::class),
         ]);
 
         yield MenuItem::subMenu('Coaching', 'fa-solid fa-dumbbell')->setSubItems([
