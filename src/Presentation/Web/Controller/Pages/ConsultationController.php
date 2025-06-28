@@ -22,7 +22,7 @@ class ConsultationController extends AbstractController
 
 
         return $this->render('pages/consultation.html.twig', [
-            'controller_name' => 'ConsultationController',
+            'controller_name' => 'Consultations',
             'consultations' => $consultations['consultations'],
             'deroulements' => $consultations['deroulement'],
             'priceConsultations' => $priceConsultations,

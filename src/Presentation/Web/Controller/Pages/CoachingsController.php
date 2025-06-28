@@ -17,7 +17,7 @@ class CoachingsController extends AbstractController
 
         
         return $this->render('pages/coachings.html.twig', [
-            'controller_name' => 'CoachingsController',
+            'controller_name' => 'Coachings',
             'coachings_page' => $coachings_page['coachings'],
             'cycles' => $coachings_page['cycles'],
         ]);

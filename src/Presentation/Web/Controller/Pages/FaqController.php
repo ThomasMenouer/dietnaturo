@@ -16,6 +16,7 @@ class FaqController extends AbstractController
         $faqs = $getAllFaqsUseCase->execute();
 
         return $this->render('pages/faq.html.twig', [
+            'controller_name' => 'FAQ',
             'faqs' => $faqs,
         ]);
     }

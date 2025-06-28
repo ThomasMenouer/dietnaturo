@@ -17,7 +17,7 @@ class ActivitiesController extends AbstractController
         $activities = $getActivitiesUseCase->execute();
         
         return $this->render('pages/activities.html.twig', [
-            'controller_name' => 'ActivitiesController',
+            'controller_name' => 'Activités',
             'activities' => $activities
         ]);
     }
