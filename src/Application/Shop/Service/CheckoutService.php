@@ -1,37 +1,42 @@
 <?php
+
 namespace App\Application\Shop\Service;
 
-use App\Domain\Shop\Order\Order;
-use App\Domain\Shop\Order\OrderItem;
-use App\Domain\Shop\Cart\Repository\OrderPersisterInterface;
 
-
+use App\Domain\Shop\Entity\Orders;
+use App\Domain\Shop\Entity\OrderDetails;
+use App\Domain\Shop\Cart\Repository\OrdersRepositoryInterface;
 
 class CheckoutService
 {
     public function __construct(
         private CartService $cartService,
-        private OrderPersisterInterface $orderPersister
+        private OrdersRepositoryInterface $ordersRepositoryInterface
     ) {}
 
-    public function processCheckout(string $firstname, string $lastname, string $email, string $phoneNumber): void
-    {
-        $order = new Order();
-        $order->reference = uniqid();
-        $order->firstname = $firstname;
-        $order->lastname = $lastname;
-        $order->email = $email;
-        $order->phoneNumber = $phoneNumber;
-        $order->totalPrice = $this->cartService->getPriceHTC();
 
-        foreach ($this->cartService->getCartData() as $item) {
-            $order->items[] = new OrderItem(
-                $item['product']->getName(),
-                $item['quantity'],
-                $item['product']->getPrice()
-            );
+    public function createOrderFromStripeSession($fullSession): void
+    {
+        $order = new Orders();
+        $order->setReference($fullSession->metadata->order_reference);
+        $order->setFirstname($fullSession->metadata->firstname);
+        $order->setLastname($fullSession->metadata->lastname);
+        $order->setEmail($fullSession->customer_email);
+        $order->setTotalPrice($fullSession->amount_total);
+        $order->setStatus($fullSession->payment_status);
+        $order->setCreatedAt(new \DateTimeImmutable());
+
+        $cart = json_decode($fullSession->metadata->cart, true);
+
+        foreach ($cart as $item) {
+            $orderDetails = new OrderDetails();
+            $orderDetails->setOrders($order);
+            $orderDetails->setProductName($item['productName']);
+            $orderDetails->setQuantity($item['quantity']);
+            $orderDetails->setPrice($item['price']);
+            $order->addOrderDetail($orderDetails);
         }
 
-        $this->orderPersister->save($order);
+        $this->ordersRepositoryInterface->save($order);
     }
 }

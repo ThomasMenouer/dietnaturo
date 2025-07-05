@@ -12,39 +12,39 @@ class OrderDetails
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\ManyToOne(inversedBy: 'orderDetails')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Orders $orders = null;
+    private Orders $orders;
 
     #[ORM\Column(length: 255)]
-    private ?string $productName = null;
+    private string $productName;
 
     #[ORM\Column]
     private ?int $quantity = null;
 
     #[ORM\Column]
-    private ?int $price = null;
+    private int $price;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getOrders(): ?Orders
+    public function getOrders(): Orders
     {
         return $this->orders;
     }
 
-    public function setOrders(?Orders $orders): static
+    public function setOrders(Orders $orders): static
     {
         $this->orders = $orders;
 
         return $this;
     }
 
-    public function getProductName(): ?string
+    public function getProductName(): string
     {
         return $this->productName;
     }
@@ -56,7 +56,7 @@ class OrderDetails
         return $this;
     }
 
-    public function getQuantity(): ?int
+    public function getQuantity(): int
     {
         return $this->quantity;
     }
@@ -68,7 +68,7 @@ class OrderDetails
         return $this;
     }
 
-    public function getPrice(): ?int
+    public function getPrice(): int
     {
         return $this->price;
     }

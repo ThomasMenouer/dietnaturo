@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Persistence\Doctrine\Repository\Shop;
 
 
+use App\Domain\Shop\Cart\Repository\OrdersRepositoryInterface;
 use App\Domain\Shop\Entity\Orders;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -10,35 +11,24 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 /**
  * @extends ServiceEntityRepository<Orders>
  */
-class OrdersRepository extends ServiceEntityRepository
+class OrdersRepository extends ServiceEntityRepository implements OrdersRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Orders::class);
     }
 
-    //    /**
-    //     * @return Orders[] Returns an array of Orders objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('o')
-    //            ->andWhere('o.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('o.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function save(Orders $order): void
+    {
+        $this->getEntityManager()->persist($order);
+        $this->getEntityManager()->flush();
+    }
 
-    //    public function findOneBySomeField($value): ?Orders
-    //    {
-    //        return $this->createQueryBuilder('o')
-    //            ->andWhere('o.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findByReference(string $reference): ?Orders
+    {
+        return $this->findOneBy(['reference' => $reference]);
+    }
+
+
+
 }

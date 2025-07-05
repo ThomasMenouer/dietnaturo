@@ -5,7 +5,10 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
 
+    stripe.secret_key: '%env(STRIPE_SECRET_KEY)%'
+
 services:
+            
     App\Domain\Shop\Repository\CartStorageInterface: '@App\Infrastructure\Cart\SessionCartStorage'
     App\Infrastructure\Persistence\Doctrine\:
         resource: '../src/Infrastructure/Persistence/Doctrine/*'
@@ -26,6 +29,10 @@ services:
             - '../src/Domain/**/Entity'
             - '../src/Domain/**/ValueObject'
             - '../src/Infrastructure/Framework/Symfony/Kernel.php'
+    
+    App\Application\Shop\Service\StripePaymentService:
+        arguments:
+            $stripeSecretKey: '%stripe.secret_key%'
 
 
     # add more service definitions when explicit configuration is needed

@@ -12,26 +12,9 @@
                 <h1 class="text-center">Boutique</h1>
             </div>
 
-            {# <div class="row">
-                <nav>
-                    <ul class="nav nav-category justify-content-center py-3">
-
-                        {% for category in allCategories %}
-
-                        <li class="nav-item">
-                            <a class="nav-link {% if app.request.attributes.get('_route') == 'blog_category' and app.request.attributes.get('slug') == category.slug %}active{% endif %}" aria-current="page" href="{{ path('blog_category', { "slug": category.slug }) }}">{{ category.name }}</a>
-                        </li>
-
-                        {% endfor %}
-                    </ul>
-                </nav>
-            </div> #}
-        
             <div class="row row-cols-1 row-cols-md-3 g-4 my-5">
 
                 {% for product in products %}
-
-
 
                     <div class="col">
 

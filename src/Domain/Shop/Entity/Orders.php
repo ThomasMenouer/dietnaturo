@@ -15,7 +15,7 @@ class Orders
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column(length: 255)]
     private string $firstname;
@@ -25,13 +25,6 @@ class Orders
 
     #[ORM\Column(length: 255)]
     private string $email;
-
-    #[ORM\Column(length: 255)]
-    #[Assert\Regex('/^\+?[1-9]\d{1,14}$/')]
-    #[Assert\Type('numeric', 'The value {{ value }} is not a valid {{ type }}.',
-)]
-     private string $phoneNumber;
-
 
     #[ORM\Column]
     private int $totalPrice;
@@ -58,7 +51,7 @@ class Orders
         $this->status = 'pending';
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -97,19 +90,7 @@ class Orders
         $this->email = $email;
 
         return $this;
-    }
-
-
-    public function getPhoneNumber(): string
-    {
-        return $this->phoneNumber;
-    }
-
-    public function setPhoneNumber(string $phoneNumber): static
-    {
-        $this->phoneNumber = $phoneNumber;
-
-        return $this;
+    
     }
 
     public function getTotalPrice(): int

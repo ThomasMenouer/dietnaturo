@@ -36,13 +36,6 @@ class CheckoutType extends AbstractType
                     'class' => 'form-control',
                     'placeholder' => 'Email'],
             ])
-            ->add('phoneNumber', TelType::class, [
-                'label' => false,
-                'required' => true,
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'Votre numéro de téléphone'],
-            ])
             ->add('Envoyer', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary'
