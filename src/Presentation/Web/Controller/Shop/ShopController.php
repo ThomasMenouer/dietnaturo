@@ -2,12 +2,11 @@
 
 namespace App\Presentation\Web\Controller\Shop;
 
-
+use App\Application\Shop\Products\UseCase\GetEnabledProductsUseCase;
 use App\Domain\Shop\Entity\Products;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
-use App\Domain\Shop\Interfaces\ProductsRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -15,10 +14,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ShopController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(ProductsRepositoryInterface $productsRepositoryInterface): Response
+    public function index(GetEnabledProductsUseCase $getEnabledProductsUseCase): Response
     {
 
-        $products = $productsRepositoryInterface->getAllProducts();
+        $products = $getEnabledProductsUseCase->execute();
 
         return $this->render('shop/shop.html.twig', [
             'products' => $products

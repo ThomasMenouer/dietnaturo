@@ -22,6 +22,11 @@ class ProductsRepository extends ServiceEntityRepository implements ProductsRepo
         return $this->findAll();
     }
 
+    public function getEnabledProducts(): array
+    {
+        return $this->findBy(['enabled' => true]);
+    }
+
     public function findById(int $id): ?Products
     {
         return $this->find($id);

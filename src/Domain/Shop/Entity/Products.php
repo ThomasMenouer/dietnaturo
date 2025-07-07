@@ -4,18 +4,17 @@ namespace App\Domain\Shop\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use App\Infrastructure\Persistence\Doctrine\Repository\Shop\ProductsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: ProductsRepository::class)]
-#[Vich\Uploadable]
 class Products
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column(length: 255)]
     private string $name;
@@ -31,67 +30,24 @@ class Products
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?CategoriesProducts $categories = null;
+    private CategoriesProducts $categories;
 
+    #[ORM\Column(type: 'boolean')]
+    private bool $enabled = true;
 
-    #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'imageName', size: 'imageSize')]
-    private ?File $imageFile = null;
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductsCover::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $covers;
 
-    #[ORM\Column(nullable: true)]
-    private ?string $imageName = null;
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductsEbook::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $ebooks;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $imageSize = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $updatedAt = null;
-
-    /**
-     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
-     * of 'UploadedFile' is injected into this setter to trigger the update. If this
-     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
-     * must be able to accept an instance of 'File' as the bundle will inject one here
-     * during Doctrine hydration.
-     *
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
-     */
-    public function setImageFile(?File $imageFile = null): void
+    public function __construct()
     {
-        $this->imageFile = $imageFile;
-
-        if (null !== $imageFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new \DateTimeImmutable();
-        }
+        $this->covers = new ArrayCollection();
+        $this->ebooks = new ArrayCollection();
     }
 
-    public function getImageFile(): ?File
-    {
-        return $this->imageFile;
-    }
-
-    public function setImageName(?string $imageName): void
-    {
-        $this->imageName = $imageName;
-    }
-
-    public function getImageName(): ?string
-    {
-        return $this->imageName;
-    }
-
-    public function setImageSize(int $imageSize): void
-    {
-        $this->imageSize = $imageSize;
-    }
-
-    public function getImageSize(): int
-    {
-        return $this->imageSize;
-    }
-
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -104,11 +60,10 @@ class Products
     public function setName(string $name): static
     {
         $this->name = $name;
-
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -116,7 +71,6 @@ class Products
     public function setDescription(string $description): static
     {
         $this->description = $description;
-
         return $this;
     }
 
@@ -128,11 +82,10 @@ class Products
     public function setPrice(int $price): static
     {
         $this->price = $price;
-
         return $this;
     }
 
-    public function getSlug(): ?string
+    public function getSlug(): string
     {
         return $this->slug;
     }
@@ -140,19 +93,96 @@ class Products
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
-
         return $this;
     }
 
-    public function getCategories(): ?CategoriesProducts
+    public function getCategories(): CategoriesProducts
     {
         return $this->categories;
     }
 
-    public function setCategories(?CategoriesProducts $categories): static
+    public function setCategories(CategoriesProducts $categories): static
     {
         $this->categories = $categories;
+        return $this;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): static
+    {
+        $this->enabled = $enabled;
+        return $this;
+    }
+
+    /** @return Collection<int, ProductsCover> */
+    public function getCovers(): Collection
+    {
+        return $this->covers;
+    }
+
+    public function getProductsCover(): ?ProductsCover
+    {
+        return $this->covers->first()  ?: null;
+    }
+
+    public function addCover(ProductsCover $cover): static
+    {
+        if (!$this->covers->contains($cover)) {
+            $this->covers[] = $cover;
+            $cover->setProduct($this);
+        }
 
         return $this;
+    }
+
+    public function removeCover(ProductsCover $cover): static
+    {
+        if ($this->covers->removeElement($cover)) {
+            if ($cover->getProduct() === $this) {
+                $cover->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /** @return Collection<int, ProductsEbook> */
+    public function getEbooks(): Collection
+    {
+        return $this->ebooks;
+    }
+
+    public function addEbook(ProductsEbook $ebook): static
+    {
+        if (!$this->ebooks->contains($ebook)) {
+            $this->ebooks[] = $ebook;
+            $ebook->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEbook(ProductsEbook $ebook): static
+    {
+        if ($this->ebooks->removeElement($ebook)) {
+            if ($ebook->getProduct() === $this) {
+                $ebook->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getImagePath(): string
+    {
+        $cover = $this->getProductsCover();
+
+        return $cover && $cover->getImageName()
+            ? '/images/products/covers/' . $cover->getImageName()
+            : '/images/products/default.jpg';
     }
 }

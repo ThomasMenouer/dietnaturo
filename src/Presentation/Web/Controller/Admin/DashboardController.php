@@ -8,6 +8,8 @@ use App\Domain\Shop\Entity\Products;
 use App\Domain\Blog\Entity\Categories;
 use App\Domain\Pages\Entity\Faqs\Faqs;
 use App\Domain\Ateliers\Entity\Ateliers;
+use App\Domain\Shop\Entity\ProductsCover;
+use App\Domain\Shop\Entity\ProductsEbook;
 use App\Domain\Shop\Entity\CategoriesProducts;
 use Symfony\Component\HttpFoundation\Response;
 use App\Domain\Pages\Entity\Coaching\Coachings;
@@ -18,8 +20,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use App\Domain\Pages\Entity\Consultation\Consultations;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use App\Domain\Pages\Entity\Consultation\DeroulementConsultation;
 use App\Domain\Pages\Entity\Consultation\PriceConsultations;
+use App\Domain\Pages\Entity\Consultation\DeroulementConsultation;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use App\Infrastructure\Persistence\Doctrine\Repository\Ateliers\AteliersRepository;
 
@@ -77,6 +79,8 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::subMenu('Boutique', 'fa-solid fa-bag-shopping')->setSubItems([
             MenuItem::linkToCrud('Voir produits', 'fa-regular fa-file', Products::class),
+            MenuItem::linkToCrud('Covers', 'fa fa-image', ProductsCover::class),
+            MenuItem::linkToCrud('Ebooks', 'fa fa-file-pdf', ProductsEbook::class),
             MenuItem::linkToCrud('Voir categories', 'fa-solid fa-tags', CategoriesProducts::class),
         ]);
     }

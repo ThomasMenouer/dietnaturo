@@ -8,6 +8,8 @@ interface ProductsRepositoryInterface
 {
     public function getAllProducts(): array;
 
+    public function getEnabledProducts(): array;
+
     public function findById(int $id): ?Products;
 
 }
