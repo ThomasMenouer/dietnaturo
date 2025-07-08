@@ -3,6 +3,7 @@
 
 namespace App\Presentation\Web\Controller\Shop;
 
+use App\Application\Invoice\Service\InvoiceGeneratorService;
 use Stripe\Stripe;
 use Stripe\Webhook;
 use Stripe\Checkout\Session;
@@ -16,7 +17,7 @@ final class WebhookController extends AbstractController
 {
 
     #[Route('/stripe/webhook', name: 'stripe_webhook', methods: ['POST'])]
-    public function handleWebhook(Request $request, CheckoutService $checkoutService): Response
+    public function handleWebhook(Request $request, CheckoutService $checkoutService, InvoiceGeneratorService $invoiceGeneratorService): Response
     {
         Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
 
@@ -34,10 +35,14 @@ final class WebhookController extends AbstractController
             $session = $event->data->object;
 
             try {
-                
                 $fullSession = Session::retrieve($session->id);
+                $order = $checkoutService->createOrderFromStripeSession($fullSession);
 
-                $checkoutService->createOrderFromStripeSession($fullSession);
+                // Create invoice
+
+                $invoicePath = $invoiceGeneratorService->createInvoice($order);
+
+
             } catch (\Exception $e) {
                 return new Response('Order creation failed', 500);
             }

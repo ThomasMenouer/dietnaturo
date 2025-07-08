@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            body { font-family: sans-serif; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        </style>
+    </head>
+    <body>
+        <h1>Facture</h1>
+        <p>Référence : {{ order.reference }}</p>
+        <p>Client : {{ order.firstname }} {{ order.lastname }} - {{ order.email }}</p>
+        <p>Date : {{ order.createdAt|date('d/m/Y H:i') }}</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Quantité</th>
+                    <th>Prix</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detail in order.orderDetails %}
+                    <tr>
+                        <td>{{ detail.productName }}</td>
+                        <td>{{ detail.quantity }}</td>
+                        <td>{{ (detail.price / 100)|number_format(2, ',', '.') }} €</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p><strong>Total :</strong> {{ (order.totalPrice / 100)|number_format(2, ',', '.') }} €</p>
+    </body>
+</html>

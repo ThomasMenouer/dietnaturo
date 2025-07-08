@@ -2,11 +2,11 @@
 
 namespace App\Domain\Shop\Entity;
 
+use Stripe\Invoice;
 use Doctrine\ORM\Mapping as ORM;
 use App\Domain\Shop\Entity\OrderDetails;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 use App\Infrastructure\Persistence\Doctrine\Repository\Shop\OrdersRepository;
 
 #[ORM\Entity(repositoryClass: OrdersRepository::class)]
@@ -43,6 +43,9 @@ class Orders
      */
     #[ORM\OneToMany(targetEntity: OrderDetails::class, mappedBy: 'orders', cascade: ['persist'])]
     private Collection $orderDetails;
+
+    #[ORM\OneToOne(mappedBy: 'order', targetEntity: Invoice::class, cascade: ['persist'])]
+    private Invoice $invoice;
 
     public function __construct()
     {
@@ -165,6 +168,16 @@ class Orders
         }
 
         return $this;
+    }
+
+    public function getInvoice(): Invoice
+    {
+        return $this->invoice;
+    }
+
+    public function setInvoice(Invoice $invoice): void
+    {
+        $this->invoice = $invoice;
     }
 
 

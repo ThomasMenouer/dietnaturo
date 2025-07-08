@@ -11,11 +11,11 @@ class CheckoutService
 {
     public function __construct(
         private CartService $cartService,
-        private OrdersRepositoryInterface $ordersRepositoryInterface
+        private OrdersRepositoryInterface $ordersRepositoryInterface,
     ) {}
 
 
-    public function createOrderFromStripeSession($fullSession): void
+    public function createOrderFromStripeSession($fullSession): Orders
     {
         $order = new Orders();
         $order->setReference($fullSession->metadata->order_reference);
@@ -38,5 +38,7 @@ class CheckoutService
         }
 
         $this->ordersRepositoryInterface->save($order);
+
+        return $order;
     }
 }
