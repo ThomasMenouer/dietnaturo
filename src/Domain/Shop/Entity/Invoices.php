@@ -4,14 +4,16 @@ namespace App\Domain\Shop\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Domain\Shop\Entity\Orders;
+use App\Infrastructure\Persistence\Doctrine\Repository\Shop\InvoicesRepository;
 
-#[ORM\Entity]
-#[ORM\Table(name: 'invoices')]
+
+
+#[ORM\Entity(repositoryClass: InvoicesRepository::class)]
 class Invoices
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column]
     private int $id;
 
     #[ORM\Column(type: 'string', unique: true)]

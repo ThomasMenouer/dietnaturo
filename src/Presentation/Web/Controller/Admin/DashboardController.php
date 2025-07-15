@@ -3,7 +3,9 @@
 namespace App\Presentation\Web\Controller\Admin;
 
 
+use App\Domain\Shop\Entity\Orders;
 use App\Domain\Blog\Entity\Articles;
+use App\Domain\Shop\Entity\Invoices;
 use App\Domain\Shop\Entity\Products;
 use App\Domain\Blog\Entity\Categories;
 use App\Domain\Pages\Entity\Faqs\Faqs;
@@ -22,6 +24,7 @@ use App\Domain\Pages\Entity\Consultation\Consultations;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Domain\Pages\Entity\Consultation\PriceConsultations;
 use App\Domain\Pages\Entity\Consultation\DeroulementConsultation;
+use App\Domain\Shop\Entity\OrderDetails;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use App\Infrastructure\Persistence\Doctrine\Repository\Ateliers\AteliersRepository;
 
@@ -76,6 +79,13 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Atelier', 'fa-solid fa-people-group')->setSubItems([
             MenuItem::linkToCrud('Voir ateliers', 'fa-solid fa-leaf', Ateliers::class),
         ]);
+
+        yield MenuItem::subMenu('Commandes', 'fas fa-box')->setSubItems([
+            MenuItem::linkToCrud('Voir Commandes', 'fas fa-shopping-bag', Orders::class),
+            MenuItem::linkToCrud('Voir Détail de la commande', 'fas fa-shopping-bag', OrderDetails::class),
+            MenuItem::linkToCrud('Facture', 'fa-solid fa-file-invoice', Invoices::class),
+        ]);
+
 
         yield MenuItem::subMenu('Boutique', 'fa-solid fa-bag-shopping')->setSubItems([
             MenuItem::linkToCrud('Voir produits', 'fa-regular fa-file', Products::class),

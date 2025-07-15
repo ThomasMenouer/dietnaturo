@@ -2,8 +2,9 @@
 
 namespace App\Domain\Shop\Entity;
 
-use Stripe\Invoice;
+
 use Doctrine\ORM\Mapping as ORM;
+use App\Domain\Shop\Entity\Invoices;
 use App\Domain\Shop\Entity\OrderDetails;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -41,11 +42,11 @@ class Orders
     /**
      * @var Collection<int, OrderDetails>
      */
-    #[ORM\OneToMany(targetEntity: OrderDetails::class, mappedBy: 'orders', cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity: OrderDetails::class, mappedBy: 'orders', cascade: ['persist','remove'], orphanRemoval: true)]
     private Collection $orderDetails;
 
-    #[ORM\OneToOne(mappedBy: 'order', targetEntity: Invoice::class, cascade: ['persist'])]
-    private Invoice $invoice;
+    #[ORM\OneToOne(mappedBy: 'order', targetEntity: Invoices::class, cascade: ['persist'])]
+    private Invoices $invoice;
 
     public function __construct()
     {
@@ -170,15 +171,13 @@ class Orders
         return $this;
     }
 
-    public function getInvoice(): Invoice
+    public function getInvoice(): Invoices
     {
         return $this->invoice;
     }
 
-    public function setInvoice(Invoice $invoice): void
+    public function setInvoice(Invoices $invoice): void
     {
         $this->invoice = $invoice;
     }
-
-
 }

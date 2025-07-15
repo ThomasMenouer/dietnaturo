@@ -6,13 +6,11 @@ use App\Domain\Ateliers\Entity\Participants;
 use App\Domain\Ateliers\Entity\Ateliers;
 use App\Domain\Ateliers\Repository\ParticipantsRepositoryInterface;
 use App\Domain\Mailer\SendMailInterface;
-use Doctrine\ORM\EntityManagerInterface;
 
 class RegisterParticipantToAtelierUseCase
 {
     public function __construct(
         private ParticipantsRepositoryInterface $participantsRepository,
-        private EntityManagerInterface $em,
         private SendMailInterface $mailer
     ) {}
 
@@ -32,10 +30,12 @@ class RegisterParticipantToAtelierUseCase
         $participant->setAteliers($atelier);
         $participant->setDate($atelier->getDate());
 
-        $this->em->persist($participant);
-        $this->em->flush();
+        $this->participantsRepository->save($participant);
 
-        $this->mailer->sendMailInscriptionAtelier($participant);
+        $this->mailer->sendMailInscriptionAtelier($participant->getEmail(), 
+            $participant->getAteliers()->getTitle(), 
+            $participant->getFormattedDate()
+        );
 
         return 'success';
     }

@@ -3,21 +3,29 @@
 
 namespace App\Presentation\Web\Controller\Shop;
 
-use App\Application\Invoice\Service\InvoiceGeneratorService;
 use Stripe\Stripe;
 use Stripe\Webhook;
+use Psr\Log\LoggerInterface;
 use Stripe\Checkout\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Application\Shop\Service\CheckoutService;
+use App\Application\Invoice\UseCase\CreateInvoiceUseCase;
+use App\Application\Mailers\UseCase\SendInvoiceAndEbooksUseCase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class WebhookController extends AbstractController
 {
 
     #[Route('/stripe/webhook', name: 'stripe_webhook', methods: ['POST'])]
-    public function handleWebhook(Request $request, CheckoutService $checkoutService, InvoiceGeneratorService $invoiceGeneratorService): Response
+    public function handleWebhook(
+        Request $request, 
+        CheckoutService $checkoutService, 
+        CreateInvoiceUseCase $createInvoiceUseCase,
+        SendInvoiceAndEbooksUseCase $sendInvoiceAndEbooksUseCase,
+        LoggerInterface $logger
+        ): Response
     {
         Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
 
@@ -35,15 +43,22 @@ final class WebhookController extends AbstractController
             $session = $event->data->object;
 
             try {
+
                 $fullSession = Session::retrieve($session->id);
+
                 $order = $checkoutService->createOrderFromStripeSession($fullSession);
 
                 // Create invoice
+                $createInvoiceUseCase->execute($order);
 
-                $invoicePath = $invoiceGeneratorService->createInvoice($order);
-
+                // send email with invoice and ebooks
+                $sendInvoiceAndEbooksUseCase->execute($order);
 
             } catch (\Exception $e) {
+                $logger->error('Stripe webhook error: ' . $e->getMessage(), [
+                    'exception' => $e,
+                    'payload' => $payload,
+                ]);
                 return new Response('Order creation failed', 500);
             }
         }

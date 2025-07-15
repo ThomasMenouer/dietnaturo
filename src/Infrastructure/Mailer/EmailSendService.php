@@ -7,30 +7,30 @@ use App\Domain\Mailer\SendMailInterface;
 use App\Domain\Ateliers\Entity\Participants;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\BodyRendererInterface;
 
 class EmailSendService implements SendMailInterface
 {
-    public function __construct(private MailerInterface $mailer)
-    {
-        $this->mailer = $mailer;
-    }
+    public function __construct(private MailerInterface $mailer, private BodyRendererInterface $renderer) {}
 
-    public function sendMailInscriptionAtelier(Participants $participants): void
+    public function sendMailInscriptionAtelier(string $email, string $atelierTitle, string $date): void
     {
 
         $email = (new TemplatedEmail())
             ->from('dietnaturo@gmail.com')
-            ->to ($participants->getEmail())
+            ->to ($email)
             ->subject('Confirmation d\'inscription')
             ->htmlTemplate('mails/inscription_atelier.html.twig')
             ->context([
-                'atelier' => $participants->getAteliers()->getTitle(),
-                'date' => $participants->getFormattedDate(),
+                'atelier' => $atelierTitle,
+                'date' => $date,
+                'disableTwigContext' => true,
             ]);
 
 
-            $this->mailer->send($email);
-        }
+        $this->renderer->render($email);
+        $this->mailer->send($email);
+    }
 
 
 
@@ -72,6 +72,22 @@ class EmailSendService implements SendMailInterface
 
 
         $this->mailer->send($email);
+    }
+
+    public function sendInvoiceAndEbooks(string $email, string $firstname, string $invoicePath): void
+    {
+        $email = (new TemplatedEmail())
+            ->from('dietnaturo@gmail.com')
+            ->to($email)
+            ->subject('Votre commande et vos ebooks')
+            ->htmlTemplate('mails/order.html.twig')
+            ->context([
+                'firstname' => $firstname,
+            ])
+            ->attachFromPath($invoicePath, 'facture.pdf');
+
+        $this->mailer->send($email);
+
     }
 
 }
