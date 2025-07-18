@@ -7,7 +7,9 @@ use App\Domain\Mailer\SendMailInterface;
 use App\Domain\Ateliers\Entity\Participants;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
+// use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\BodyRendererInterface;
+use Symfony\Component\Mailer\Transport\TransportInterface;
 
 class EmailSendService implements SendMailInterface
 {
@@ -24,7 +26,6 @@ class EmailSendService implements SendMailInterface
             ->context([
                 'atelier' => $atelierTitle,
                 'date' => $date,
-                'disableTwigContext' => true,
             ]);
 
 
@@ -74,9 +75,9 @@ class EmailSendService implements SendMailInterface
         $this->mailer->send($email);
     }
 
-    public function sendInvoiceAndEbooks(string $email, string $firstname, string $invoicePath): void
+    public function sendInvoiceAndEbooks(string $email, string $firstname, string $invoicePath, array $ebookPaths): void
     {
-        $email = (new TemplatedEmail())
+        $mail = (new TemplatedEmail())
             ->from('dietnaturo@gmail.com')
             ->to($email)
             ->subject('Votre commande et vos ebooks')
@@ -85,8 +86,14 @@ class EmailSendService implements SendMailInterface
                 'firstname' => $firstname,
             ])
             ->attachFromPath($invoicePath, 'facture.pdf');
+            
+        foreach ($ebookPaths as $ebookPath) {
+            $filename = basename($ebookPath);
+            $mail->attachFromPath($ebookPath, $filename);
+        }
 
-        $this->mailer->send($email);
+        $this->renderer->render($mail);
+        $this->mailer->send($mail);
 
     }
 

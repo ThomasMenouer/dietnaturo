@@ -4,7 +4,9 @@ namespace App\Domain\Shop\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 
 #[ORM\Entity]
 #[Vich\Uploadable]
@@ -40,6 +42,10 @@ class ProductsEbook
 
         if ($file !== null) {
             $this->updatedAt = new \DateTimeImmutable();
+            
+            if ($file instanceof UploadedFile) {
+                $this->fileName = $file->getClientOriginalName();
+            }
         }
     }
 
@@ -64,12 +70,12 @@ class ProductsEbook
         return $this;
     }
 
-    public function getFileName(): string
+    public function getFileName(): ?string
     {
         return $this->fileName;
     }
 
-    public function setFileName(string $fileName): void
+    public function setFileName(?string $fileName): void
     {
         $this->fileName = $fileName;
     }
@@ -79,7 +85,7 @@ class ProductsEbook
         return $this->fileSize;
     }
 
-    public function setFileSize(int $fileSize): void
+    public function setFileSize(?int $fileSize): void
     {
         $this->fileSize = $fileSize;
     }

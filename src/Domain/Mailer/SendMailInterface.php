@@ -14,6 +14,6 @@ interface SendMailInterface
 
     public function sendEmailContact(array $data): void;
 
-    public function sendInvoiceAndEbooks(string $email, string $firstname, string $invoicePath): void;
+    public function sendInvoiceAndEbooks(string $email, string $firstname, string $invoicePath, array $ebookPaths): void;
 
 }

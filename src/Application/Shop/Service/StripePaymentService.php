@@ -58,6 +58,7 @@ class StripePaymentService
                     'productName' => $item['product']->getName(),
                     'quantity' => $item['quantity'],
                     'price' => $item['product']->getPrice(),
+                    'ebookPath' => $item['product']->getFirstEbookPath(),
                 ], $cartData)),
             ],
             'success_url' => $this->urlGenerator->generate('checkout_success', [], UrlGeneratorInterface::ABSOLUTE_URL),

@@ -180,4 +180,16 @@ class Orders
     {
         $this->invoice = $invoice;
     }
+
+    public function getEbookPaths(): array
+    {
+        $paths = [];
+
+        foreach ($this->getOrderDetails() as $detail) {
+            $paths[] = $detail->getEbookPath();
+        }
+
+        return $paths;
+    }
+
 }

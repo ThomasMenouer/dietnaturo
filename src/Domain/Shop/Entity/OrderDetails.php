@@ -27,7 +27,9 @@ class OrderDetails
     #[ORM\Column]
     private int $price;
 
-    public function getId(): ?int
+    private string $ebookPath;
+
+    public function getId(): int
     {
         return $this->id;
     }
@@ -77,6 +79,18 @@ class OrderDetails
     {
         $this->price = $price;
 
+        return $this;
+    }
+
+    public function getEbookPath(): string
+    {
+        return $this->ebookPath;
+    }
+
+    public function setEbookPath(string $ebookPath): static
+    {
+        $this->ebookPath = $ebookPath;
+        
         return $this;
     }
 }

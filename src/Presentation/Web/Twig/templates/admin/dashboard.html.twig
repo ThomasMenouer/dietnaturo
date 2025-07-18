@@ -43,46 +43,6 @@
 
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Ateliers</h5>
-
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Atelier</th>
-                                        <th>Dates</th>
-                                        <th>Nombre de participants</th>
-                                        <th>Tarif</th>
-                                        <th>Montant</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for atelier in countParticipantsByAtelierWithDate %}
-                                        <tr>
-                                            <td>{{ atelier.title }}</td>
-                                            <td>{{ atelier.date | format_datetime('long', 'short', locale: 'fr')}}</td>
-                                            <td>{{ atelier.participant_count }}</td>
-                                            <td>{{ (atelier.price / 100) | format_currency('EUR') }}</td>
-                                            <td>{{ (atelier.montant / 100) | format_currency('EUR') }}</td>
-                                        </tr>
-                                    {% else %}
-                                        <tr>
-                                            <td colspan="2">Aucun atelier trouvé.</td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        
-                        </div>
-                    
-                    </div>
-
-                </div>
-            </div>
         </div>
     </section>
 

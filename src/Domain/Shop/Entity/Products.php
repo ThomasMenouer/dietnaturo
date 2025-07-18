@@ -177,6 +177,19 @@ class Products
         return $this;
     }
 
+
+    public function getFirstEbookPath(): string
+    {
+        $firstEbook = $this->ebooks->first();
+        if (!$firstEbook) {
+            return null;
+        }
+
+        // Exemple de chemin relatif au dossier public
+        return '/ebooks/products/' . $firstEbook->getFileName();
+    }
+
+
     public function getImagePath(): string
     {
         $cover = $this->getProductsCover();

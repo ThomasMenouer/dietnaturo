@@ -10,7 +10,6 @@ use App\Domain\Shop\Cart\Repository\OrdersRepositoryInterface;
 class CheckoutService
 {
     public function __construct(
-        private CartService $cartService,
         private OrdersRepositoryInterface $ordersRepositoryInterface,
     ) {}
 
@@ -34,6 +33,7 @@ class CheckoutService
             $orderDetails->setProductName($item['productName']);
             $orderDetails->setQuantity($item['quantity']);
             $orderDetails->setPrice($item['price']);
+            $orderDetails->setEbookPath($item['ebookPath']);
             $order->addOrderDetail($orderDetails);
         }
 

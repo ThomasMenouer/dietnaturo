@@ -49,7 +49,9 @@ final class WebhookController extends AbstractController
                 $order = $checkoutService->createOrderFromStripeSession($fullSession);
 
                 // Create invoice
-                $createInvoiceUseCase->execute($order);
+                $invoice = $createInvoiceUseCase->execute($order);
+
+                $order->setInvoice($invoice);
 
                 // send email with invoice and ebooks
                 $sendInvoiceAndEbooksUseCase->execute($order);
