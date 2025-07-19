@@ -1,85 +1,82 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Commande{% endblock %}
+{% block title %}Commande
+{% endblock %}
 
 {% block body %}
-<main>
-    <section>
-        <div class="container">
-            <div class="row">
-                <div class="col-6">
-                    <div class="card mb-3 g-0 border-0">
-                        <div class="card-title">Informations de paiement</div>
-                        <h5></h5>
-                        <div class="card-body">
-                            {{ form_start(form) }}
 
-                                <div class="row">
+	<div class="container">
+		<div class="row my-5">
+			<div class="col-6">
+                <h5 class="text-center mb-3">Informations de paiement</h5>
+				<div class="card mb-3 g-0 border-0 my-auto">
+					<div class="card-body">
+						{{ form_start(form) }}
 
-                                    <div class="col mb-3">
-                                    
-                                        {{ form_row(form.firstName) }}
-                                        {{ form_errors(form.firstName) }}
+						<div class="row">
 
-                                    </div>
+							<div class="col mb-3">
 
-                                    <div class="col mb-3">
-                                        {{ form_row(form.lastName) }}
-                                        {{ form_errors(form.lastName) }}
-                                    </div>
-                                
+								{{ form_row(form.firstName) }}
+								{{ form_errors(form.firstName) }}
+
+							</div>
+
+							<div class="col mb-3">
+								{{ form_row(form.lastName) }}
+								{{ form_errors(form.lastName) }}
+							</div>
+
+						</div>
+
+						<div class="row">
+
+							<div class="col mb-3">
+
+								{{ form_row(form.email) }}
+								{{ form_errors(form.email) }}
+
+							</div>
+
+						</div>
+
+						<div class="row">
+							<div class="col mb-3 text-center">
+
+								{{ form_row(form.Envoyer) }}
+							</div>
+						</div>
+
+						{{ form_end(form) }}
+
+					</div>
+				</div>
+
+			</div>
+			<div class="col-6">
+
+				<h5 class="text-center mb-3">Résumé de la commande</h5>
+				{% if cartData | length > 0 %}
+					{% for item in cartData %}
+
+                        <div class="card border-0 mb-3 mx-auto">
+                            <div class="row g-0">
+                                <div class="col-md-3">
+                                    <img src="{{ item.product.imagePath }}" alt="{{ item.product.name }}" class="img-fluid rounded-start h-100 w-100"/>
                                 </div>
-
-                                <div class="row">
-
-                                    <div class="col mb-3">
-                                    
-                                        {{ form_row(form.email) }}
-                                        {{ form_errors(form.email) }}
-
-                                    </div>
-                                
-                                </div>
-
-                                <div class="row">
-                                    <div class="col mb-3 text-center">
-                                    
-                                        {{ form_row(form.Envoyer) }}
+                                <div class="col-md-9">
+                                    <div class="card-body">
+                                        <h3>{{ item.product.name }}</h3>
+                                        <p>Quantité : {{ item.quantity }}</p>
                                     </div>
                                 </div>
-
-                            {{ form_end(form) }}                        
-                        
+                            </div>
                         </div>
-                    </div>
-                
-                </div>
-                <div class="col-6">
-                    <div class="card mb-3 g-0 border-0">
-                            <h5>Résumé de la commande</h5>
-                            <a href="{{ path('cart_index') }}" class="btn btn-custom-color">Modifier le panier</a>
-                            {% if cartData | length > 0 %}
-                                {% for item in cartData %}
-                                
-                                    <img src="{{ item.product.imagePath }}" class="img-fluid rounded-start" alt="{{ item.product.name }}">
-                                        <div class="card-body d-flex justify-content-between">
-                                            <h3> {{ item.product.name }}</h3>
-                                        </div>
-                                        <div class="card-footer d-flex justify-content-between border-0">
-                                            <p>Quantité : {{ item.quantity }}</p>
 
-
-
-                                            <p class="card-text">{{ ((item.product.price / 100) * item.quantity) | format_currency('EUR') }}</p>
-                                        </div>
-                                    </div>       
-                        </div>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </section>
-
-</main>
+					{% endfor %}
+				{% endif %}
+				<a href="{{ path('cart_index') }}" class="btn btn-custom-color">Modifier le panier</a>
+			</div>
+		</div>
+	</div>
 {% endblock %}
