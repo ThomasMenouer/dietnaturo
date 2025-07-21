@@ -3,6 +3,7 @@
 namespace App\Presentation\Web\Controller\Admin\Ateliers;
 
 
+use Symfony\Component\DomCrawler\Link;
 use App\Domain\Ateliers\Entity\Ateliers;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Presentation\Web\Form\SendEmailType;
@@ -12,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -25,7 +27,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-
 
 class AteliersCrudController extends AbstractCrudController
 {
@@ -72,17 +73,16 @@ class AteliersCrudController extends AbstractCrudController
             MoneyField::new('price', 'Prix')->setCurrency('EUR'),
             SlugField::new('slug')->setTargetFieldName('title')->hideOnIndex(),
             BooleanField::new('isAvailable', 'Atelier disponible'),
+            BooleanField::new('isVisio', 'Atelier en visio'),
+
+            UrlField::new('link', 'Lien de l\'atelier en visio')
+                ->setHelp('Si l\'atelier est en visio, ajoutez le lien de la réunion ici.')
+                ->hideOnIndex(),
 
             FormField::addTab('Date Ateliers')
             ->setHelp('⚠️ Lors de la suppression d\'une date, vous supprimez également tous les participants inscrits à cette date.'),
-            
-            // CollectionField::new('date', 'Date')
-            //     ->setHelp('📅 Vous pouvez une seuled    te pour un même atelier.')
-            //     ->allowAdd(true)
-            //     ->allowDelete(true)
-            //     ->setEntryType(DatesAteliersAdminType::class)
-            //     ->setFormTypeOption('by_reference', false),
 
+            
             DateTimeField::new('date', 'date'),
             
             FormField::addTab('Inscriptions'),

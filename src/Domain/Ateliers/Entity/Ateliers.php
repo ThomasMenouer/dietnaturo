@@ -18,7 +18,7 @@ class Ateliers
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column(length: 255)]
     private string $title;
@@ -42,7 +42,13 @@ class Ateliers
     private Collection $participants;
 
     #[ORM\Column]
-    private ?bool $isAvailable = null;
+    private bool $isAvailable = false;
+
+    #[ORM\Column]
+    private bool $isVisio = false;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $link = null;
 
 
     public function __construct()
@@ -108,7 +114,7 @@ class Ateliers
     }
 
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -226,6 +232,31 @@ class Ateliers
 
         return $this;
     }
+
+    public function getIsVisio(): bool
+    {
+        return $this->isVisio;
+    }
+
+    public function setIsVisio(bool $isVisio): static
+    {
+        $this->isVisio = $isVisio;
+
+        return $this;
+    }
+
+    public function getLink(): ?string
+    {
+        return $this->link;
+    }
+
+    public function setLink(?string $link): static
+    {
+        $this->link = $link;
+
+        return $this;
+    }
+
 
 
     // public function __tostring(): string
