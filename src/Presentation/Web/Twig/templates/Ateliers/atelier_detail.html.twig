@@ -4,56 +4,50 @@
 
 {% block body %}
 
-<main class="flex-grow-1">
-    <section class="article-section my-5">
-        <div class="container">
-            <div class="row">
-                <h1 class="">
-                        Atelier du {{ atelier.date | format_datetime('long', 'short', locale: 'fr') }} <br>
-                </h1>
-                <p class=" mb-5"> {{ atelier.title }}</p>
-            </div>
-        
-        
+<div class="container my-5">
+    <div class="row">
+        <h1>Atelier du {{ atelier.date | format_datetime('long', 'short', locale: 'fr') }}</h1>
+        <p class=" mb-5"> {{ atelier.title }}</p>
+    </div>
 
-            <p class="">{{ atelier.content | raw }}</p>
+    <p>{{ atelier.content | raw }}</p>
 
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    <!-- Button trigger modal -->
+    <div class="text-center">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             S'inscrire
-            </button>
+        </button>
+    </div>
 
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">S'inscrire</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">S'inscrire</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    {{ form_start(form) }}
+                        {{ form_errors(form) }}
+
+                        {{ form_row(form.email) }}
+                        
+                        {{ form_row(form.date)}}
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            {{ form_row(form.Inscription) }}
                         </div>
 
-                        <div class="modal-body">
-                            {{ form_start(form) }}
-                                {{ form_errors(form) }}
-
-                                {{ form_row(form.email) }}
-                                
-                                {{ form_row(form.date)}}
-                                
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    {{ form_row(form.Inscription) }}
-                                </div>
-
-                                
-                            {{ form_end(form) }}
-                        </div>
-                    </div>
-
+                        
+                    {{ form_end(form) }}
                 </div>
             </div>
-        </div>
 
-    </section>
-</main>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
