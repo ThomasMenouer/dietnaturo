@@ -1,10 +1,15 @@
+@import "./colors.css";
+
+
 body{
-    background-color: #FCFAEE;
+
+    background-image: url("../images/background/bg_3.svg");
+    
 }
 
 nav {
 
-    background-color: #A5B68D;
+    background-color: var(--pink-pastel);
 }
 
 nav .nav-link{
@@ -12,19 +17,19 @@ nav .nav-link{
 }
 
 nav .active{
-    color: #DA8359;
+    color: var(--orange-pastel);
 }
 
 nav .nav-link:hover{
-    color: #DA8359;
+    color: var(--orange-pastel);
 }
 
 footer {
-    background-color: #A5B68D;
+    background-color: var(--pink-pastel);
 }
 
 .card{
-    background-color: #ECDFCC;
+    background-color: var(--light-beige-pastel);
 }
 
 .card-footer{
@@ -34,12 +39,12 @@ footer {
 
 .btn-custom-color{
 
-    background-color: #DA8359;
+    background-color: var(--orange-pastel);
 }
 
 .btn-custom-color:hover{
 
-    background-color: #DA8359;
+    background-color: var(--orange-pastel);
 }
 
 .btn-remove-cart-color{

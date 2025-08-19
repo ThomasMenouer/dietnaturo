@@ -4,6 +4,7 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Styles
+import './styles/colors.css';
 import './styles/app.css';
 import './styles/about.css';
 import './styles/home.css';
