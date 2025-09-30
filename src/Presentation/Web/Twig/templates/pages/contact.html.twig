@@ -3,90 +3,89 @@
 {% block title %}Contact{% endblock %}
 
 {% block body %}
-<main class="flex-grow-1">
-    <section class="mb-5">
-        <div class="container">
-            {# read and display several types of flash messages #}
-            {% for label, messages in app.flashes(['success', 'danger']) %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ label }} mt-5">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endfor %}
 
-            <div class="row">
-                <div class="col-6">
-
-                    <div class="card text-center">
-                        <div class="card-body">
-                                <h5 class="card-title">Coordonnées</h5>
-                                <p class="card-text">Adresse des cabinets :</p>
-                                <p class="card-text">19 route de Provins 77144 MONTEVRAIN</p>
-                                <p class="card-text">ou</p>
-                                <p class="card-text">53 boulevard Antoine Giroust 77600 BUSSY SAINT GEORGES</p>
-                                <p class="card-text">Mail : coline.legeard@gmail.com</p>
-                                <p class="cart-text">Téléphone : 06 35 23 76 01</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6">
-
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">Mes réseaux sociaux</h5>
-                            <p class="card-text">Pour y trouver recettes, conseils et articles</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="container py-5">
+        <h1 class="text-center">Contact</h1>
+    </div>
     
-    <section class="section-contact mb-5">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="card mx-auto"style="max-width: 700px;">
-                        <div class="card-body">
-                            <h3 class="text-center">Contact</h3>
+    <div class="container">
 
-                            {{ form_start(form) }}
+        {# Flash messages #}
+        {% for label, messages in app.flashes(['success', 'danger']) %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }} text-center rounded-pill shadow-sm">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
 
-                                <div class="row">
-                                    <div class="col mb-3">
-                                        {{ form_row(form.Prenom) }}
-                                    </div>
-                                    <div class="col mb-3">
-                                        {{ form_row(form.Nom) }}
-                                    </div>
-                                    <div class="col mb-3">
-                                        {{ form_row(form.Email) }}
-                                        {{ form_errors(form.Email) }}
-                                    </div>
-                                </div>
+        <div class="row g-5 align-items-start">
+            
+            <!-- Coordonnées -->
+            <div class="col-md-5">
+                <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                    <h4 class="mb-3">Coordonnées</h4>
+                    <p class="mb-1">📍 19 route de Provins, 77144 Montévrain</p>
+                    <p class="mb-1">📍 53 boulevard Antoine Giroust, 77600 Bussy Saint Georges</p>
+                    <p class="mb-1">✉️ <a href="mailto:coline.legeard@gmail.com" class="text-color-custom">coline.legeard@gmail.com</a></p>
+                    <p>📞 <a href="tel:0635237601" class="text-color-custom">06 35 23 76 01</a></p>
+                </div>
 
-                                <div class="row g-3">
-                                    <div class="col mb-3">
-                                        {{ form_row(form.Message) }}
-                                        {{ form_errors(form.Message) }}
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col text-center">
-                                        {{ form_row(form.Envoyer) }}
-                                    </div>
-                                </div>
-
-                            {{ form_end(form) }}
-                        
-                        </div>
+                <div class="card border-0 shadow-sm rounded-4 p-4">
+                    <h4 class="mb-3">Réseaux sociaux</h4>
+                    <p class="text-muted">Recettes, conseils & articles</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="https://www.instagram.com/cocodietnaturo" class="text-decoration-none" target="_blank" rel="noopener noreferrer">
+                            <img src="/images/icons/Instagram_logo.svg" alt="Instagram" width="30" height="30">
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100063477043523" class="text-decoration-none" target="_blank" rel="noopener noreferrer">
+                            <img src="/images/icons/Facebook_icon.svg" alt="Facebook" width="30" height="30">
+                        </a>
                     </div>
                 </div>
             </div>
+
+            <!-- Formulaire -->
+            <div class="col-md-7">
+
+                <div class="card text-center border-0 shadow-sm rounded-4 p-4 mb-4">
+
+                    <h3 class="text-center mb-4">Prendre rendez-vous sur Doctolib</h3>
+
+                    <div class="mb-3">
+                        <a href="https://www.doctolib.fr/dieteticien/esbly/coline-legeard" class="btn btn-custom-color text-white rounded-pill">Prendre rendez-vous</a>
+                    </div>
+
+                </div>
+
+                <span class="choice d-flex justify-content-center my-3">ou</span>
+
+                <div class="card border-0 shadow-sm rounded-4 p-4">
+                    <h3 class="text-center mb-4">Me contacter</h3>
+                    
+                    {{ form_start(form) }}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                {{ form_row(form.Prenom) }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form_row(form.Nom) }}
+                            </div>
+                            <div class="col-12">
+                                {{ form_row(form.Email) }}
+                            </div>
+                            <div class="col-12">
+                                {{ form_row(form.Message) }}
+                            </div>
+                            <div class="col-12 text-center mt-3">
+                                {{ form_row(form.Envoyer, {'attr': {'class': 'btn btn-custom-color text-white rounded-pill'}}) }}
+                            </div>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+
+
+            </div>
         </div>
-    </section>
-</main>
+    </div>
 {% endblock %}

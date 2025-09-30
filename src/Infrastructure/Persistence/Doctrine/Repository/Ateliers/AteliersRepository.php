@@ -63,7 +63,7 @@ class AteliersRepository extends ServiceEntityRepository implements AteliersRepo
     public function countParticipantsByAtelierWithDate()
     {
         $qb = $this->createQueryBuilder('a')
-            ->select('a.title, a.date, a.price, COUNT(p.id) AS participant_count, (COUNT(p.id)*a.price) AS montant')
+            ->select('a.title, a.date, a.price, a.places, COUNT(p.id) AS participant_count, (COUNT(p.id)*a.price) AS montant')
             ->leftJoin('a.participants', 'p')
             ->groupBy('a.id');
     

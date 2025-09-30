@@ -34,7 +34,6 @@ class AteliersController extends AbstractController
         RegisterParticipantToAtelierUseCase $registerParticipantToAtelierUseCase
         ): Response 
     {
-        
         $participant = new Participants();
         
         $form = $this->createForm(ParticipantsType::class, $participant, ['atelier' => $atelier]);

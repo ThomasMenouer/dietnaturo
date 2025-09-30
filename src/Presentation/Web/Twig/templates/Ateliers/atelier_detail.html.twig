@@ -14,11 +14,19 @@
 
     <!-- Button trigger modal -->
     <div class="text-center">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            S'inscrire
-        </button>
-    </div>
+        {% if atelier.getRemainingPlaces == 0 %}
+            <div class="alert alert-danger" role="alert">
+                Plus de place disponible pour cet atelier.
+            </div>
+        {% else %}
 
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                S'inscrire
+            </button> 
+
+        {% endif %}
+
+    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

@@ -1,5 +1,5 @@
 .choice:before{
-    background-color: #FCFAEE;
+    background-color: #FFC099;
     content: "";
     height: 1px;
     position: relative;
@@ -9,7 +9,7 @@
 }
 
 .choice::after{
-    background-color: #FCFAEE;
+    background-color: #FFC099;
     content: "";
     height: 1px;
     position: relative;

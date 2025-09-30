@@ -32,7 +32,7 @@ class Ateliers
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private int $price;
 
     #[ORM\Column(length: 255)]
@@ -41,14 +41,17 @@ class Ateliers
     #[ORM\OneToMany(mappedBy: 'ateliers', targetEntity: Participants::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $participants;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private bool $isAvailable = false;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private bool $isVisio = false;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $link = null;
+
+    #[ORM\Column(type: 'integer', options: ['default' => 5])]
+    private int $places = 5;
 
 
     public function __construct()
@@ -257,6 +260,22 @@ class Ateliers
         return $this;
     }
 
+    public function getPlaces(): int
+    {
+        return $this->places;
+    }
+
+    public function setPlaces(int $places): static
+    {
+        $this->places = $places;
+
+        return $this;
+    }
+
+    public function getRemainingPlaces(): int
+    {
+        return $this->places - count($this->participants);
+    }
 
 
     // public function __tostring(): string

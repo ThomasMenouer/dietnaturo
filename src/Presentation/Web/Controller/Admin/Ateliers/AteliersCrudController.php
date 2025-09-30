@@ -6,6 +6,7 @@ namespace App\Presentation\Web\Controller\Admin\Ateliers;
 use Symfony\Component\DomCrawler\Link;
 use App\Domain\Ateliers\Entity\Ateliers;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\Integer;
 use App\Presentation\Web\Form\SendEmailType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Infrastructure\Mailer\EmailSendService;
@@ -20,6 +21,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use App\Presentation\Web\Form\Admin\ParticipantsAdminType;
@@ -66,11 +68,17 @@ class AteliersCrudController extends AbstractCrudController
             FormField::addTab('Atelier'),
 
             TextField::new('title', 'Titre'),
-            TextField::new('theme', 'Thème'),
+            TextField::new('theme', 'Thème')->addCssClass('col-6'),
             TextField::new('imageFile', 'Image')->setFormType(VichImageType::class)->hideOnIndex(),
             ImageField::new('imageName', 'Image')->setBasePath('/images/ateliers')->setUploadDir('public/images')->hideOnForm(),
             TextEditorField::new('content', 'Au programme')->hideOnIndex(),
-            MoneyField::new('price', 'Prix')->setCurrency('EUR'),
+
+            MoneyField::new('price', 'Prix')->setCurrency('EUR')
+            ->addCssClass('col-3'),
+
+            IntegerField::new('places', 'Nombre de places')
+            ->addCssClass('col-3'),
+
             SlugField::new('slug')->setTargetFieldName('title')->hideOnIndex(),
             BooleanField::new('isAvailable', 'Atelier disponible'),
             BooleanField::new('isVisio', 'Atelier en visio'),
