@@ -6,10 +6,12 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use App\Domain\Ateliers\Entity\Participants;
+use App\Domain\Ateliers\Enum\TypeAtelier;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use App\Infrastructure\Persistence\Doctrine\Repository\Ateliers\AteliersRepository;
+use Doctrine\DBAL\Types\Type;
 
 #[ORM\Entity(repositoryClass: AteliersRepository::class)]
 #[Vich\Uploadable]
@@ -52,6 +54,9 @@ class Ateliers
 
     #[ORM\Column(type: 'integer', options: ['default' => 5])]
     private int $places = 5;
+
+    #[ORM\Column(type: "string", enumType: TypeAtelier::class)]
+    private TypeAtelier $typeAtelier = TypeAtelier::ATELIER;
 
 
     public function __construct()
@@ -275,6 +280,17 @@ class Ateliers
     public function getRemainingPlaces(): int
     {
         return $this->places - count($this->participants);
+    }
+
+    public function getTypeAtelier(): TypeAtelier
+    {
+        return $this->typeAtelier;
+    }
+
+    public function setTypeAtelier(TypeAtelier $typeAtelier): static
+    {
+        $this->typeAtelier = $typeAtelier;
+        return $this;
     }
 
 
