@@ -1,70 +1,64 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Activités{% endblock %}
+{% block title %}Activités
+{% endblock %}
 
 {% block body %}
 
-<main class="activities flex-grow-1">
-    <section class="title-activities">
-        <div class="container">
-            <h1 class="text-center py-5">Mes différentes Activités</h1>
-        </div>
-    </section>
+	<div class="container">
+		<h1 class="text-center py-5">Mes différentes Activités</h1>
+	</div>
 
-    <section class="section-activities mb-5">
-        <div class="container">
+	<div class="container">
 
-            {% for activity in activities %}
-                {% if loop.index is odd %}
+		{% for activity in activities %}
+			{% if loop.index is odd %}
 
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <div class="card border-0 h-100">
-                                <img src="{{ asset('/images/activities/') ~ activity.imageName }}"  class="img-fluid rounded" alt="">
-                            </div>
-                           
-                        </div>
-                        
-                        <div class="col-6">
+				<div class="row mb-5 g-4">
+					<div class="col-12 col-md-6">
+						<div class="card border-0 h-100 rounded-4 shadow-sm">
+							<img src="{{ asset('/images/activities/') ~ activity.imageName }}" class="img-fluid h-100 rounded-4" alt="">
+						</div>
 
-                            <div class="card text-center border-0 h-100">
+					</div>
 
-                                <div class="card-header text-center">
-                                    <h3 class="card-title mt-3">{{ activity.title }}</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="card-text">{{ activity.content | raw }}</div>
-                                </div>
-                            
-                            </div>
-                        </div>
-                    </div>
-                {% else %}
-                    <div class="row mb-3">
-                        <div class="col-6">
+					<div class="col-12 col-md-6">
 
-                            <div class="card text-center border-0 h-100">
+						<div class="card text-center border-0 h-100 rounded-4 shadow-sm p-4">
 
-                                <div class="card-header text-center">
-                                    <h3 class="card-title mt-3">{{ activity.title }}</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="card-text">{{ activity.content | raw }}</div>
-                                </div>
-                            
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="card border-0 h-100">
-                                <img src="{{ asset('/images/activities/') ~ activity.imageName }}"  class="img-fluid rounded" alt="">
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        </div>
+							<div class="card-header text-center">
+								<h3 class="card-title">{{ activity.title }}</h3>
+							</div>
+							<div class="card-body">
+								<div class="card-text">{{ activity.content | raw }}</div>
+							</div>
 
-    </section>
-</main>
+						</div>
+					</div>
+				</div>
+			{% else %}
+				<div class="row mb-5 g-4">
+					<div class="col-12 col-md-6">
+
+						<div class="card text-center border-0 h-100 rounded-4 shadow-sm p-4">
+
+							<div class="card-header text-center">
+								<h3 class="card-title">{{ activity.title }}</h3>
+							</div>
+							<div class="card-body">
+								<div class="card-text">{{ activity.content | raw }}</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-12 col-md-6">
+						<div class="card border-0 h-100 rounded-4 shadow-sm">
+							<img src="{{ asset('/images/activities/') ~ activity.imageName }}" class="img-fluid h-100 rounded-4" alt="">
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		{% endfor %}
+	</div>
 
 {% endblock %}

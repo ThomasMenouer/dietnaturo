@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mentions Légales
+{% endblock %}
+
+{% block meta_description %}
+	<meta name="description" content="Découvrez les mentions légales du site DietNaturo, géré par Coline Legeard, diététicienne-nutritionniste. Informations sur l'éditeur, l'hébergement et la propriété intellectuelle.">
+{% endblock %}
+
+{% block body %}
+
+	<div class="container mb-5">
+    
+		<h1 class="text-center py-5">{{mentions_legales.title}}</h1>
+
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div class="content">
+					{{ mentions_legales.content|raw }}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -10,8 +10,12 @@ use App\Domain\Shop\Entity\Products;
 use App\Domain\Blog\Entity\Categories;
 use App\Domain\Pages\Entity\Faqs\Faqs;
 use App\Domain\Ateliers\Entity\Ateliers;
+use App\Domain\Pages\Entity\About\About;
+use App\Domain\Pages\Entity\MentionsLegales\MentionsLegales;
+use App\Domain\Shop\Entity\OrderDetails;
 use App\Domain\Shop\Entity\ProductsCover;
 use App\Domain\Shop\Entity\ProductsEbook;
+use App\Domain\Pages\Entity\About\Approche;
 use App\Domain\Shop\Entity\CategoriesProducts;
 use Symfony\Component\HttpFoundation\Response;
 use App\Domain\Pages\Entity\Coaching\Coachings;
@@ -24,7 +28,6 @@ use App\Domain\Pages\Entity\Consultation\Consultations;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Domain\Pages\Entity\Consultation\PriceConsultations;
 use App\Domain\Pages\Entity\Consultation\DeroulementConsultation;
-use App\Domain\Shop\Entity\OrderDetails;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use App\Infrastructure\Persistence\Doctrine\Repository\Ateliers\AteliersRepository;
 
@@ -55,6 +58,11 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        
+        yield MenuItem::subMenu('A propos', 'fa-solid fa-list-ol')->setSubItems([
+            MenuItem::linkToCrud('Voir à propos', 'fa-solid fa-pencil', About::class),
+            MenuItem::linkToCrud('Voir mon approche', 'fa-solid fa-list-ol', Approche::class),
+        ]);
 
         yield MenuItem::linkToCrud('Activités', 'fa-solid fa-list-ol', Activities::class);
 
@@ -92,6 +100,13 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Covers', 'fa fa-image', ProductsCover::class),
             MenuItem::linkToCrud('Ebooks', 'fa fa-file-pdf', ProductsEbook::class),
             MenuItem::linkToCrud('Voir categories', 'fa-solid fa-tags', CategoriesProducts::class),
+        ]);
+
+        yield MenuItem::subMenu('Pages légales', 'fa-solid fa-file-contract')->setSubItems([
+            MenuItem::linkToCrud('Voir mentions légales', 'fa-solid fa-pencil', MentionsLegales::class),
+            // MenuItem::linkToCrud('Voir politique de confidentialité', 'fa-solid fa-pencil', PolitiqueConfidentialite::class),
+            // MenuItem::linkToCrud('Voir politique de cookies', 'fa-solid fa-pencil', PolitiqueCookies::class),
+            // MenuItem::linkToCrud('Voir conditions générales de vente', 'fa-solid fa-pencil', ConditionsGeneralesVente::class),
         ]);
     }
 }

@@ -1,15 +1,20 @@
 .accordion-color {
 
-    background-color: #ECDFCC;
+    background-color: var(--light-beige-pastel);
 }
 
 .accordion-color:active{
 
-   background-color: #ECDFCC;
+   background-color: var(--light-beige-pastel);
 }
 
 .accordion-body-color{
 
-    background-color: #DA8359;
+    background-color: var(--orange-pastel);
+}
+
+.accordion-button:focus{
+
+    border: none;
 }
 

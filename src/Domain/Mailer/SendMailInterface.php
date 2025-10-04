@@ -2,6 +2,7 @@
 
 namespace App\Domain\Mailer;
 
+use App\Domain\Ateliers\Entity\Ateliers;
 use App\Domain\Ateliers\Entity\Participants;
 
 interface SendMailInterface
@@ -15,5 +16,15 @@ interface SendMailInterface
     public function sendEmailContact(array $data): void;
 
     public function sendInvoiceAndEbooks(string $email, string $firstname, string $invoicePath, array $ebookPaths): void;
+
+    public function sendEmailReminderAtelier(
+        array $participants,
+        string $title,
+        \DateTimeInterface $date,
+        ?string $link,
+        bool $isVisio,
+        string $slug,
+        string $typeAtelier
+    ): void;
 
 }

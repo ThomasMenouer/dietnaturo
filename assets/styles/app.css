@@ -70,3 +70,9 @@ footer {
     height: 27px;
     width: auto;
 }
+
+.form-control:focus{
+
+    border-color: var(--orange-pastel) !important;
+    box-shadow: none !important;
+}   
