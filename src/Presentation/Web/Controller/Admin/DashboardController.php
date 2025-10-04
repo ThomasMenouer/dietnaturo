@@ -57,8 +57,14 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
+        // Lien vers le dashboard
+
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+
+        // Index des pages du site
         
+        yield MenuItem::section('Pages du site');
+    
         yield MenuItem::subMenu('A propos', 'fa-solid fa-list-ol')->setSubItems([
             MenuItem::linkToCrud('Voir à propos', 'fa-solid fa-pencil', About::class),
             MenuItem::linkToCrud('Voir mon approche', 'fa-solid fa-list-ol', Approche::class),
@@ -79,21 +85,29 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Voir cycle coachings', 'fa-solid fa-bars-staggered', CycleCoachings::class),
         ]);
 
+        yield MenuItem::subMenu('Pages légales', 'fa-solid fa-file-contract')->setSubItems([
+            MenuItem::linkToCrud('Voir mentions légales', 'fa-solid fa-pencil', MentionsLegales::class),
+            // MenuItem::linkToCrud('Voir politique de confidentialité', 'fa-solid fa-pencil', PolitiqueConfidentialite::class),
+            // MenuItem::linkToCrud('Voir politique de cookies', 'fa-solid fa-pencil', PolitiqueCookies::class),
+            // MenuItem::linkToCrud('Voir conditions générales de vente', 'fa-solid fa-pencil', ConditionsGeneralesVente::class),
+        ]);
+
+        // Index des entités du site
+
+        yield MenuItem::section('Blog');
+
         yield MenuItem::subMenu('Blog', 'fa fa-file-text')->setSubItems([
             MenuItem::linkToCrud('Voir articles', 'fa-regular fa-file-lines', Articles::class),
             MenuItem::linkToCrud('Voir categories', 'fa fa-tags', Categories::class),
         ]);
 
+        yield MenuItem::section('Ateliers');
+
         yield MenuItem::subMenu('Atelier', 'fa-solid fa-people-group')->setSubItems([
             MenuItem::linkToCrud('Voir ateliers', 'fa-solid fa-leaf', Ateliers::class),
         ]);
 
-        yield MenuItem::subMenu('Commandes', 'fas fa-box')->setSubItems([
-            MenuItem::linkToCrud('Voir Commandes', 'fas fa-shopping-bag', Orders::class),
-            MenuItem::linkToCrud('Voir Détail de la commande', 'fas fa-shopping-bag', OrderDetails::class),
-            MenuItem::linkToCrud('Facture', 'fa-solid fa-file-invoice', Invoices::class),
-        ]);
-
+        yield MenuItem::section('Boutique');
 
         yield MenuItem::subMenu('Boutique', 'fa-solid fa-bag-shopping')->setSubItems([
             MenuItem::linkToCrud('Voir produits', 'fa-regular fa-file', Products::class),
@@ -102,11 +116,15 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Voir categories', 'fa-solid fa-tags', CategoriesProducts::class),
         ]);
 
-        yield MenuItem::subMenu('Pages légales', 'fa-solid fa-file-contract')->setSubItems([
-            MenuItem::linkToCrud('Voir mentions légales', 'fa-solid fa-pencil', MentionsLegales::class),
-            // MenuItem::linkToCrud('Voir politique de confidentialité', 'fa-solid fa-pencil', PolitiqueConfidentialite::class),
-            // MenuItem::linkToCrud('Voir politique de cookies', 'fa-solid fa-pencil', PolitiqueCookies::class),
-            // MenuItem::linkToCrud('Voir conditions générales de vente', 'fa-solid fa-pencil', ConditionsGeneralesVente::class),
+        yield MenuItem::subMenu('Commandes', 'fas fa-box')->setSubItems([
+            MenuItem::linkToCrud('Voir Commandes', 'fas fa-shopping-bag', Orders::class),
+            MenuItem::linkToCrud('Voir Détail de la commande', 'fas fa-shopping-bag', OrderDetails::class),
+            MenuItem::linkToCrud('Facture', 'fa-solid fa-file-invoice', Invoices::class),
         ]);
+
+        // Retour au site
+        yield MenuItem::section('');
+
+        yield MenuItem::linkToRoute('Retour au site', 'fa fa-undo', 'home');
     }
 }

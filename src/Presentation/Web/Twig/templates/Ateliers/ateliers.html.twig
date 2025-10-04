@@ -1,63 +1,67 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ateliers{% endblock %}
+{% block title %}Ateliers
+{% endblock %}
 
 {% block body %}
 
-<main class="flex-grow-1">
 
-    <section class="atelier">
-        
-        <h1 class="text-center my-5">Les prochains ateliers</h1>
+	<div class="container">
+		<h1 class="text-center py-5">Les prochains ateliers</h1>
+	</div>
 
-        <div class="container">
+	<div
+		class="container mb-5">
 
-            {# read and display several types of flash messages #}
-            {% for label, messages in app.flashes(['success', 'danger']) %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ label }} mt-5">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endfor %}
+		{# read and display several types of flash messages #}
+		{% for label, messages in app.flashes(['success', 'danger']) %}
+			{% for message in messages %}
+				<div class="alert alert-{{ label }} mt-5">
+					{{ message }}
+				</div>
+			{% endfor %}
+		{% endfor %}
 
-            <div class="row row-cols-1 row-cols-md-3 g-4 my-5">
-                
-                {% for atelier in ateliers %}
+		<div class="row row-cols-1 row-cols-md-4 g-4">
 
-                    {% if atelier.isAvailable %}
+			{% for atelier in ateliers %}
 
-                        <div class="col">
-                
-                            <div class="card border-0 h-100">
-                                <img class="card-img-top" src="{{ asset('/images/ateliers/') ~ atelier.imageName }}">
-                                <div class="card-body">
-                                    {% if atelier.isVisio %}
-                                        <span class="badge-atelier badge text-bg-primary py-2 my-1">Visio</span>
-                                    {% else %}
-                                        <span class="badge-atelier badge text-bg-secondary py-2 my-1">Présentiel</span>
-                                    {% endif %}
-                                    
-                                    <h5 class="card-title">{{ atelier.title }}</h5>
-                                    <span class="badge-atelier badge text-bg-success py-2 my-1">{{ atelier.theme }}</span>
-                                    <p class="card-text">Atelier du {{ atelier.date | format_datetime('long', 'short', locale: 'fr') }} <br>
-                                    </p>
-                                    <p class="card-text">{{ (atelier.price / 100) | format_currency('EUR') }}</p>
-                                </div>
-                                <div class="card-footer text-center border-0">
-                                    <a href="{{ path('ateliers_detail', { "slug": atelier.slug }) }}" class="btn btn-custom-color text-white">Voir</a>
-                                </div>
-                
-                            </div>
-                        </div>
-                    
-                    {% endif %}
-            
-                {% endfor %}
-            </div>
-        </div>
+				{% if atelier.isAvailable %}
 
-    </section>
+					<div class="col">
 
-</main>
+						<div class="card border-0 h-100 rounded-4 shadow-sm">
+							<img class="card-img-top rounded-top-4 object-fit-cover" style="height: 220px;" src="{{ asset('/images/ateliers/') ~ atelier.imageName }}" alt="{{ atelier.title }}">
+							<div class="card-body d-flex flex-column justify-content-between">
+								<div>
+									<h5 class="card-title">{{ atelier.title }}</h5>
+									<p class="card-text text-muted small mb-2">
+										Atelier du
+										{{ atelier.date | format_datetime('long', 'short', locale: 'fr') }}
+									</p>
+									<p class="card-text fw-semibold">
+										{{ (atelier.price / 100) | format_currency('EUR') }}
+									</p>
+								</div>
+
+								<div>
+									{% if atelier.isVisio %}
+										<span class="badge-atelier badge text-bg-primary rounded-pill py-2 my-1">Visio</span>
+									{% else %}
+										<span class="badge-atelier badge text-bg-secondary rounded-pill py-2 my-1">Présentiel</span>
+									{% endif %}
+								</div>
+							</div>
+							<div class="card-footer text-center border-0">
+								<a href="{{ path('ateliers_detail', { "slug": atelier.slug }) }}" class="btn btn-custom-color text-white rounded-pill">Voir</a>
+							</div>
+
+						</div>
+					</div>
+
+				{% endif %}
+
+			{% endfor %}
+		</div>
+	</div>
 {% endblock %}

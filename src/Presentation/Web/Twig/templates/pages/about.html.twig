@@ -14,12 +14,12 @@
 
 			{% for item in about %}
 				{% if loop.first %}
-					<div class="col-12 col-md-6">
+					<div class="col-12 col-md-12 col-lg-6">
 						<div class="card border-0 shadow-sm h-100 rounded-4">
-							<img src="{{ asset('/images/about/') ~ item.imageName }}" class="img-fluid rounded-4 h-100 w-auto" alt="">
+							<img src="{{ asset('/images/about/') ~ item.imageName }}" class="img-fluid rounded-4 h-100 object-fit-cover" alt="">
 						</div>
 					</div>
-					<div class="col-12 col-md-6">
+					<div class="col-12 col-md-12 col-lg-6">
 						<div class="card border-0 text-center p-4 h-100 rounded-4 shadow-sm">
 							<div class="card-header">
 								<h3 class="card-title">{{ item.title }}</h3>
@@ -51,7 +51,7 @@
 						</div>
 					{% else %}
 						<div class="card border-0 h-100 shadow-sm rounded-4">
-							<img src="{{ asset('/images/about/') ~ item.imageName }}" class="img-fluid h-100 rounded-4" alt="">
+							<img src="{{ asset('/images/about/') ~ item.imageName }}" class="img-fluid h-100 rounded-4 object-fit-cover" alt="">
 						</div>
 					{% endif %}
 				</div>
@@ -65,12 +65,12 @@
 		<div class="row g-4">
 			{% for item in about %}
 				{% if loop.last %}
-					<div class="col-12 col-md-6">
+					<div class="col-12 col-md-12 col-lg-6">
 						<div class="card border-0 h-100 rounded-4 shadow-sm">
-							<img src="{{ asset('/images/about/') ~ item.imageName }}" class="img-fluid h-100 rounded-4" alt="">
+							<img src="{{ asset('/images/about/') ~ item.imageName }}" class="img-fluid h-100 rounded-4 object-fit-cover" alt="">
 						</div>
 					</div>
-					<div class="col-12 col-md-6">
+					<div class="col-12 col-md-12 col-lg-6">
 						<div class="card border-0 text-center h-100 rounded-4 shadow-sm p-4">
 							<div class="card-header">
 								<h3 class="card-title">{{ item.title }}</h3>
