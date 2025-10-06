@@ -18,8 +18,8 @@
 
                     <div class="col">
 
-                        <div class="card border-0 h-100">
-                            <img class="img-fluid" src="{{ product.imagePath }}" alt="{{ product.name }}">
+                        <div class="card border-0 rounded-4 shadow-sm h-100">
+                            <img class="img-fluid h-75 rounded-top-4" src="{{ product.imagePath }}" alt="{{ product.name }}">
                             <div class="card-body">
                                 <h5 class="card-title">{{ product.name }}</h5>
                                 <p class="card-text">{{ (product.price / 100) | format_currency('EUR') }}</p>
