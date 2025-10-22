@@ -12,12 +12,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ConsultationController extends AbstractController
 {
     #[Route('/consultation', name: 'consultation')]
-    public function index(GetAllConsultationsAndDeroulementUseCase $getAllConsultationsAndDeroulementUseCase, 
-    GetAllPriceConsultationsUseCase $getAllPriceConsultationsUseCase): Response
-    {
+    public function index(
+        GetAllConsultationsAndDeroulementUseCase $getAllConsultationsAndDeroulementUseCase,
+        GetAllPriceConsultationsUseCase $getAllPriceConsultationsUseCase
+    ): Response {
 
         $consultations = $getAllConsultationsAndDeroulementUseCase->execute();
         $priceConsultations = $getAllPriceConsultationsUseCase->execute();
+
+        // Grouper par catégorie
+        $groupedConsultations = [];
+        foreach ($priceConsultations as $consultation) {
+            $category = $consultation->getCategory() ?? 'Autres';
+            if (!isset($groupedConsultations[$category])) {
+                $groupedConsultations[$category] = [];
+            }
+            $groupedConsultations[$category][] = $consultation;
+        }
+
 
 
 
@@ -26,6 +38,7 @@ class ConsultationController extends AbstractController
             'consultations' => $consultations['consultations'],
             'deroulements' => $consultations['deroulement'],
             'priceConsultations' => $priceConsultations,
+            'groupedConsultations' => $groupedConsultations,
         ]);
     }
 }

@@ -2,11 +2,12 @@
 
 namespace App\Presentation\Web\Controller\Admin\Pages\Consultation;
 
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use App\Domain\Pages\Entity\Consultation\Consultations;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 
 class ConsultationsCrudController extends AbstractCrudController
 {
@@ -19,7 +20,8 @@ class ConsultationsCrudController extends AbstractCrudController
     {
         return [
             TextField::new('title'),
-            TextEditorField::new('content')->hideOnIndex(),
+            TextareaField::new('content')
+                ->hideOnIndex(),
         ];
     }
 }

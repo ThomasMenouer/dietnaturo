@@ -12,16 +12,37 @@ nav {
     background-color: var(--pink-pastel);
 }
 
-nav .nav-link{
+.nav-link:focus{
+
+    box-shadow: none;
+    color: var(--orange-pastel);
+}
+
+.navbar-nav .nav-link{
     color: white;
 }
 
-nav .active{
+.navbar-nav .nav-link.show{
     color: var(--orange-pastel);
 }
 
-nav .nav-link:hover{
+.navbar-nav .nav-link.active{
     color: var(--orange-pastel);
+}
+
+.dropdown-item.active{
+    background-color: unset;
+    color: white;
+}
+
+.navbar-nav .nav-link:hover{
+    color: var(--orange-pastel);
+}
+
+.navbar-nav .dropdown-menu{
+    background-color: var(--pink-pastel);
+    border: none;
+
 }
 
 footer {

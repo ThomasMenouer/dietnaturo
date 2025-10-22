@@ -18,6 +18,12 @@ class PriceConsultations
     #[ORM\Column(length: 100)]
     private string $name;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $description = null;
+
+     #[ORM\Column(length: 100, nullable: true)]
+    private ?string $category = null;
+
     #[ORM\Column]
     private int $price;
 
@@ -47,6 +53,26 @@ class PriceConsultations
     {
         $this->price = $price;
 
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+    public function setCategory(?string $category): static
+    {
+        $this->category = $category;
         return $this;
     }
 }
