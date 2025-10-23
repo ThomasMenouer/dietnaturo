@@ -11,7 +11,6 @@ use App\Domain\Blog\Entity\Categories;
 use App\Domain\Pages\Entity\Faqs\Faqs;
 use App\Domain\Ateliers\Entity\Ateliers;
 use App\Domain\Pages\Entity\About\About;
-use App\Domain\Pages\Entity\MentionsLegales\MentionsLegales;
 use App\Domain\Shop\Entity\OrderDetails;
 use App\Domain\Shop\Entity\ProductsCover;
 use App\Domain\Shop\Entity\ProductsEbook;
@@ -27,8 +26,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use App\Domain\Pages\Entity\Consultation\Consultations;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Domain\Pages\Entity\Consultation\PriceConsultations;
+use App\Domain\Pages\Entity\MentionsLegales\MentionsLegales;
 use App\Domain\Pages\Entity\Consultation\DeroulementConsultation;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use App\Domain\Pages\Entity\ConditionsGeneralesVente\ConditionsGeneralesVente;
 use App\Infrastructure\Persistence\Doctrine\Repository\Ateliers\AteliersRepository;
 
 #[IsGranted('ROLE_ADMIN')]
@@ -89,7 +90,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Voir mentions légales', 'fa-solid fa-pencil', MentionsLegales::class),
             // MenuItem::linkToCrud('Voir politique de confidentialité', 'fa-solid fa-pencil', PolitiqueConfidentialite::class),
             // MenuItem::linkToCrud('Voir politique de cookies', 'fa-solid fa-pencil', PolitiqueCookies::class),
-            // MenuItem::linkToCrud('Voir conditions générales de vente', 'fa-solid fa-pencil', ConditionsGeneralesVente::class),
+            MenuItem::linkToCrud('Voir conditions générales de vente', 'fa-solid fa-pencil', ConditionsGeneralesVente::class),
         ]);
 
         // Index des entités du site
