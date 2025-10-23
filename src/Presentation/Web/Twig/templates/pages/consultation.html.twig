@@ -5,12 +5,12 @@
 
 {% block body %}
 
-	<div class="container-fluid consultation-header py-5">
+	<div class="container-fluid consultation-header py-5 mb-5">
 		<div class="row">
 			<div class=" col-12 col-md-12 text-center mx-auto">
 
 				{% for consultation in consultations %}
-					<h3 class="title text-center text-white mb-5">{{ consultation.title }}</h3>
+					<h1 class="title text-center text-white mb-5">{{ consultation.title }}</h1>
 					<p class="fs-4 text-center text-white">{{ consultation.content }}</p>
 				{% endfor %}
 			</div>
@@ -18,9 +18,10 @@
 
 	</div>
 
-	<div class="container">
+	<div
+		class="container">
 
-		<h1 class="text-center py-5">Déroulement de la consultation</h1>
+		{# <h1 class="text-center py-5">Déroulement de la consultation</h1> #}
 
 		<div class="row">
 			{% for deroulement in deroulements %}
@@ -71,24 +72,32 @@
 	<div class="container mb-5">
 		<h1 class="text-center py-5">Tarifications</h1>
 
+
 		{% for category, consultations in groupedConsultations %}
+
 			<h2 class="text-center py-4">{{ category }}</h2>
-			<div class="row g-4 justify-content-center">
+
+			<div class="row row-cols-1 row-cols-md-2 g-4">
+
+
 				{% for consultation in consultations %}
-					<div class="col-12 col-md-6">
-						<div class="card border-0 shadow-sm rounded-4 p-4 h-100"  style="max-width: 18rem;">
-							<h4 class="fw-bold">{{ consultation.name }}</h4>
-							<p class="display-6 fw-bold text-dark">{{ (consultation.price / 100) | format_currency('EUR') }}</p>
+
+					<div class="col mx-auto">
+
+						<div class="card h-100 border-0 shadow-sm rounded-4 p-5" >
+
+							<h4 class="fw-bold text-center">{{ consultation.name }}</h4>
+							<hr class="mx-auto w-75 pricing-separator">
+							<h2 class="text-center font-weight-bold display-6">{{ (consultation.price / 100) | format_currency('EUR') }}</h2>
+							<div class="mx-auto my-4 custom-separator border-0 rounded-4"></div>
 							{% if consultation.description %}
-								<p class="card-text text-muted">{{ consultation.description | raw }}</p>
+								<div class="card-text">{{ consultation.description | raw }}</div>
 							{% endif %}
 						</div>
 					</div>
+
 				{% endfor %}
 			</div>
 		{% endfor %}
-
 	</div>
-
-
 {% endblock %}

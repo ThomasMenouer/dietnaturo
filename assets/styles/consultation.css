@@ -2,3 +2,14 @@
     
     background-color: var(--orange-pastel);
 }
+
+.pricing-separator {
+    color: var(--orange-pastel);
+}
+
+.custom-separator {
+    
+    width: 5rem;
+    height: 8px;
+    background-color: var(--orange-pastel);
+}
