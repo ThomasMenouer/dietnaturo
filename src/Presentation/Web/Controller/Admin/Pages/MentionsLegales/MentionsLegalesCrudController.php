@@ -2,11 +2,9 @@
 
 namespace App\Presentation\Web\Controller\Admin\Pages\MentionsLegales;
 
-use Vich\UploaderBundle\Form\Type\VichImageType;
+
 use App\Domain\Pages\Entity\MentionsLegales\MentionsLegales;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-
-use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
