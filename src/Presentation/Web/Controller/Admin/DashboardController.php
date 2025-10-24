@@ -30,6 +30,7 @@ use App\Domain\Pages\Entity\MentionsLegales\MentionsLegales;
 use App\Domain\Pages\Entity\Consultation\DeroulementConsultation;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use App\Domain\Pages\Entity\ConditionsGeneralesVente\ConditionsGeneralesVente;
+use App\Domain\Pages\Entity\PolitiqueConfidentialite\PolitiqueConfidentialite;
 use App\Infrastructure\Persistence\Doctrine\Repository\Ateliers\AteliersRepository;
 
 #[IsGranted('ROLE_ADMIN')]
@@ -88,8 +89,7 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::subMenu('Pages légales', 'fa-solid fa-file-contract')->setSubItems([
             MenuItem::linkToCrud('Voir mentions légales', 'fa-solid fa-pencil', MentionsLegales::class),
-            // MenuItem::linkToCrud('Voir politique de confidentialité', 'fa-solid fa-pencil', PolitiqueConfidentialite::class),
-            // MenuItem::linkToCrud('Voir politique de cookies', 'fa-solid fa-pencil', PolitiqueCookies::class),
+            MenuItem::linkToCrud('Voir politique de confidentialité', 'fa-solid fa-pencil', PolitiqueConfidentialite::class),
             MenuItem::linkToCrud('Voir conditions générales de vente', 'fa-solid fa-pencil', ConditionsGeneralesVente::class),
         ]);
 

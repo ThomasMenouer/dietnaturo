@@ -1,11 +1,12 @@
 <?php
 
+
 namespace App\Presentation\Web\Controller\Pages;
+
 
 use App\Application\Pages\MentionsLegales\UseCase\GetMentionsLegalesUseCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Domain\Pages\Repository\MentionsLegalesRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
