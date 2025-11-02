@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blog Instagram{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+  <h1 class="mb-4 text-center">Publications Instagram</h1>
+
+  {% if posts is empty %}
+    <p class="text-center text-muted">Aucune publication trouvée.</p>
+  {% else %}
+    <div class="row">
+      {% for post in posts %}
+        <div class="col-md-4 mb-4">
+          <div class="card shadow-sm h-100">
+            {% if post.media_type == 'IMAGE' or post.media_type == 'CAROUSEL_ALBUM' %}
+              <img src="{{ post.media_url }}" class="card-img-top" alt="Instagram post">
+            {% elseif post.media_type == 'VIDEO' %}
+              <video class="card-img-top" controls>
+                <source src="{{ post.media_url }}" type="video/mp4">
+              </video>
+            {% endif %}
+            <div class="card-body">
+              <p class="card-text">{{ post.caption|default('')|slice(0, 120) ~ '...' }}</p>
+              <a href="{{ post.permalink }}" target="_blank" class="btn btn-outline-primary btn-sm">Voir sur Instagram</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <nav aria-label="Pagination Instagram" class="mt-4">
+      <ul class="pagination justify-content-center">
+        <li class="page-item {% if page == 1 %}disabled{% endif %}">
+          <a class="page-link" href="{{ path('blog_index', {'page': page - 1}) }}" aria-label="Précédent">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+
+        {% for p in 1..pages %}
+          <li class="page-item {% if p == page %}active{% endif %}">
+            <a class="page-link" href="{{ path('blog_index', {'page': p}) }}">{{ p }}</a>
+          </li>
+        {% endfor %}
+
+        <li class="page-item {% if page == pages %}disabled{% endif %}">
+          <a class="page-link" href="{{ path('blog_index', {'page': page + 1}) }}" aria-label="Suivant">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  {% endif %}
+</div>
+{% endblock %}
