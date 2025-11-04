@@ -27,7 +27,9 @@ class OrdersController extends AbstractController
             return $this->redirectToRoute('cart_index');
         }
 
-        $form = $this->createForm(CheckoutType::class);
+        $form = $this->createForm(CheckoutType::class, null, [
+            'privacy_url' => $this->generateUrl('politique_confidentialite')
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

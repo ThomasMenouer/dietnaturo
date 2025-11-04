@@ -58,24 +58,7 @@ footer {
     background: unset;
 }
 
-.btn-custom-color{
-
-    background-color: var(--orange-pastel);
-}
-
-.btn-custom-color:hover{
-
-    background-color: var(--orange-pastel);
-}
-
-.btn-remove-cart-color{
-    background-color: #F95454;
-}
-
-.btn-remove-cart-color:hover{
-    background-color: #F95454;
-}
-
+/* 
 .btn-delete-product-color{
 
     background-color: #FFEEAD;
@@ -84,7 +67,7 @@ footer {
 .btn-delete-product-color:hover{
 
     background-color: #FFEEAD;
-}
+} */
 
 .cart-icon svg{
 
@@ -96,4 +79,9 @@ footer {
 
     border-color: var(--orange-pastel) !important;
     box-shadow: none !important;
-}   
+}
+
+
+.bg-red-pastel{
+    background-color: var(--red-pastel) !important;
+}

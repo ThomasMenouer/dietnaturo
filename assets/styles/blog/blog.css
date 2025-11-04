@@ -12,3 +12,27 @@
     background-color: var(--orange-pastel); /* Effet hover */
     color: white;
 }
+
+
+/* Show post Instagram */
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(88%) sepia(26%) saturate(543%) hue-rotate(321deg) brightness(104%) contrast(104%);
+}
+
+
+.carousel-indicators .active {
+  background-color: var(--orange-pastel); /* couleur active */
+  opacity: 1;
+}
+
+.btn-outline-secondary {
+  border-color: var(--orange-pastel);
+  color: var(--orange-pastel);
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--orange-pastel);
+  color: white;
+}

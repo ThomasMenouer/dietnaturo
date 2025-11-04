@@ -8,7 +8,7 @@
 	<div class="container">
 		<div class="row my-5">
 			<div class="col-6">
-                <h5 class="text-center mb-3">Informations de paiement</h5>
+                <h3 class="text-center mb-3">Informations de paiement</h3>
 				<div class="card mb-3 g-0 border-0 rounded-4 shadow-sm my-auto">
 					<div class="card-body">
 						{{ form_start(form) }}
@@ -39,6 +39,17 @@
 							</div>
 
 						</div>
+						
+						<div class="row">
+
+							<div class="col mb-3">
+
+								{{ form_row(form.acceptPrivacy) }}
+								{{ form_errors(form.acceptPrivacy) }}
+
+							</div>
+
+						</div>
 
 						<div class="row">
 							<div class="col mb-3 text-center">
@@ -55,14 +66,14 @@
 			</div>
 			<div class="col-6">
 
-				<h5 class="text-center mb-3">Résumé de la commande</h5>
+				<h3 class="text-center mb-3">Résumé de la commande</h3>
 				{% if cartData | length > 0 %}
 					{% for item in cartData %}
 
                         <div class="card border-0 mb-3 rounded-4 shadow-sm mx-auto">
                             <div class="row g-0">
                                 <div class="col-md-3">
-                                    <img src="{{ item.product.imagePath }}" alt="{{ item.product.name }}" class="img-fluid rounded-start h-100 w-100"/>
+                                    <img src="{{ item.product.imagePath }}" alt="{{ item.product.name }}" class="img-fluid rounded-start-4 h-100 w-100"/>
                                 </div>
                                 <div class="col-md-9">
                                     <div class="card-body">
@@ -75,7 +86,12 @@
 
 					{% endfor %}
 				{% endif %}
-				<a href="{{ path('cart_index') }}" class="btn btn-custom-color">Modifier le panier</a>
+				<div class="text-center">
+					<a href="{{ path('cart_index') }}" class="btn btn-custom-color text-white rounded-pill px-4">
+						Modifier le panier
+					</a>
+				
+				</div>
 			</div>
 		</div>
 	</div>

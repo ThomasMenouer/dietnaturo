@@ -17,5 +17,6 @@ import './styles/pages/consultation.css';
 import './styles/pages/activities.css';
 
 import './styles/colors.css';
+import './styles/btn.css';
 import './styles/app.css';
 import './styles/cart.css';

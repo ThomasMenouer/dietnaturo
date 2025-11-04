@@ -1,0 +1,30 @@
+@import "./colors.css";
+
+
+.btn-custom-color{
+
+    background-color: var(--orange-pastel);
+}
+
+.btn-custom-color:hover{
+
+    background-color: var(--orange-pastel);
+}
+
+.btn-remove-cart-color{
+    /* background-color: #F95454; */
+    background-color: var(--red-pastel);
+}
+
+.btn-remove-cart-color:hover{
+    /* background-color: #F95454; */
+    background-color: var(--red-pastel);
+}
+
+.btn-add-cart-color{
+    background-color: var(--green-pastel);
+}
+
+.btn-add-cart-color:hover{
+    background-color: var(--green-pastel);
+}

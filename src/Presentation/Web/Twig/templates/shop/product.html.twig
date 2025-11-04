@@ -1,31 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} {{ product.name }} {% endblock %}
+{% block title %}
+	{{ product.name }}
+{% endblock %}
 
 {% block body %}
-
-<main class="flex-grow-1">
-    <section class="product-section my-5">
-        <div class="container">
-
-            <div class="row">
-                <h1 class="text-center mb-5"> {{ product.name }}</h1>
-
-                <div class="">{{ product.description | raw }}<div>
-        
-                <p>{{ (product.price / 100) | format_currency('EUR') }}</p>
-
-                <div class="btn"></div>
-                <a href="{{ path('cart_add', { "id": product.id }) }}" class="btn btn-primary">Ajouter au panier</a>
-            
-            </div>
-        
+	<div class="container my-5">
+        <div class="d-flex justify-content-start mb-4">
+    		<a href="{{ path('shop_index') }}" class="btn btn-custom-color text-white rounded-pill px-4">
+				Retour à la boutique
+			</a>
         </div>
 
-    </section>
-</main>
 
 
+		<div class="row justify-content-center align-items-center g-5">
 
+			<!-- Image principale -->
+			<div class="col-md-6 text-center">
+				<img src="{{ product.imagePath }}" alt="{{ product.name }}" class="img-fluid rounded-4 shadow-sm object-fit-contain" style="max-height: 500px; width: auto;">
+			</div>
 
+			<!-- Informations produit -->
+			<div class="col-md-6">
+				<h1 class="fw-bold mb-4">{{ product.name }}</h1>
+
+				<p class="text-muted mb-4">
+					{{ product.description|raw }}
+				</p>
+
+				<h3 class="text-dark fw-semibold mb-4">
+					{{ (product.price / 100) | format_currency('EUR') }}
+				</h3>
+
+				<div class="d-flex">
+					<a href="{{ path('cart_add', { 'id': product.id }) }}" class="btn btn-add-cart-color text-white rounded-pill px-4 py-2">
+						<i class="bi bi-cart-plus me-2"></i>
+						Ajouter au panier
+					</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
 {% endblock %}

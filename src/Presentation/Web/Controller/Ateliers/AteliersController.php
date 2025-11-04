@@ -2,6 +2,7 @@
 
 namespace App\Presentation\Web\Controller\Ateliers;
 
+use App\Application\Ateliers\UseCase\GetAllAteliersUseCase;
 use App\Domain\Ateliers\Entity\Ateliers;
 use App\Domain\Ateliers\Entity\Participants;
 use Symfony\Component\HttpFoundation\Request;
@@ -9,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Presentation\Web\Form\ParticipantsType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
-use App\Domain\Ateliers\Repository\AteliersRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Application\Ateliers\UseCase\RegisterParticipantToAtelierUseCase;
 
@@ -18,9 +18,9 @@ class AteliersController extends AbstractController
 {
 
     #[Route('/', name: 'index')]
-    public function index(AteliersRepositoryInterface $ateliersRepositoryInterface): Response
+    public function index(GetAllAteliersUseCase $getAllAteliersUseCase): Response
     {
-        $ateliers = $ateliersRepositoryInterface->getAllAteliers();
+        $ateliers = $getAllAteliersUseCase->getAllAteliers();
 
         return $this->render('Ateliers/ateliers.html.twig', [
             'ateliers' => $ateliers,
