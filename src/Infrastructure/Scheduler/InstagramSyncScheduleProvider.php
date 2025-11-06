@@ -2,19 +2,19 @@
 
 namespace App\Infrastructure\Scheduler;
 
+use App\Application\Blog\Message\SyncInstagramMediaMessage;
 use Symfony\Component\Scheduler\Schedule;
 use Symfony\Component\Scheduler\RecurringMessage;
 use Symfony\Component\Scheduler\Attribute\AsSchedule;
 use Symfony\Component\Scheduler\ScheduleProviderInterface;
-use App\Application\Ateliers\Message\SendAtelierReminderMessage;
 
-#[AsSchedule('atelier_reminders')]
-class AtelierReminderScheduleProvider implements ScheduleProviderInterface
+#[AsSchedule('instagram_sync')]
+final class InstagramSyncScheduleProvider implements ScheduleProviderInterface
 {
     public function getSchedule(): Schedule
     {
         return (new Schedule())
-            // Tous les jours à 8h
-            ->add(RecurringMessage::cron('0 8 * * *', new SendAtelierReminderMessage()));
+            // Tous les jours à minuit (0h00)
+            ->add(RecurringMessage::cron('0 0 * * *', new SyncInstagramMediaMessage()));
     }
 }

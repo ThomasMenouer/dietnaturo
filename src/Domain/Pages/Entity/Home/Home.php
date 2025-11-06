@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Domain\Pages\Entity\Activities;
+namespace App\Domain\Pages\Entity\Home;
 
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use App\Infrastructure\Persistence\Doctrine\Repository\Pages\Activities\ActivitiesRepository;
+use App\Infrastructure\Persistence\Doctrine\Repository\Pages\Home\HomeRepository;
 
-#[ORM\Entity(repositoryClass: ActivitiesRepository::class)]
+#[ORM\Entity(repositoryClass: HomeRepository::class)]
 #[Vich\Uploadable]
-class Activities
+class Home
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -24,7 +24,7 @@ class Activities
     #[ORM\Column(type: Types::TEXT)]
     private string $content;
 
-    #[Vich\UploadableField(mapping: 'activities', fileNameProperty: 'imageName', size: 'imageSize')]
+    #[Vich\UploadableField(mapping: 'home', fileNameProperty: 'imageName', size: 'imageSize')]
     private ?File $imageFile = null;
 
     #[ORM\Column(nullable: true)]
@@ -33,8 +33,6 @@ class Activities
     #[ORM\Column(nullable: true)]
     private ?int $imageSize = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $updatedAt = null;
 
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance

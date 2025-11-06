@@ -30,6 +30,8 @@ use App\Domain\Pages\Entity\MentionsLegales\MentionsLegales;
 use App\Domain\Pages\Entity\Consultation\DeroulementConsultation;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use App\Domain\Pages\Entity\ConditionsGeneralesVente\ConditionsGeneralesVente;
+use App\Domain\Pages\Entity\Contact\Contact;
+use App\Domain\Pages\Entity\Home\Home;
 use App\Domain\Pages\Entity\PolitiqueConfidentialite\PolitiqueConfidentialite;
 use App\Infrastructure\Persistence\Doctrine\Repository\Ateliers\AteliersRepository;
 
@@ -66,6 +68,9 @@ class DashboardController extends AbstractDashboardController
         // Index des pages du site
         
         yield MenuItem::section('Pages du site');
+
+
+        yield MenuItem::linkToCrud('Home', 'fa-solid fa-list-ol', Home::class);
     
         yield MenuItem::subMenu('A propos', 'fa-solid fa-list-ol')->setSubItems([
             MenuItem::linkToCrud('Voir à propos', 'fa-solid fa-pencil', About::class),
@@ -75,6 +80,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Activités', 'fa-solid fa-list-ol', Activities::class);
 
         yield MenuItem::linkToCrud('FAQs', 'fa-solid fa-question', Faqs::class);
+
+        yield MenuItem::linkToCrud('Contact', 'fa-solid fa-list-ol', Contact::class);
 
         yield MenuItem::subMenu('Consultation', 'fa-solid fa-hand-holding-heart')->setSubItems([
             MenuItem::linkToCrud('Voir consultations', 'fa-solid fa-pencil', Consultations::class),
@@ -93,14 +100,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Voir conditions générales de vente', 'fa-solid fa-pencil', ConditionsGeneralesVente::class),
         ]);
 
-        // Index des entités du site
-
-        yield MenuItem::section('Blog');
-
-        yield MenuItem::subMenu('Blog', 'fa fa-file-text')->setSubItems([
-            MenuItem::linkToCrud('Voir articles', 'fa-regular fa-file-lines', Articles::class),
-            MenuItem::linkToCrud('Voir categories', 'fa fa-tags', Categories::class),
-        ]);
+        // Index Ateliers et Boutique
 
         yield MenuItem::section('Ateliers');
 
