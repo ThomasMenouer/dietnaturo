@@ -73,7 +73,7 @@ class EmailSendService implements SendMailInterface
                 'data' => $data
             ]);
 
-
+        $this->renderer->render($email);
         $this->mailer->send($email);
     }
 
@@ -105,8 +105,8 @@ class EmailSendService implements SendMailInterface
         ?string $link,
         bool $isVisio,
         string $slug,
-        string $typeAtelier): void 
-    {
+        string $typeAtelier
+    ): void {
 
         $template = match ($typeAtelier) {
             TypeAtelier::ATELIER->value => 'mails/rappels/atelier.html.twig',
@@ -127,6 +127,36 @@ class EmailSendService implements SendMailInterface
                     'link' => $link,
                     'isVisio' => $isVisio,
                 ]);
+            $this->renderer->render($email);
+            $this->mailer->send($email);
+        }
+    }
+
+    /**
+     * Envoie un email à tous les abonnés de la newsletter
+     * @param array $subscribers
+     * @param string $subject
+     * @param string $content
+     * @return void
+     */
+    public function sendEmailToAllSubscribers(array $subscribers, string $subject, string $content): void
+    {
+        foreach ($subscribers as $subscriber) {
+            $unsubscribeLink = sprintf(
+                'https://127.0.0.1:8000/newsletter/unsubscribe/%s',
+                $subscriber->getUnsubscribeToken()
+            );
+
+            $email = (new TemplatedEmail())
+                ->from('dietnaturo@gmail.com')
+                ->to($subscriber->getEmail())
+                ->subject($subject)
+                ->htmlTemplate('mails/newsletter/newsletter.html.twig')
+                ->context([
+                    'content' => $content,
+                    'unsubscribeLink' => $unsubscribeLink,
+                ]);
+
             $this->renderer->render($email);
             $this->mailer->send($email);
         }

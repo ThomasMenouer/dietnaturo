@@ -10,6 +10,7 @@ use App\Domain\Shop\Entity\Products;
 use App\Domain\Blog\Entity\Categories;
 use App\Domain\Pages\Entity\Faqs\Faqs;
 use App\Domain\Ateliers\Entity\Ateliers;
+use App\Domain\NewsletterSubscriber\Entity\NewsletterSubscriber;
 use App\Domain\Pages\Entity\About\About;
 use App\Domain\Shop\Entity\OrderDetails;
 use App\Domain\Shop\Entity\ProductsCover;
@@ -106,6 +107,7 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::subMenu('Atelier', 'fa-solid fa-people-group')->setSubItems([
             MenuItem::linkToCrud('Voir ateliers', 'fa-solid fa-leaf', Ateliers::class),
+            MenuItem::linkToCrud('Newsletter', 'fa-solid fa-newspaper', NewsletterSubscriber::class),
         ]);
 
         yield MenuItem::section('Boutique');

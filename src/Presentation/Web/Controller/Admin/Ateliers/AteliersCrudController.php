@@ -145,7 +145,7 @@ class AteliersCrudController extends AbstractCrudController
 
 
     /**
-     * Summary of sendEmailsToParticipants
+     * Envoie des emails aux participants inscrits à un atelier spécifique.
      * @param \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext $context
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -199,6 +199,12 @@ class AteliersCrudController extends AbstractCrudController
         ]);
     }
 
+    /**
+     * Supprime tous les participants associés à un atelier spécifique.
+     * @param \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext $context
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function DeleteParticipants(AdminContext $context, EntityManagerInterface $em)
     {
 

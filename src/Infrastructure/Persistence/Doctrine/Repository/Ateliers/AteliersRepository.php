@@ -31,11 +31,6 @@ class AteliersRepository extends ServiceEntityRepository implements AteliersRepo
         return $this->findAll();
     }
 
-    // public function getAtelierBySlug()
-    // {
-
-    // }
-
     public function save(Ateliers $atelier): void
     {
         $this->em->persist($atelier);
