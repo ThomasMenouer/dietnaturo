@@ -25,16 +25,28 @@
 						Mes accompagnements
 					</a>
 					<ul class="dropdown-menu">
-
-						<li class="nav-item">
-							<a class="nav-link dropdown-item {% if app.request.attributes.get('_route') == 'activities' %} active {% endif %}" href="{{ path('activities') }}">Activités</a>
-						</li>
-
-						<li class="nav-item">
-							<a class="nav-link dropdown-item {% if app.request.attributes.get('_route') == 'coachings' %} active {% endif %}" href="{{ path('coachings') }}">Coaching</a>
-						</li>
+						<twig:NavbarAccompagnements/>
 					</ul>
 				</li>
+
+				{# <li class="nav-item dropdown">
+													<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+														Mes accompagnements
+													</a>
+													<ul class="dropdown-menu">
+														<ul class="dropdown-menu">
+															{{ render(controller('App\\Controller\\NavbarAccompagnementController::accompagnementsDropdown')) }}
+														</ul>
+								
+														<li class="nav-item">
+															<a class="nav-link dropdown-item {% if app.request.attributes.get('_route') == 'activities' %} active {% endif %}" href="{{ path('activities') }}">Activités</a>
+														</li>
+								
+														<li class="nav-item">
+															<a class="nav-link dropdown-item {% if app.request.attributes.get('_route') == 'coachings' %} active {% endif %}" href="{{ path('coachings') }}">Coaching</a>
+														</li>
+													</ul>
+												</li> #}
 
 				<li class="nav-item">
 					<a class="nav-link {% if app.request.attributes.get('_route') == 'contact' %} active {% endif %}" href="{{ path('contact') }}">Contact</a>

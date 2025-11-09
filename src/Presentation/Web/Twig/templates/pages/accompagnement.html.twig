@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ accompagnement.title }}{% endblock %}
+
+{% block body %}
+<section class="accompagnement container py-5">
+    <h1 class="mb-4">{{ accompagnement.title }}</h1>
+
+    {% for bloc in accompagnement.contents %}
+        <div class="row align-items-center mb-5">
+            <div class="col-md-6">
+                <h2>{{ bloc.title }}</h2>
+                <div class="content">{{ bloc.content|raw }}</div>
+            </div>
+            <div class="col-md-6">
+                {% if bloc.imageName %}
+                    <img src="{{ vich_uploader_asset(bloc, 'imageFile') }}" alt="{{ bloc.title }}" class="img-fluid rounded shadow-sm">
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</section>
+
+{% endblock %}

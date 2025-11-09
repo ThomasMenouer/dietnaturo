@@ -14,12 +14,16 @@ class NewsletterType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label' => 'Votre email',
-                'attr' => ['placeholder' => 'exemple@domaine.com'],
+                'label' => 'Votre email :',
+                'attr' => [
+                    'placeholder' => 'exemple@domaine.com',
+                    'class' => 'form-control rounded-pill',
+                ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'S’inscrire',
-                'attr' => ['class' => 'btn btn-primary mt-2'],
+                'row_attr' => ['class' => 'text-center'],
+                'attr' => ['class' => 'btn btn-custom-color rounded-pill text-white px-4'],
             ]);
     }
 

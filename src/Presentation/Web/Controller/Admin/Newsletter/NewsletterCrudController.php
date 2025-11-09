@@ -2,19 +2,19 @@
 
 namespace App\Presentation\Web\Controller\Admin\Newsletter;
 
-use App\Application\Newsletter\UseCase\GetAllEmailsUseCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Infrastructure\Mailer\EmailSendService;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
-use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use App\Application\Newsletter\UseCase\GetAllEmailsUseCase;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use App\Domain\NewsletterSubscriber\Entity\NewsletterSubscriber;
 use App\Presentation\Web\Form\Admin\Newsletter\NewsletterAdminType;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use App\Infrastructure\Persistence\Doctrine\Repository\NewsletterRepository\NewsletterSubscriberRepository;
-use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 
 class NewsletterCrudController extends AbstractCrudController
 {
@@ -43,6 +43,17 @@ class NewsletterCrudController extends AbstractCrudController
         return $actions
             ->add(Crud::PAGE_INDEX, $sendNewsletter)
             ->disable(Action::NEW); // empêche l’ajout manuel d’un abonné
+    }
+
+    public function configureFields(string $pageName): array|\Traversable
+    {
+        return [
+            
+            TextField::new('email', 'Email')->setDisabled(),
+            DateTimeField::new('subscribedAt', 'Date d\'inscription')->setDisabled(),
+
+            
+        ];
     }
 
     public function sendNewsletter(Request $request, GetAllEmailsUseCase $getAllEmailsUseCase): Response

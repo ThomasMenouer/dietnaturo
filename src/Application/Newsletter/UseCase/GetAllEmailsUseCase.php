@@ -2,18 +2,15 @@
 
 namespace App\Application\Newsletter\UseCase;
 
-use App\Domain\NewsletterSubscriber\Entity\NewsletterSubscriber;
-use App\Infrastructure\Persistence\Doctrine\Repository\NewsletterRepository\NewsletterSubscriberRepository;
-
-
+use App\Domain\NewsletterSubscriber\Repository\NewsletterSubscriberRepositoryInterface;
 
 class GetAllEmailsUseCase
 {
-    public function __construct(private NewsletterSubscriberRepository $repository) {}
+    public function __construct(private NewsletterSubscriberRepositoryInterface $newsletterSubscriberRepositoryInterface) {}
 
     public function execute(): array
     {
-        return $this->repository->findAllEmails();
+        return $this->newsletterSubscriberRepositoryInterface->findAllEmails();
 
     }
 }

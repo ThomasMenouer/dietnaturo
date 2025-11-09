@@ -9,13 +9,14 @@ use App\Domain\Shop\Entity\Invoices;
 use App\Domain\Shop\Entity\Products;
 use App\Domain\Blog\Entity\Categories;
 use App\Domain\Pages\Entity\Faqs\Faqs;
+use App\Domain\Pages\Entity\Home\Home;
 use App\Domain\Ateliers\Entity\Ateliers;
-use App\Domain\NewsletterSubscriber\Entity\NewsletterSubscriber;
 use App\Domain\Pages\Entity\About\About;
 use App\Domain\Shop\Entity\OrderDetails;
 use App\Domain\Shop\Entity\ProductsCover;
 use App\Domain\Shop\Entity\ProductsEbook;
 use App\Domain\Pages\Entity\About\Approche;
+use App\Domain\Pages\Entity\Contact\Contact;
 use App\Domain\Shop\Entity\CategoriesProducts;
 use Symfony\Component\HttpFoundation\Response;
 use App\Domain\Pages\Entity\Coaching\Coachings;
@@ -26,13 +27,13 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use App\Domain\Pages\Entity\Consultation\Consultations;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use App\Domain\Pages\Entity\Accompagnement\Accompagnement;
 use App\Domain\Pages\Entity\Consultation\PriceConsultations;
 use App\Domain\Pages\Entity\MentionsLegales\MentionsLegales;
+use App\Domain\NewsletterSubscriber\Entity\NewsletterSubscriber;
 use App\Domain\Pages\Entity\Consultation\DeroulementConsultation;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use App\Domain\Pages\Entity\ConditionsGeneralesVente\ConditionsGeneralesVente;
-use App\Domain\Pages\Entity\Contact\Contact;
-use App\Domain\Pages\Entity\Home\Home;
 use App\Domain\Pages\Entity\PolitiqueConfidentialite\PolitiqueConfidentialite;
 use App\Infrastructure\Persistence\Doctrine\Repository\Ateliers\AteliersRepository;
 
@@ -89,6 +90,8 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Voir déroulement consultation', 'fa-solid fa-bars-staggered', DeroulementConsultation::class),
             MenuItem::linkToCrud('Voir prix consultations', 'fa-solid fa-money-bill', PriceConsultations::class),
         ]);
+
+        yield MenuItem::linkToCrud('Accompagnement', 'fa-solid fa-list-ol', Accompagnement::class);
 
         yield MenuItem::subMenu('Coaching', 'fa-solid fa-dumbbell')->setSubItems([
             MenuItem::linkToCrud('Voir coachings', 'fa-solid fa-dumbbell', Coachings::class),

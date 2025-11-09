@@ -3,23 +3,21 @@
 namespace App\Application\Newsletter\UseCase;
 
 use App\Domain\NewsletterSubscriber\Entity\NewsletterSubscriber;
-use App\Infrastructure\Persistence\Doctrine\Repository\NewsletterRepository\NewsletterSubscriberRepository;
-
-
+use App\Domain\NewsletterSubscriber\Repository\NewsletterSubscriberRepositoryInterface;
 
 class RegisterNewsletterSubscriberUseCase
 {
-    public function __construct(private NewsletterSubscriberRepository $repository) {}
+    public function __construct(private NewsletterSubscriberRepositoryInterface $newsletterSubscriberRepositoryInterface) {}
 
     public function execute(string $email): string
     {
-        $existing = $this->repository->findOneByEmail($email);
+        $existing = $this->newsletterSubscriberRepositoryInterface->findOneByEmail($email);
         if ($existing) {
             return 'already_registered';
         }
 
         $subscriber = new NewsletterSubscriber($email);
-        $this->repository->save($subscriber);
+        $this->newsletterSubscriberRepositoryInterface->save($subscriber);
 
         return 'success';
     }

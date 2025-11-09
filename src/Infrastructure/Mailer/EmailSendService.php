@@ -108,11 +108,20 @@ class EmailSendService implements SendMailInterface
         string $typeAtelier
     ): void {
 
-        $template = match ($typeAtelier) {
-            TypeAtelier::ATELIER->value => 'mails/rappels/atelier.html.twig',
-            TypeAtelier::ATELIER_FLASH->value => 'mails/rappels/atelier_flash.html.twig',
-            TypeAtelier::COURS_YOGA->value => 'mails/rappels/cours_yoga.html.twig',
-        };
+        // Choix du template selon le type et si c'est en visio
+        if ($isVisio) {
+            $template = match ($typeAtelier) {
+                TypeAtelier::ATELIER->value => 'mails/rappels/atelier_visio.html.twig',
+                TypeAtelier::ATELIER_FLASH->value => 'mails/rappels/atelier_flash_visio.html.twig',
+                TypeAtelier::COURS_YOGA->value => 'mails/rappels/cours_yoga_visio.html.twig',
+            };
+        } else {
+            $template = match ($typeAtelier) {
+                TypeAtelier::ATELIER->value => 'mails/rappels/atelier.html.twig',
+                TypeAtelier::ATELIER_FLASH->value => 'mails/rappels/atelier_flash.html.twig',
+                TypeAtelier::COURS_YOGA->value => 'mails/rappels/cours_yoga.html.twig',
+            };
+        }
 
         foreach ($participants as $participant) {
             $email = (new TemplatedEmail())
@@ -131,6 +140,7 @@ class EmailSendService implements SendMailInterface
             $this->mailer->send($email);
         }
     }
+
 
     /**
      * Envoie un email à tous les abonnés de la newsletter

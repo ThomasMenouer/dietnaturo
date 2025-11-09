@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Persistence\Doctrine\Repository\NewsletterRepository;
+namespace App\Infrastructure\Persistence\Doctrine\Repository\NewsletterSubscriber;
 
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,9 +27,20 @@ class NewsletterSubscriberRepository extends ServiceEntityRepository implements 
         $this->em->flush();
     }
 
+    public function remove(NewsletterSubscriber $subscriber): void
+    {
+        $this->em->remove($subscriber);
+        $this->em->flush();
+    }
+
+    public function findOneByUnsubscribeToken(string $token): ?NewsletterSubscriber
+    {
+        return $this->findOneBy(['unsubscribeToken' => $token]);
+    }
+
     public function findOneByEmail(string $email): ?NewsletterSubscriber
     {
-        return $this->em->getRepository(NewsletterSubscriber::class)->findOneBy(['email' => $email]);
+        return $this->findOneBy(['email' => $email]);
     }
 
     /**

@@ -32,25 +32,31 @@
 		<!-- Modal Newsletter -->
 		<div class="modal fade" id="newsletterModal" tabindex="-1" aria-labelledby="newsletterModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content rounded-4 shadow-lg">
+				<div class="modal-content rounded-4 shadow-lg border-0">
 					<div class="modal-header border-0">
 						<h5 class="modal-title fw-bold" id="newsletterModalLabel">S’inscrire à la newsletter</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
 					</div>
 					<div class="modal-body">
-						<p>Recevez les prochains ateliers directement dans votre boîte mail :</p>
+						<p>Recevez les prochains ateliers directement dans votre boîte mail !</p>
+
 						{{ form_start(form) }}
 						{{ form_errors(form) }}
 
-						<div class="mb-3">
-							{{ form_row(form.email) }}
+						<div class="row g-3 align-items-center mb-3">
+							<div class="col-auto">
+								{{ form_label(form.email, null, {'label_attr': {'class': 'col-form-label'}}) }}
+							</div>
+							<div class="col-auto">
+								{{ form_widget(form.email, {'attr': {'placeholder': 'exemple@domaine.com', 'class': 'form-control rounded-pill'}}) }}
+							</div>
 						</div>
 
 						<div class="text-end mt-4">
-							{{ form_row(form.submit) }}
+							{{ form_widget(form.submit, {'attr': {'class': 'btn btn-custom-color rounded-pill text-white px-4'}}) }}
 						</div>
-						{{ form_end(form) }}
 
+						{{ form_end(form) }}
 					</div>
 				</div>
 			</div>
