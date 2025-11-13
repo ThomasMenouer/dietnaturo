@@ -31,6 +31,7 @@ use App\Domain\Pages\Entity\Accompagnement\Accompagnement;
 use App\Domain\Pages\Entity\Consultation\PriceConsultations;
 use App\Domain\Pages\Entity\MentionsLegales\MentionsLegales;
 use App\Domain\NewsletterSubscriber\Entity\NewsletterSubscriber;
+use App\Domain\Pages\Entity\Accompagnement\AccompagnementContent;
 use App\Domain\Pages\Entity\Consultation\DeroulementConsultation;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use App\Domain\Pages\Entity\ConditionsGeneralesVente\ConditionsGeneralesVente;
@@ -91,7 +92,10 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Voir prix consultations', 'fa-solid fa-money-bill', PriceConsultations::class),
         ]);
 
-        yield MenuItem::linkToCrud('Accompagnement', 'fa-solid fa-list-ol', Accompagnement::class);
+        yield MenuItem::subMenu('Accompagnement', 'fa-solid fa-list-ol')->setSubItems([
+            MenuItem::linkToCrud('Accompagnement', 'fa-solid fa-list-ol', Accompagnement::class),
+            MenuItem::linkToCrud('Accompagnement Content', 'fa-solid fa-file-lines', AccompagnementContent::class),
+        ]);
 
         yield MenuItem::subMenu('Coaching', 'fa-solid fa-dumbbell')->setSubItems([
             MenuItem::linkToCrud('Voir coachings', 'fa-solid fa-dumbbell', Coachings::class),

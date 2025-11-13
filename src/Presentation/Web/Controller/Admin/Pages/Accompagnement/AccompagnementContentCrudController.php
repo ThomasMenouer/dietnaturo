@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Presentation\Web\Controller\Admin\Pages\Accompagnement;
+
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use Vich\UploaderBundle\Form\Type\VichImageType;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use App\Domain\Pages\Entity\Accompagnement\AccompagnementContent;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+
+class AccompagnementContentCrudController extends AbstractCrudController
+{
+    public static function getEntityFqcn(): string
+    {
+        return AccompagnementContent::class;
+    }
+
+    public function configureFields(string $pageName): iterable
+    {
+        return [
+            IdField::new('id')->hideOnForm(),
+            TextField::new('title', 'Titre'),
+
+
+            TextEditorField::new('content', 'Contenu')
+                ->hideOnIndex(),
+
+            IntegerField::new('position', 'Ordre d’affichage'),
+
+
+            TextField::new('imageName', 'Image')->onlyOnIndex(), // pour affichage dans la liste
+            TextField::new('imageFile', 'Image (upload)')->setFormType(VichImageType::class)->onlyOnForms(),
+
+            AssociationField::new('accompagnement', 'Accompagnement')
+                ->setCrudController(AccompagnementCrudController::class),
+        ];
+    }
+}

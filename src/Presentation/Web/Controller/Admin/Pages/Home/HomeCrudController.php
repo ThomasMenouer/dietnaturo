@@ -4,6 +4,7 @@ namespace App\Presentation\Web\Controller\Admin\Pages\Home;
 
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use App\Domain\Pages\Entity\Home\Home;
+use Dom\Text;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -20,6 +21,9 @@ class HomeCrudController extends AbstractCrudController
     {
         return [
             TextField::new('title'),
+            TextField::new('subtitle'),
+            TextField::new('fullName'),
+            TextField::new('consult'),
             TextEditorField::new('content')->hideOnIndex()->setTrixEditorConfig([
                 'blockAttributes' => [
                     'default' => ['tagName' => 'p', 'class' => ''],

@@ -21,6 +21,15 @@ class Home
     #[ORM\Column(length: 255)]
     private string $title;
 
+    #[ORM\Column(length: 255)]
+    private string $subtitle;
+
+    #[ORM\Column(length: 255)]
+    private string $fullName;
+
+    #[ORM\Column(length: 255)]
+    private string $consult;
+
     #[ORM\Column(type: Types::TEXT)]
     private string $content;
 
@@ -92,6 +101,42 @@ class Home
     public function setTitle(string $title): static
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function getSubtitle(): string
+    {
+        return $this->subtitle;
+    }
+    
+    public function setSubtitle(string $subtitle): static
+    {
+        $this->subtitle = $subtitle;
+
+        return $this;
+    }
+
+    public function getFullName(): string
+    {
+        return $this->fullName;
+    }
+
+    public function setFullName(string $fullName): static
+    {
+        $this->fullName = $fullName;
+
+        return $this;
+    }
+
+    public function getConsult(): string
+    {
+        return $this->consult;
+    }
+
+    public function setConsult(string $consult): static
+    {
+        $this->consult = $consult;
 
         return $this;
     }
