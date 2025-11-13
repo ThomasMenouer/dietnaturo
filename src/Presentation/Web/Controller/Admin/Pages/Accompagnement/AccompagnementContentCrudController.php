@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -32,9 +33,14 @@ class AccompagnementContentCrudController extends AbstractCrudController
 
             IntegerField::new('position', 'Ordre d’affichage'),
 
+            TextField::new('imageFile', 'Image')
+                ->setFormType(VichImageType::class)
+                ->hideOnIndex(),
 
-            TextField::new('imageName', 'Image')->onlyOnIndex(), // pour affichage dans la liste
-            TextField::new('imageFile', 'Image (upload)')->setFormType(VichImageType::class)->onlyOnForms(),
+            ImageField::new('imageName', 'Image')
+                ->setBasePath('/images/accompagnementContent')
+                ->setUploadDir('public/images')
+                ->hideOnForm(),
 
             AssociationField::new('accompagnement', 'Accompagnement')
                 ->setCrudController(AccompagnementCrudController::class),
