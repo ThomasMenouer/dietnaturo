@@ -1,24 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Commande réussie{% endblock %}
+{% block title %}Commande réussie
+{% endblock %}
 
 {% block body %}
 
-    <div class="container">
+	<div class="container">
 
-        <div class="row d-flex justify-content-center align-items-center" style="height: 70vh;">
-            <div class="col-12 col-md-6">
-                <div class="card border-0">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Merci pour votre commande !</h5>
-                        <p class="card-text">Votre paiement a bien été effectué.</p>
-                        <p class="card-text">Vous recevrez bientôt un e-mail de confirmation avec les détails de votre commande et votre e-book !</p>
-                    </div>
-                    <div class="card-footer border-0 text-center">
-                        <a href="{{ path('home') }}" class="btn btn-outline-primary">Retour à la boutique</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+		<div class="row d-flex justify-content-center align-items-center" style="height: 70vh;">
+			<div class="col-12 col-md-6">
+				<div class="card border-0 rounded-4 shadow-sm">
+					<div class="card-body">
+						<h5 class="card-title text-center">Merci pour votre commande !</h5>
+						<p class="card-text">Votre paiement a bien été effectué.</p>
+						<p class="card-text">Vous recevrez bientôt un e-mail de confirmation avec les détails de votre commande et votre e-book !</p>
+					</div>
+					<div class="card-footer border-0 text-center">
+						<a href="{{ path('shop_index') }}" class="btn btn-custom-color text-white rounded-pill px-4">
+							Retour à la boutique
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

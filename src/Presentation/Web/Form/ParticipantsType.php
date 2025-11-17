@@ -41,7 +41,7 @@ class ParticipantsType extends AbstractType
 
         ->add('Inscription', SubmitType::class, [
             'attr' => [
-                'class' => 'btn btn-primary'
+                'class' => 'btn btn-custom-color text-white rounded-pill'
             ]
         ]);
     }

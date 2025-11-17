@@ -1,60 +1,84 @@
-<nav>
-    <ul class="nav justify-content-end py-3 fs-5">
+<nav class="navbar navbar-expand-lg">
+	<div class="container-fluid">
 
-        <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'home' %} active {% endif %}" aria-current="#" href="{{ path('home') }}">Accueil</a>
-        </li>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
 
-            <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'about' %} active {% endif %}" href="{{ path('about') }}">A propos</a>
-        </li>
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+			<ul class="navbar-nav nav-underline mx-auto mb-2 mb-lg-0 fs-5 fw-semibold px-3">
 
-        <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'consultation' %} active {% endif %}" href="{{ path('consultation') }}">Consultation</a>
-        </li>
+				<li class="nav-item">
+					<a class="nav-link {% if app.request.attributes.get('_route') == 'home' %} active {% endif %}" aria-current="#" href="{{ path('home') }}">Accueil</a>
+				</li>
 
-        <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'activities' %} active {% endif %}" href="{{ path('activities') }}">Activités</a>
-        </li>
+				<li class="nav-item">
+					<a class="nav-link {% if app.request.attributes.get('_route') == 'about' %} active {% endif %}" href="{{ path('about') }}">A propos</a>
+				</li>
 
-        <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'coachings' %} active {% endif %}" href="{{ path('coachings') }}">Coaching</a>
-        </li>
+				<li class="nav-item">
+					<a class="nav-link {% if app.request.attributes.get('_route') == 'consultation' %} active {% endif %}" href="{{ path('consultation') }}">Consultation</a>
+				</li>
 
-        <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'contact' %} active {% endif %}" href="{{ path('contact') }}">Contact</a>
-        </li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Mes accompagnements
+					</a>
+					<ul class="dropdown-menu">
+						<twig:NavbarAccompagnements/>
+					</ul>
+				</li>
 
-        <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'faq' %} active {% endif %}" href="{{ path('faq') }}">FAQ</a>
-        </li>
+				{# <li class="nav-item dropdown">
+													<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+														Mes accompagnements
+													</a>
+													<ul class="dropdown-menu">
+														<ul class="dropdown-menu">
+															{{ render(controller('App\\Controller\\NavbarAccompagnementController::accompagnementsDropdown')) }}
+														</ul>
+								
+														<li class="nav-item">
+															<a class="nav-link dropdown-item {% if app.request.attributes.get('_route') == 'activities' %} active {% endif %}" href="{{ path('activities') }}">Activités</a>
+														</li>
+								
+														<li class="nav-item">
+															<a class="nav-link dropdown-item {% if app.request.attributes.get('_route') == 'coachings' %} active {% endif %}" href="{{ path('coachings') }}">Coaching</a>
+														</li>
+													</ul>
+												</li> #}
 
-        <div class="vr" style="background-color: #DA8359; width: 3px;"></div>
+				<li class="nav-item">
+					<a class="nav-link {% if app.request.attributes.get('_route') == 'contact' %} active {% endif %}" href="{{ path('contact') }}">Contact</a>
+				</li>
 
-         <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'ateliers_index' %} active {% endif %}" href="{{ path('ateliers_index') }}">Ateliers</a>
-        </li>
+				<li class="nav-item">
+					<a class="nav-link {% if app.request.attributes.get('_route') == 'ateliers_index' %} active {% endif %}" href="{{ path('ateliers_index') }}">Ateliers</a>
+				</li>
 
-        <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'blog_index' %} active {% endif %}" href="{{ path('blog_index') }}">Blog</a>
-        </li>
+				<li class="nav-item">
+					<a class="nav-link {% if app.request.attributes.get('_route') == 'blog_index' %} active {% endif %}" href="{{ path('blog_index') }}">Blog</a>
+				</li>
 
-        <li class="nav-item">
-            <a class="nav-link {% if app.request.attributes.get('_route') == 'shop_index' %} active {% endif %}" href="{{ path('shop_index') }}">Boutique</a>
-        </li>
+				<li class="nav-item">
+					<a class="nav-link {% if app.request.attributes.get('_route') == 'shop_index' %} active {% endif %}" href="{{ path('shop_index') }}">Boutique</a>
+				</li>
 
-        <li class="nav-item">
-            <a class="nav-link cart-icon {% if app.request.attributes.get('_route') == 'cart_index' %} active {% endif %}" href="{{ path('cart_index') }}">
-                {{ ux_icon('bi:cart3') }}
+				<li class="nav-item">
+					<a class="nav-link cart-icon {% if app.request.attributes.get('_route') == 'cart_index' %} active {% endif %}" href="{{ path('cart_index') }}">
+						{{ ux_icon('bi:cart3') }}
 
-                {% if app.session.get('cart') %}
-                    <span class="position-absolute translate-middle badge rounded-pill bg-danger">
-                        {{ cartItemCount }}
-                    </span>
-                {% endif %}
-              
-            </a>
-        </li>
+						{% if app.session.get('cart') %}
+							<span class="position-absolute translate-middle badge rounded-pill bg-red-pastel">
+								{{ cartItemCount }}
+							</span>
+						{% endif %}
 
-    </ul>
+					</a>
+				</li>
+
+			</ul>
+
+		</div>
+	</div>
 </nav>

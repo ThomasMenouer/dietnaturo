@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blog Instagram
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5">
+		<h1 class="mb-5 text-center">Publications Instagram</h1>
+
+		{% if posts is empty %}
+			<p class="text-center text-muted">Aucune publication trouvée.</p>
+		{% else %}
+			<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+				{% for post in posts %}
+					<div class="col">
+						<div class="card rounded-4 shadow-sm h-100 border-0">
+							{% if post.mediaType == 'IMAGE' or post.mediaType == 'CAROUSEL_ALBUM' %}
+								<img src="{{ post.mediaUrl }}" class="card-img-top rounded-top-4 object-fit-cover" style="height: 300px;" alt="Instagram post">
+							{% elseif post.mediaType == 'VIDEO' %}
+								<video class="card-img-top rounded-top-4 object-fit-cover" style="height: 300px;" controls controlslist="nodownload" oncontextmenu="return false;">
+									<source src="{{ post.mediaUrl }}" type="video/mp4">
+								</video>
+							{% endif %}
+
+							<div class="card-body">
+								{% if post.caption %}
+									<p class="card-text">{{ post.caption|default('')|slice(0, 120) ~ '...' }}</p>
+								{% endif %}
+
+							</div>
+							<div class="card-footer text-center border-0">
+								<a href="{{ path('blog_show', {id: post.id}) }}" class="btn btn-custom-color text-white rounded-pill">
+									Voir le post
+								</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+
+			<!-- Pagination -->
+			{% if totalPages > 1 %}
+				<nav class="bg-transparent" aria-label="Pagination">
+					<ul class="pagination justify-content-center my-4">
+
+						{# Bouton précédent #}
+						<li class="page-item {% if page <= 1 %}disabled{% endif %}">
+							<a class="page-link rounded-start-4 border-0 shadow-sm" href="?page={{ page - 1 }}" tabindex="-1">Précédent</a>
+						</li>
+
+						{# Pages avant la page courante #}
+						{% set start = page - 2 > 1 ? page - 2 : 1 %}
+						{% set end = page + 2 < totalPages ? page + 2 : totalPages %}
+
+						{% if start > 1 %}
+							<li class="page-item">
+								<a class="page-link border-0 shadow-sm" href="?page=1">1</a>
+							</li>
+							{% if start > 2 %}
+								<li class="page-item disabled">
+									<span class="page-link border-0 shadow-sm">…</span>
+								</li>
+							{% endif %}
+						{% endif %}
+
+						{# Pages autour de la page courante #}
+						{% for p in start..end %}
+							<li class="page-item {% if p == page %}active{% endif %}">
+								<a class="page-link border-0 shadow-sm" href="?page={{ p }}">{{ p }}</a>
+							</li>
+						{% endfor %}
+
+						{# Pages après la page courante #}
+						{% if end < totalPages %}
+							{% if end < totalPages - 1 %}
+								<li class="page-item disabled">
+									<span class="page-link border-0 shadow-sm">…</span>
+								</li>
+							{% endif %}
+							<li class="page-item">
+								<a class="page-link border-0 shadow-sm" href="?page={{ totalPages }}">{{ totalPages }}</a>
+							</li>
+						{% endif %}
+
+						{# Bouton suivant #}
+						<li class="page-item {% if page >= totalPages %}disabled{% endif %}">
+							<a class="page-link rounded-end-4 border-0 shadow-sm" href="?page={{ page + 1 }}">Suivant</a>
+						</li>
+
+					</ul>
+				</nav>
+			{% endif %}
+
+		{% endif %}
+	</div>
+{% endblock %}

@@ -4,23 +4,26 @@ namespace App\Infrastructure\Mailer;
 
 use Symfony\Component\Mime\Email;
 use App\Domain\Mailer\SendMailInterface;
+use App\Domain\Ateliers\Enum\TypeAtelier;
 use App\Domain\Ateliers\Entity\Participants;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
-// use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\BodyRendererInterface;
-use Symfony\Component\Mailer\Transport\TransportInterface;
 
 class EmailSendService implements SendMailInterface
 {
-    public function __construct(private MailerInterface $mailer, private BodyRendererInterface $renderer) {}
+    public function __construct(
+        private MailerInterface $mailer,
+        private BodyRendererInterface $renderer,
+        private string $fromAddress
+    ) {}
 
     public function sendMailInscriptionAtelier(string $email, string $atelierTitle, string $date): void
     {
 
         $email = (new TemplatedEmail())
-            ->from('dietnaturo@gmail.com')
-            ->to ($email)
+            ->from($this->fromAddress)
+            ->to($email)
             ->subject('Confirmation d\'inscription')
             ->htmlTemplate('mails/inscription_atelier.html.twig')
             ->context([
@@ -35,14 +38,14 @@ class EmailSendService implements SendMailInterface
 
 
 
-    public function sendEmail(Participants $participants,string $to, string $subject, string $content): void
+    public function sendEmail(Participants $participants, string $to, string $subject, string $content): void
     {
         $email = (new Email())
-            ->from('dietnaturo@gmail.com')
+            ->from($this->fromAddress)
             ->to($participants->getEmail())
             ->subject($subject)
             ->html($content);
-        
+
         $this->mailer->send($email);
     }
 
@@ -51,11 +54,11 @@ class EmailSendService implements SendMailInterface
 
         foreach ($participants as $participant) {
             $email = (new Email())
-            ->from('dietnaturo@gmail.com')
-            ->to($participant->getEmail())
-            ->subject($subject)
-            ->html($content);
-        
+                ->from($this->fromAddress)
+                ->to($participant->getEmail())
+                ->subject($subject)
+                ->html($content);
+
             $this->mailer->send($email);
         }
     }
@@ -63,22 +66,22 @@ class EmailSendService implements SendMailInterface
     public function sendEmailContact(array $data): void
     {
         $email = (new TemplatedEmail())
-        ->from($data['Email'])
-        ->to ('dietnaturo@gmail.com')
-        ->subject('Demande de contact via site web')
-        ->htmlTemplate('mails/contact.html.twig')
-        ->context([
-            'data' => $data
-        ]);
+            ->from($data['Email'])
+            ->to($this->fromAddress)
+            ->subject('Demande de contact via site web')
+            ->htmlTemplate('mails/contact.html.twig')
+            ->context([
+                'data' => $data
+            ]);
 
-
+        $this->renderer->render($email);
         $this->mailer->send($email);
     }
 
     public function sendInvoiceAndEbooks(string $email, string $firstname, string $invoicePath, array $ebookPaths): void
     {
         $mail = (new TemplatedEmail())
-            ->from('dietnaturo@gmail.com')
+            ->from($this->fromAddress)
             ->to($email)
             ->subject('Votre commande et vos ebooks')
             ->htmlTemplate('mails/order.html.twig')
@@ -86,7 +89,7 @@ class EmailSendService implements SendMailInterface
                 'firstname' => $firstname,
             ])
             ->attachFromPath($invoicePath, 'facture.pdf');
-            
+
         foreach ($ebookPaths as $ebookPath) {
             $filename = basename($ebookPath);
             $mail->attachFromPath($ebookPath, $filename);
@@ -94,7 +97,79 @@ class EmailSendService implements SendMailInterface
 
         $this->renderer->render($mail);
         $this->mailer->send($mail);
-
     }
 
+    public function sendEmailReminderAtelier(
+        array $participants,
+        string $title,
+        \DateTimeInterface $date,
+        ?string $link,
+        bool $isVisio,
+        string $slug,
+        string $typeAtelier
+    ): void {
+
+        // Choix du template selon le type et si c'est en visio
+        if ($isVisio) {
+            $template = match ($typeAtelier) {
+                TypeAtelier::ATELIER->value => 'mails/rappels/atelier_visio.html.twig',
+                TypeAtelier::ATELIER_FLASH->value => 'mails/rappels/atelier_flash_visio.html.twig',
+                TypeAtelier::COURS_YOGA->value => 'mails/rappels/cours_yoga_visio.html.twig',
+            };
+        } else {
+            $template = match ($typeAtelier) {
+                TypeAtelier::ATELIER->value => 'mails/rappels/atelier.html.twig',
+                TypeAtelier::ATELIER_FLASH->value => 'mails/rappels/atelier_flash.html.twig',
+                TypeAtelier::COURS_YOGA->value => 'mails/rappels/cours_yoga.html.twig',
+            };
+        }
+
+        foreach ($participants as $participant) {
+            $email = (new TemplatedEmail())
+                ->from('dietnaturo@gmail.com')
+                ->to($participant->getEmail())
+                ->subject('Rappel : votre ' . $title . ' approche !')
+                ->htmlTemplate($template)
+                ->context([
+                    'participant' => $participant,
+                    'title' => $title,
+                    'date' => $date,
+                    'link' => $link,
+                    'isVisio' => $isVisio,
+                ]);
+            $this->renderer->render($email);
+            $this->mailer->send($email);
+        }
+    }
+
+
+    /**
+     * Envoie un email à tous les abonnés de la newsletter
+     * @param array $subscribers
+     * @param string $subject
+     * @param string $content
+     * @return void
+     */
+    public function sendEmailToAllSubscribers(array $subscribers, string $subject, string $content): void
+    {
+        foreach ($subscribers as $subscriber) {
+            $unsubscribeLink = sprintf(
+                'https://www.dietnaturo.fr/newsletter/unsubscribe/%s',
+                $subscriber->getUnsubscribeToken()
+            );
+
+            $email = (new TemplatedEmail())
+                ->from($this->fromAddress)
+                ->to($subscriber->getEmail())
+                ->subject($subject)
+                ->htmlTemplate('mails/newsletter/newsletter.html.twig')
+                ->context([
+                    'content' => $content,
+                    'unsubscribeLink' => $unsubscribeLink,
+                ]);
+
+            $this->renderer->render($email);
+            $this->mailer->send($email);
+        }
+    }
 }

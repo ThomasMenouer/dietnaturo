@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ accompagnement.title }}{% endblock %}
+
+{% block body %}
+
+<div class="container my-5">
+    <h1 class="text-center mb-5">{{ accompagnement.title }}</h1>
+    <div class="row">
+
+        {% for bloc in accompagnement.contents %}
+            <div class="row mb-5">
+
+                <div class="card p-5 border-0 shadow-sm rounded-4 d-flex flex-row justify-content-between">
+
+                    {% if loop.index is odd %}
+                        <!-- Image à gauche pour les itérations impaires -->
+                        {% if bloc.imageName %}
+                            <div class="col-12 col-md-3">
+                                <img src="{{ vich_uploader_asset(bloc, 'imageFile') }}" 
+                                     alt="{{ bloc.title }}" 
+                                     class="img-fluid object-fit-cover shadow-sm rounded-4"
+                                     style="transform: translateX(-80px);">
+                            </div>
+                        {% endif %}
+
+                        <div class="col-12 col-md-9">
+                            <div class="card-body">
+                                <h3 class="card-title">{{ bloc.title }}</h3>
+                                <p class="card-text">{{ bloc.content|raw }}</p>
+                            </div>
+                        </div>
+
+                    {% else %}
+                        <!-- Image à droite pour les itérations paires -->
+                        <div class="col-12 col-md-9">
+                            <div class="card-body">
+                                <h3 class="card-title">{{ bloc.title }}</h3>
+                                <p class="card-text">{{ bloc.content|raw }}</p>
+                            </div>
+                        </div>
+
+                        {% if bloc.imageName %}
+                            <div class="col-12 col-md-3">
+                                <img src="{{ vich_uploader_asset(bloc, 'imageFile') }}" 
+                                     alt="{{ bloc.title }}" 
+                                     class="img-fluid object-fit-cover shadow-sm rounded-4"
+                                     style="transform: translateX(80px);">
+                            </div>
+                        {% endif %}
+                    {% endif %}
+
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}

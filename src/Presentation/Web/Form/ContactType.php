@@ -18,7 +18,7 @@ class ContactType extends AbstractType
         $builder
             ->add('Prenom', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control rounded-pill',
                     'placeholder' => 'Prénom'
                 ],
                 'required' => false,
@@ -26,7 +26,7 @@ class ContactType extends AbstractType
             ])
             ->add('Nom', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control rounded-pill',
                     'placeholder' => 'Nom de famille'
                 ],
                 'required' => false,
@@ -34,7 +34,7 @@ class ContactType extends AbstractType
             ])
             ->add('Email', EmailType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control rounded-pill',
                     'placeholder' => 'Email*',
                 ],
                 'constraints' =>[new Assert\Email([
@@ -45,7 +45,7 @@ class ContactType extends AbstractType
             ])
             ->add('Message', TextareaType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control rounded-4',
                     'placeholder' => 'Message*'
                 ],
                 'constraints' => [new Assert\NotBlank(['message' => 'Le message ne peut pas etre vide.']
@@ -55,7 +55,7 @@ class ContactType extends AbstractType
             ])
             ->add('Envoyer', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-primary'
+                    'class' => 'btn btn-custom-color rounded-pill text-white px-4',
                 ]
             ])
         ;

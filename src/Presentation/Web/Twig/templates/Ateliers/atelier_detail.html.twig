@@ -1,59 +1,109 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} {{ atelier.title }} {% endblock %}
+{% block title %}
+	{{ atelier.title }}
+{% endblock %}
 
 {% block body %}
 
-<main class="flex-grow-1">
-    <section class="article-section my-5">
-        <div class="container">
-            <div class="row">
-                <h1 class="">
-                        Atelier du {{ atelier.date | format_datetime('long', 'short', locale: 'fr') }} <br>
-                </h1>
-                <p class=" mb-5"> {{ atelier.title }}</p>
-            </div>
-        
-        
+	<div class="container mb-5">
 
-            <p class="">{{ atelier.content | raw }}</p>
+		<div class="row">
+			<div class="col my-5">
+				<div class="card border-0 shadow-sm p-4 rounded-4">
+					<div class="card-header text-center">
+						<h1 class="card-title text-center">{{ atelier.title }}</h1>
+						<p class="text-muted mb-2">
+							<i class="bi bi-calendar-event"></i>
+							{{ atelier.date | format_datetime('long', 'short', locale: 'fr') }}
+						</p>
+						<div>
+							{% if atelier.isVisio %}
+								<span class="badge rounded-pill bg-primary px-3 py-2">Visio</span>
+							{% else %}
+								<span class="badge rounded-pill bg-secondary px-3 py-2">Présentiel</span>
+							{% endif %}
+						</div>
 
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            S'inscrire
-            </button>
+					</div>
+					<div
+						class="card-body">
+						<!-- Image principale -->
+						<div class="text-center mb-5">
+							<img src="{{ asset('/images/ateliers/') ~ atelier.imageName }}" alt="{{ atelier.title }}" class="img-fluid rounded-4 shadow-sm w-25">
+						</div>
 
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">S'inscrire</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
+						<!-- Contenu -->
+						<div class="mx-auto" style="max-width: 800px;">
+							<div class="fs-5 lh-lg mb-5 text-dark">
+								{{ atelier.content | raw }}
+							</div>
 
-                        <div class="modal-body">
-                            {{ form_start(form) }}
-                                {{ form_errors(form) }}
+							<!-- Bloc d'infos -->
+							<div class="d-flex justify-content-between align-items-center border-top pt-4 mb-4 flex-wrap gap-2">
+								<div>
+									<strong class="fs-6 text-muted">Prix :</strong>
+									<span class="fw-semibold">{{ (atelier.price / 100) | format_currency('EUR') }}</span>
+								</div>
+								<div>
+									<strong class="fs-6 text-muted">Places restantes :</strong>
+									{% if atelier.getRemainingPlaces == 0 %}
+										<span class="text-danger fw-semibold">Aucune</span>
+									{% else %}
+										<span class="text-success fw-semibold">{{ atelier.getRemainingPlaces }}</span>
+									{% endif %}
+								</div>
+							</div>
 
-                                {{ form_row(form.email) }}
-                                
-                                {{ form_row(form.date)}}
-                                
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    {{ form_row(form.Inscription) }}
-                                </div>
+							<!-- Réservation -->
+							<div class="text-center mt-5">
+								{% if atelier.getRemainingPlaces == 0 %}
+									<div class="alert alert-danger rounded-pill d-inline-block px-4 py-2" role="alert">
+										Plus de places disponibles.
+									</div>
+								{% else %}
+									<button type="button" class="btn btn-custom-color text-white rounded-pill" data-bs-toggle="modal" data-bs-target="#modalReservation">
+										Réserver ma place
+									</button>
+								{% endif %}
+							</div>
+						</div>
 
-                                
-                            {{ form_end(form) }}
-                        </div>
-                    </div>
+						<!-- Modal -->
+						<div class="modal fade" id="modalReservation" tabindex="-1" aria-labelledby="modalReservationLabel" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered">
+								<div class="modal-content border-0 shadow rounded-4">
+									<div class="modal-header border-0 pb-0">
+										<h5 class="modal-title fw-bold" id="modalReservationLabel">Réserver ma place</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+									</div>
+									<div class="modal-body">
+										{{ form_start(form) }}
+										{{ form_errors(form) }}
 
-                </div>
-            </div>
-        </div>
+										<div class="mb-3">
+											{{ form_row(form.email) }}
+										</div>
 
-    </section>
-</main>
+										<div class="mb-3">
+											{{ form_row(form.date) }}
+										</div>
 
+										<div class="text-end mt-4">
+											{{ form_row(form.Inscription) }}
+										</div>
+										{{ form_end(form) }}
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+	</div>
 {% endblock %}

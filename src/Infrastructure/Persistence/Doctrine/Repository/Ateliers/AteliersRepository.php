@@ -31,16 +31,10 @@ class AteliersRepository extends ServiceEntityRepository implements AteliersRepo
         return $this->findAll();
     }
 
-    // public function getAtelierBySlug()
-    // {
-
-    // }
-
     public function save(Ateliers $atelier): void
     {
         $this->em->persist($atelier);
         $this->em->flush();
-
     }
 
     public function remove(Ateliers $atelier): void
@@ -48,25 +42,35 @@ class AteliersRepository extends ServiceEntityRepository implements AteliersRepo
         $this->em->remove($atelier);
     }
 
-    public function countAllAteliers() {
-        
+    public function countAllAteliers()
+    {
+
         $qb = $this->createQueryBuilder('a')
-        ->select('COUNT(a.id) as Value');
+            ->select('COUNT(a.id) as Value');
 
         $query = $qb->getQuery();
 
         return $query->getSingleResult();
-
-        
     }
 
     public function countParticipantsByAtelierWithDate()
     {
         $qb = $this->createQueryBuilder('a')
-            ->select('a.title, a.date, a.price, COUNT(p.id) AS participant_count, (COUNT(p.id)*a.price) AS montant')
+            ->select('a.title, a.date, a.price, a.places, COUNT(p.id) AS participant_count, (COUNT(p.id)*a.price) AS montant')
             ->leftJoin('a.participants', 'p')
             ->groupBy('a.id');
-    
+
         return $qb->getQuery()->getResult();
+    }
+
+    public function findBetweenDates(\DateTimeInterface $start, \DateTimeInterface $end): array
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.date >= :start')
+            ->andWhere('a.date < :end')
+            ->setParameter('start', $start)
+            ->setParameter('end', $end)
+            ->getQuery()
+            ->getResult();
     }
 }

@@ -20,6 +20,9 @@ class ContactController extends AbstractController
     #[Route('/contact', name: 'contact')]
     public function index(Request $request): Response
     {
+
+        // $contacts = $getAllContactUseCase->execute();
+
         $form = $this->createForm(ContactType::class);
         $form->handleRequest($request);
 
@@ -35,6 +38,7 @@ class ContactController extends AbstractController
 
         return $this->render('pages/contact.html.twig', [
             'controller_name' => 'Contact',
+            // 'contacts' => $contacts,
             'form' => $form
         ]);
     }

@@ -1,5 +1,45 @@
-<footer class="text-center text-white py-3 fs-5">
-    <p>©Copyright coline.legeard@gmail.com</p>
-    <p>06 35 23 76 01</p>
-    <p>mettre les liens des réseaux</p>
+<footer class="text-center p-4">
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<p class="mb-3">Contact</p>
+                
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item bg-transparent border-0"><a href="mailto:coline.legeard@gmail.com" class="text-color-custom">coline.legeard@gmail.com</a></li>
+                    <li class="list-group-item bg-transparent border-0"><a href="tel:0635237601" class="text-color-custom">06 35 23 76 01</a></li>
+                </ul>
+
+				<p class="mb-2">Réseaux sociaux</p>
+				<div class="d-flex justify-content-center gap-3">
+					<a href="https://www.instagram.com/cocodietnaturo" class="text-decoration-none" target="_blank" rel="noopener noreferrer">
+
+						<img src="/images/icons/Instagram_logo.svg" alt="Instagram" width="30" height="30">
+					</a>
+
+
+					<a href="https://www.facebook.com/profile.php?id=100063477043523" class="text-decoration-none" target="_blank" rel="noopener noreferrer">
+
+						<img src="/images/icons/Facebook_icon.svg" alt="Facebook" width="30" height="30">
+					</a>
+				</div>
+
+			</div>
+
+			<div class="col-md-6">
+				<p class="mb-3">Liens utiles</p>
+
+				<ul class="list-group list-group-flush">
+                    <li class="list-group-item bg-transparent border-0"><a href="{{ path('mentions_legales') }}" class="text-color-custom">Mentions légales</a></li>
+                    <li class="list-group-item bg-transparent border-0"><a href="{{ path('politique_confidentialite') }}" class="text-color-custom">Politique de Confidentialité</a></li>
+					<li class="list-group-item bg-transparent border-0"><a href="{{ path('conditions_generales_vente') }}" class="text-color-custom">Conditions Générales de Vente</a></li>
+					<li class="list-group-item bg-transparent border-0"><a href="{{ path('faq') }}" class="text-color-custom">FAQ</a></li>
+				</ul>
+			</div>
+		</div>
+
+        <div class="row">
+            <span class="">&copy; 2025 - Tous droits réservés</span>
+        </div>
+	</div>
 </footer>

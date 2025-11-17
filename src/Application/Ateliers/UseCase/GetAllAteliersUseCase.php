@@ -8,9 +8,9 @@ class GetAllAteliersUseCase
 {
     public function __construct(private AteliersRepositoryInterface $ateliersRepositoryInterface) {}
 
-    public function getAllAteliers(): void
+    public function getAllAteliers(): array
     {
-        $this->ateliersRepositoryInterface->getAllAteliers();
+        return $this->ateliersRepositoryInterface->getAllAteliers();
     }
 
 }

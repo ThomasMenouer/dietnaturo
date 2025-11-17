@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mentions Légales
+{% endblock %}
+
+{% block body %}
+
+	<div class="container mb-5">
+    
+		<h1 class="text-center py-5">{{mentions_legales.title}}</h1>
+
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div class="content">
+					{{ mentions_legales.content|raw }}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

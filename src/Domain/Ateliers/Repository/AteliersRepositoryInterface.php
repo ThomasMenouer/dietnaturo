@@ -29,4 +29,12 @@ interface AteliersRepositoryInterface
      */
     public function remove(Ateliers $atelier): void;
 
+    /**
+     * Summary of findBetweenDates
+     * @param \DateTimeImmutable $start
+     * @param \DateTimeImmutable $end
+     * @return Ateliers[]
+     */
+    public function findBetweenDates(\DateTimeImmutable $start, \DateTimeImmutable $end): array;
+
 }

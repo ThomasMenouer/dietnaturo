@@ -15,7 +15,8 @@
                                     <tr>
                                         <th>Atelier</th>
                                         <th>Dates</th>
-                                        <th>Nombre de participants</th>
+                                        <th>Places</th>
+                                        <th>Participants</th>
                                         <th>Tarif</th>
                                         <th>Montant</th>
                                     </tr>
@@ -25,6 +26,7 @@
                                         <tr>
                                             <td>{{ atelier.title }}</td>
                                             <td>{{ atelier.date | format_datetime('long', 'short', locale: 'fr')}}</td>
+                                            <td>{{ atelier.places }}</td>
                                             <td>{{ atelier.participant_count }}</td>
                                             <td>{{ (atelier.price / 100) | format_currency('EUR') }}</td>
                                             <td>{{ (atelier.montant / 100) | format_currency('EUR') }}</td>

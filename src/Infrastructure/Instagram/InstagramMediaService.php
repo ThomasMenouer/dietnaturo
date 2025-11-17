@@ -1,0 +1,84 @@
+<?php
+
+namespace App\Infrastructure\Instagram;
+
+
+use Doctrine\ORM\EntityManagerInterface;
+use App\Domain\Blog\Entity\InstagramPost;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+
+class InstagramMediaService
+{
+    private HttpClientInterface $http;
+    private InstagramTokenService $tokenService;
+    private EntityManagerInterface $em;
+
+    public function __construct(HttpClientInterface $http, InstagramTokenService $tokenService, EntityManagerInterface $em)
+    {
+        $this->http = $http;
+        $this->tokenService = $tokenService;
+        $this->em = $em;
+    }
+
+    /**
+     * Synchronise les médias Instagram et les stocke en base de données.
+     * @throws \RuntimeException
+     * @return int
+     */
+    public function syncMedia(): int
+    {
+        $accessToken = $this->tokenService->getAccessToken();
+        if (!$accessToken) {
+            throw new \RuntimeException('Aucun token Instagram disponible.');
+        }
+
+        $endpoint = 'https://graph.instagram.com/me/media';
+        $fields = 'id,caption,media_type,media_url,permalink,thumbnail_url,timestamp';
+        $url = sprintf('%s?fields=%s&access_token=%s', $endpoint, $fields, $accessToken);
+
+        $count = 0;
+
+        while ($url) {
+            $response = $this->http->request('GET', $url);
+            $data = $response->toArray();
+
+            foreach ($data['data'] as $item) {
+                $existing = $this->em->getRepository(InstagramPost::class)
+                    ->findOneBy(['instagramId' => $item['id']]);
+
+                if (!$existing) {
+                    $post = new InstagramPost();
+                    $post->setInstagramId($item['id']);
+                    $post->setCaption($item['caption'] ?? null);
+                    $post->setMediaType($item['media_type']);
+                    $post->setMediaUrl($item['media_url']);
+                    $post->setPermalink($item['permalink']);
+                    $post->setThumbnailUrl($item['thumbnail_url'] ?? null);
+                    $post->setTimestamp(new \DateTime($item['timestamp']));
+                    $this->em->persist($post);
+                    $count++;
+                }
+            }
+
+            $this->em->flush();
+            $url = $data['paging']['next'] ?? null;
+        }
+
+        return $count;
+    }
+
+    public function getCarouselChildren(string $mediaId): array
+    {
+        $accessToken = $this->tokenService->getAccessToken();
+        if (!$accessToken) {
+            throw new \RuntimeException('Aucun token Instagram disponible.');
+        }
+
+        $url = sprintf('https://graph.instagram.com/%s/children?fields=id,media_type,media_url,thumbnail_url&access_token=%s', $mediaId, $accessToken);
+
+        $response = $this->http->request('GET', $url);
+        $data = $response->toArray();
+
+        return $data['data'] ?? [];
+    }
+}

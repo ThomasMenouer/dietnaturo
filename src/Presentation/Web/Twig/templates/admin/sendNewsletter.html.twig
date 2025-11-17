@@ -1,0 +1,17 @@
+{% extends '@!EasyAdmin/page/content.html.twig' %}
+
+{% block main %}
+
+    <div class="container">
+
+        <div class="row">
+            <h4>Envoyer une newsletter</h4>
+
+            {{ form_start(form) }}
+            {{ form_row(form.subject) }}
+            {{ form_row(form.content) }}
+            {{ form_row(form.submit) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

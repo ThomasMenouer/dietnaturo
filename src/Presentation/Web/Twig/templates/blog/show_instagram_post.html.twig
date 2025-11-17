@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Post Instagram{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+
+    <div class="d-flex justify-content-start mb-4">
+        <a href="{{ path('blog_index') }}" class="btn btn-custom-color text-white rounded-pill px-4">
+            Retour au blog
+        </a>
+    </div>
+
+    <h1 class="mb-5 text-center">Post Instagram</h1>
+
+    <div class="row">
+        <div class="col-md-8 mx-auto text-center">
+
+            {% if post.mediaType == 'CAROUSEL_ALBUM' and children is not empty %}
+                <div id="carousel{{ post.id }}" class="carousel slide" data-bs-ride="carousel">
+                    
+                    <!-- Indicators -->
+                    <div class="carousel-indicators">
+                        {% for child in children %}
+                            <button type="button"
+                                    data-bs-target="#carousel{{ post.id }}"
+                                    data-bs-slide-to="{{ loop.index0 }}"
+                                    {% if loop.first %}class="active"{% endif %}
+                                    aria-current="{% if loop.first %}true{% else %}false{% endif %}"
+                                    aria-label="Slide {{ loop.index }}"></button>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Carousel content -->
+                    <div class="carousel-inner rounded-4 overflow-hidden">
+                        {% for child in children %}
+                            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                {% if child.media_type == 'VIDEO' %}
+                                    <div class="d-flex justify-content-center">
+                                        <video class="rounded-4" style="max-height:600px; max-width:100%; object-fit:contain;" controls controlslist="nodownload" oncontextmenu="return false;">
+                                            <source src="{{ child.media_url }}" type="video/mp4">
+                                        </video>
+                                    </div>
+                                {% else %}
+                                    <img src="{{ child.media_url }}" class="d-block w-100 mx-auto rounded-4" style="max-height:600px; width:auto; object-fit:contain;" alt="Post Instagram">
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Navigation controls -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ post.id }}" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Précédent</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ post.id }}" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Suivant</span>
+                    </button>
+                </div>
+
+            {% else %}
+                {% if post.mediaType == 'IMAGE' %}
+                    <img src="{{ post.mediaUrl }}" class="rounded-4 mx-auto d-block" style="max-height:600px; width:auto; object-fit:contain;" alt="Post Instagram">
+                {% elseif post.mediaType == 'VIDEO' %}
+                    <div class="d-flex justify-content-center">
+                        <video class="rounded-4 mb-3" style="max-height:600px; max-width:100%; object-fit:contain;" controls>
+                            <source src="{{ post.mediaUrl }}" type="video/mp4">
+                        </video>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            <div class="mt-4">
+                {% if post.caption %}
+                    <p>{{ post.caption }}</p>
+                {% endif %}
+                <a href="{{ post.permalink }}" target="_blank" class="btn btn-custom-color text-white rounded-pill px-4">
+                    Voir sur Instagram
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

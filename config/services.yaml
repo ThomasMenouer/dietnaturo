@@ -6,14 +6,9 @@
 parameters:
 
     stripe.secret_key: '%env(STRIPE_SECRET_KEY)%'
+    mail.from_address: '%env(MAIL_FROM_ADDRESS)%'
 
 services:
-            
-    App\Domain\Shop\Repository\CartStorageInterface: '@App\Infrastructure\Cart\SessionCartStorage'
-    App\Infrastructure\Persistence\Doctrine\:
-        resource: '../src/Infrastructure/Persistence/Doctrine/*'
-        autowire: true
-        autoconfigure: true
     
     # default configuration for services in *this* file
     _defaults:
@@ -29,10 +24,27 @@ services:
             - '../src/Domain/**/Entity'
             - '../src/Domain/**/ValueObject'
             - '../src/Infrastructure/Framework/Symfony/Kernel.php'
+
+    
+    App\Infrastructure\Instagram\InstagramTokenService:
+        arguments:
+            $instagramAppSecret: '%env(INSTAGRAM_APP_SECRET)%'
+        tags: [ 'app.instagram_token_adapter' ]
+            
+    App\Domain\Shop\Repository\CartStorageInterface: '@App\Infrastructure\Cart\SessionCartStorage'
+    
+    App\Infrastructure\Persistence\Doctrine\:
+        resource: '../src/Infrastructure/Persistence/Doctrine/*'
+        autowire: true
+        autoconfigure: true
     
     App\Application\Shop\Service\StripePaymentService:
         arguments:
             $stripeSecretKey: '%stripe.secret_key%'
+
+    App\Infrastructure\Mailer\EmailSendService:
+        arguments:
+            $fromAddress: '%mail.from_address%'
 
 
     # add more service definitions when explicit configuration is needed

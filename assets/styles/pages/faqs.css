@@ -1,0 +1,20 @@
+.accordion-color {
+
+    background-color: var(--light-beige-pastel);
+}
+
+.accordion-color:active{
+
+   background-color: var(--light-beige-pastel);
+}
+
+.accordion-body-color{
+
+    background-color: var(--orange-pastel);
+}
+
+.accordion-button:focus{
+
+    border: none;
+}
+

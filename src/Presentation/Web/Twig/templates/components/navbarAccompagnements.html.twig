@@ -1,0 +1,15 @@
+<div{{attributes}}>
+	{% for accompagnement in accompagnements %}
+		<li>
+			<a class="dropdown-item {% if app.request.attributes.get('_route') == 'accompagnement_show'
+				            and app.request.attributes.get('slug') == accompagnement.slug %} active {% endif %}" href="{{ path('accompagnement_show', { slug: accompagnement.slug }) }}">
+				{{ accompagnement.title }}
+			</a>
+		</li>
+	{% else %}
+		<li>
+			<span class="dropdown-item text-muted">Aucun accompagnement</span>
+		</li>
+	{% endfor %}
+
+</div>
