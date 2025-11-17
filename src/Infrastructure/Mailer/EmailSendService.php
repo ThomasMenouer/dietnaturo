@@ -14,14 +14,15 @@ class EmailSendService implements SendMailInterface
 {
     public function __construct(
         private MailerInterface $mailer,
-        private BodyRendererInterface $renderer
+        private BodyRendererInterface $renderer,
+        private string $fromAddress
     ) {}
 
     public function sendMailInscriptionAtelier(string $email, string $atelierTitle, string $date): void
     {
 
         $email = (new TemplatedEmail())
-            ->from('dietnaturo@gmail.com')
+            ->from($this->fromAddress)
             ->to($email)
             ->subject('Confirmation d\'inscription')
             ->htmlTemplate('mails/inscription_atelier.html.twig')
@@ -40,7 +41,7 @@ class EmailSendService implements SendMailInterface
     public function sendEmail(Participants $participants, string $to, string $subject, string $content): void
     {
         $email = (new Email())
-            ->from('dietnaturo@gmail.com')
+            ->from($this->fromAddress)
             ->to($participants->getEmail())
             ->subject($subject)
             ->html($content);
@@ -53,7 +54,7 @@ class EmailSendService implements SendMailInterface
 
         foreach ($participants as $participant) {
             $email = (new Email())
-                ->from('dietnaturo@gmail.com')
+                ->from($this->fromAddress)
                 ->to($participant->getEmail())
                 ->subject($subject)
                 ->html($content);
@@ -66,7 +67,7 @@ class EmailSendService implements SendMailInterface
     {
         $email = (new TemplatedEmail())
             ->from($data['Email'])
-            ->to('dietnaturo@gmail.com')
+            ->to($this->fromAddress)
             ->subject('Demande de contact via site web')
             ->htmlTemplate('mails/contact.html.twig')
             ->context([
@@ -80,7 +81,7 @@ class EmailSendService implements SendMailInterface
     public function sendInvoiceAndEbooks(string $email, string $firstname, string $invoicePath, array $ebookPaths): void
     {
         $mail = (new TemplatedEmail())
-            ->from('dietnaturo@gmail.com')
+            ->from($this->fromAddress)
             ->to($email)
             ->subject('Votre commande et vos ebooks')
             ->htmlTemplate('mails/order.html.twig')
@@ -153,12 +154,12 @@ class EmailSendService implements SendMailInterface
     {
         foreach ($subscribers as $subscriber) {
             $unsubscribeLink = sprintf(
-                'https://127.0.0.1:8000/newsletter/unsubscribe/%s',
+                'https://www.dietnaturo.fr/newsletter/unsubscribe/%s',
                 $subscriber->getUnsubscribeToken()
             );
 
             $email = (new TemplatedEmail())
-                ->from('dietnaturo@gmail.com')
+                ->from($this->fromAddress)
                 ->to($subscriber->getEmail())
                 ->subject($subject)
                 ->htmlTemplate('mails/newsletter/newsletter.html.twig')

@@ -1,3 +1,5 @@
 framework:
     mailer:
+        envelope:
+            sender: 'coline.legeard@dietnaturo.fr'
         dsn: '%env(MAILER_DSN)%'

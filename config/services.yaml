@@ -6,6 +6,7 @@
 parameters:
 
     stripe.secret_key: '%env(STRIPE_SECRET_KEY)%'
+    mail.from_address: '%env(MAIL_FROM_ADDRESS)%'
 
 services:
     
@@ -40,6 +41,10 @@ services:
     App\Application\Shop\Service\StripePaymentService:
         arguments:
             $stripeSecretKey: '%stripe.secret_key%'
+
+    App\Infrastructure\Mailer\EmailSendService:
+        arguments:
+            $fromAddress: '%mail.from_address%'
 
 
     # add more service definitions when explicit configuration is needed
