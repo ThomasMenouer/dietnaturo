@@ -43,10 +43,13 @@ class OrdersController extends AbstractController
             return $this->redirect($checkoutUrl);
         }
 
-        return $this->render('shop/orders.html.twig', [
-            'cartData' => $cartData,
-            'form' => $form
+        // Page en maintenance
+        return $this->render('maintenance/maintenance.html.twig');
+
+        // return $this->render('shop/orders.html.twig', [
+        //     'cartData' => $cartData,
+        //     'form' => $form
             
-        ]);
+        // ]);
     }
 }

@@ -16,13 +16,15 @@ class ShopController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(GetEnabledProductsUseCase $getEnabledProductsUseCase): Response
     {
+        // Page en maintenance
+        return $this->render('maintenance/maintenance.html.twig');
 
-        $products = $getEnabledProductsUseCase->execute();
+        // $products = $getEnabledProductsUseCase->execute();
 
-        return $this->render('shop/shop.html.twig', [
-            'products' => $products
+        // return $this->render('shop/shop.html.twig', [
+        //     'products' => $products
 
-        ]);
+        // ]);
     }
 
     #[Route('/{slug}', name: 'product')]

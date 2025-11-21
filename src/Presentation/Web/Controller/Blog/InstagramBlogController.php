@@ -22,11 +22,13 @@ class InstagramBlogController extends AbstractController
 
         $result = $getPaginatedInstagramPostsUseCase->execute($page, $limit);
 
-        return $this->render('blog/blog_instagram.html.twig', [
-            'posts' => $result['posts'],
-            'page' => $page,
-            'totalPages' => $result['totalPages'],
-        ]);
+        // return $this->render('blog/blog_instagram.html.twig', [
+        //     'posts' => $result['posts'],
+        //     'page' => $page,
+        //     'totalPages' => $result['totalPages'],
+        // ]);
+
+        return $this->render('maintenance/maintenance.html.twig');
     }
 
     #[Route('/post/{id}', name: 'show', requirements: ['id' => '\d+'])]

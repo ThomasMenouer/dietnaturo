@@ -16,10 +16,13 @@ class CartController extends AbstractController
     #[Route('/', name:'index')]
     public function index(CartService $cartService): Response
     {
-        return $this->render('cart/cart.html.twig', [
-            'cartData' => $cartService->getCartData(),
-            'TotalHTC' => $cartService->getPriceHTC()
-        ]);
+        // Page en maintenance
+        return $this->render('maintenance/maintenance.html.twig');
+
+        // return $this->render('cart/cart.html.twig', [
+        //     'cartData' => $cartService->getCartData(),
+        //     'TotalHTC' => $cartService->getPriceHTC()
+        // ]);
     }
 
 
