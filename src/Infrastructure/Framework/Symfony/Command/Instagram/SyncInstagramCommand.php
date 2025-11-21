@@ -23,7 +23,7 @@ class SyncInstagramCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $count = $this->service->syncMedia();
-        $output->writeln("<info>$count nouveaux posts importés.</info>");
+        $output->writeln("<info>$count posts synchronisés (nouveaux ou mis à jour).</info>");
         return Command::SUCCESS;
     }
 }

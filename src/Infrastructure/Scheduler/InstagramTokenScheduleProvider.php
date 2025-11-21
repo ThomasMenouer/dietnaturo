@@ -16,7 +16,7 @@ class InstagramTokenScheduleProvider implements ScheduleProviderInterface
     public function getSchedule(): Schedule
     {
         return (new Schedule())
-            // Tous les jours à 2h du matin
+            // Tous les mois le 1er à minuit
             ->add(RecurringMessage::cron('0 0 1 * *', new RefreshInstagramTokenMessage()));
     }
 }

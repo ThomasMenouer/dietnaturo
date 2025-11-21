@@ -14,7 +14,7 @@ final class InstagramSyncScheduleProvider implements ScheduleProviderInterface
     public function getSchedule(): Schedule
     {
         return (new Schedule())
-            // Tous les jours à minuit (0h00)
-            ->add(RecurringMessage::cron('0 0 * * *', new SyncInstagramMediaMessage()));
+            // Tous les jours à 3h00 du matin
+            ->add(RecurringMessage::cron('0 3 * * *', new SyncInstagramMediaMessage()));
     }
 }
