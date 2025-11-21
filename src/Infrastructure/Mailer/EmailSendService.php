@@ -2,111 +2,105 @@
 
 namespace App\Infrastructure\Mailer;
 
-use Symfony\Component\Mime\Email;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 use App\Domain\Mailer\SendMailInterface;
 use App\Domain\Ateliers\Enum\TypeAtelier;
 use App\Domain\Ateliers\Entity\Participants;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\BodyRendererInterface;
+use Twig\Environment;
 
 class EmailSendService implements SendMailInterface
 {
     public function __construct(
-        private MailerInterface $mailer,
-        private BodyRendererInterface $renderer,
+        private Environment $twig,   // Pour rendre les templates
         private string $fromAddress
     ) {}
 
-    /**
-     * Envoie un email de confirmation d'inscription à un atelier
-     *
-     * @param string $email
-     * @param string $atelierTitle
-     * @param string $date
-     * @param string $dateHour
-     * @return void
-     */
-    public function sendMailInscriptionAtelier(string $email, string $atelierTitle, string $date, string $dateHour): void
+    private function sendMail(string $to, string $subject, string $htmlBody): void
     {
+        $mail = new PHPMailer(true);
 
-        $email = (new TemplatedEmail())
-            ->from($this->fromAddress)
-            ->to($email)
-            ->subject('Confirmation d\'inscription')
-            ->htmlTemplate('mails/inscription_atelier.html.twig')
-            ->context([
-                'atelier' => $atelierTitle,
-                'date' => $date,
-                'dateHour' => $dateHour,
-            ]);
+        try {
+            // Utilise mail() sur OVH mutualisé
+            $mail->isMail();
 
+            // Expéditeur
+            $mail->setFrom($this->fromAddress, 'Dietnaturo');
 
-        $this->renderer->render($email);
-        $this->mailer->send($email);
+            // Destinataire
+            $mail->addAddress($to);
+
+            // Sujet et contenu HTML
+            $mail->Subject = $subject;
+            $mail->isHTML(true);
+            $mail->Body = $htmlBody;
+
+            $mail->send();
+        } catch (Exception $e) {
+            // Log ou gestion des erreurs
+            error_log("Erreur PHPMailer : " . $mail->ErrorInfo);
+        }
     }
 
+    public function sendMailInscriptionAtelier(string $email, string $atelierTitle, string $date, string $dateHour): void
+    {
+        $html = $this->twig->render('mails/inscription_atelier.html.twig', [
+            'atelier' => $atelierTitle,
+            'date' => $date,
+            'dateHour' => $dateHour,
+        ]);
 
+        $this->sendMail($email, 'Confirmation d\'inscription', $html);
+    }
 
     public function sendEmail(Participants $participants, string $to, string $subject, string $content): void
     {
-        $email = (new Email())
-            ->from($this->fromAddress)
-            ->to($participants->getEmail())
-            ->subject($subject)
-            ->html($content);
-
-        $this->mailer->send($email);
+        $this->sendMail($participants->getEmail(), $subject, $content);
     }
 
     public function sendEmailToAllParticipants(array $participants, string $subject, string $content): void
     {
-
         foreach ($participants as $participant) {
-            $email = (new Email())
-                ->from($this->fromAddress)
-                ->to($participant->getEmail())
-                ->subject($subject)
-                ->html($content);
-
-            $this->mailer->send($email);
+            $this->sendMail($participant->getEmail(), $subject, $content);
         }
     }
 
     public function sendEmailContact(array $data): void
     {
-        $email = (new TemplatedEmail())
-            ->from($data['Email'])
-            ->to($this->fromAddress)
-            ->subject('Demande de contact via site web')
-            ->htmlTemplate('mails/contact.html.twig')
-            ->context([
-                'data' => $data
-            ]);
+        $html = $this->twig->render('mails/contact.html.twig', [
+            'data' => $data
+        ]);
 
-        $this->renderer->render($email);
-        $this->mailer->send($email);
+        $this->sendMail($this->fromAddress, 'Demande de contact via site web', $html);
     }
 
     public function sendInvoiceAndEbooks(string $email, string $firstname, string $invoicePath, array $ebookPaths): void
     {
-        $mail = (new TemplatedEmail())
-            ->from($this->fromAddress)
-            ->to($email)
-            ->subject('Votre commande et vos ebooks')
-            ->htmlTemplate('mails/order.html.twig')
-            ->context([
-                'firstname' => $firstname,
-            ])
-            ->attachFromPath($invoicePath, 'facture.pdf');
+        $html = $this->twig->render('mails/order.html.twig', [
+            'firstname' => $firstname,
+        ]);
 
-        foreach ($ebookPaths as $ebookPath) {
-            $filename = basename($ebookPath);
-            $mail->attachFromPath($ebookPath, $filename);
+        $mail = new PHPMailer(true);
+        try {
+            $mail->isMail();
+            $mail->setFrom($this->fromAddress, 'Dietnaturo');
+            $mail->addAddress($email);
+            $mail->Subject = 'Votre commande et vos ebooks';
+            $mail->isHTML(true);
+            $mail->Body = $html;
+
+            // Ajout de la facture
+            $mail->addAttachment($invoicePath, 'facture.pdf');
+
+            // Ajout des ebooks
+            foreach ($ebookPaths as $ebookPath) {
+                $mail->addAttachment($ebookPath, basename($ebookPath));
+            }
+
+            $mail->send();
+        } catch (Exception $e) {
+            error_log("Erreur PHPMailer : " . $mail->ErrorInfo);
         }
-
-        $this->renderer->render($mail);
-        $this->mailer->send($mail);
     }
 
     public function sendEmailReminderAtelier(
@@ -118,49 +112,30 @@ class EmailSendService implements SendMailInterface
         bool $isVisio,
         string $typeAtelier
     ): void {
-
-        // Choix du template selon le type et si c'est en visio
-        if ($isVisio) {
-            $template = match ($typeAtelier) {
-                TypeAtelier::ATELIER->value => 'mails/rappels/atelier_visio.html.twig',
-                TypeAtelier::ATELIER_FLASH->value => 'mails/rappels/atelier_flash_visio.html.twig',
-                TypeAtelier::COURS_YOGA->value => 'mails/rappels/cours_yoga_visio.html.twig',
-            };
-        } else {
-            $template = match ($typeAtelier) {
-                TypeAtelier::ATELIER->value => 'mails/rappels/atelier.html.twig',
-                TypeAtelier::ATELIER_FLASH->value => 'mails/rappels/atelier_flash.html.twig',
-                TypeAtelier::COURS_YOGA->value => 'mails/rappels/cours_yoga.html.twig',
-            };
-        }
-
         foreach ($participants as $participant) {
-            $email = (new TemplatedEmail())
-                ->from('dietnaturo@gmail.com')
-                ->to($participant->getEmail())
-                ->subject('Rappel : votre ' . $title . ' approche !')
-                ->htmlTemplate($template)
-                ->context([
-                    'participant' => $participant,
-                    'title' => $title,
-                    'date' => $date,
-                    'dateHour' => $dateHour,
-                    'link' => $link,
-                    'isVisio' => $isVisio,
-                ]);
-            $this->renderer->render($email);
-            $this->mailer->send($email);
+            // Choix du template selon le type et si c'est en visio
+            $template = match (true) {
+                $isVisio && $typeAtelier === TypeAtelier::ATELIER->value => 'mails/rappels/atelier_visio.html.twig',
+                $isVisio && $typeAtelier === TypeAtelier::ATELIER_FLASH->value => 'mails/rappels/atelier_flash_visio.html.twig',
+                $isVisio && $typeAtelier === TypeAtelier::COURS_YOGA->value => 'mails/rappels/cours_yoga_visio.html.twig',
+                !$isVisio && $typeAtelier === TypeAtelier::ATELIER->value => 'mails/rappels/atelier.html.twig',
+                !$isVisio && $typeAtelier === TypeAtelier::ATELIER_FLASH->value => 'mails/rappels/atelier_flash.html.twig',
+                !$isVisio && $typeAtelier === TypeAtelier::COURS_YOGA->value => 'mails/rappels/cours_yoga.html.twig',
+            };
+
+            $html = $this->twig->render($template, [
+                'participant' => $participant,
+                'title' => $title,
+                'date' => $date,
+                'dateHour' => $dateHour,
+                'link' => $link,
+                'isVisio' => $isVisio,
+            ]);
+
+            $this->sendMail($participant->getEmail(), 'Rappel : votre ' . $title . ' approche !', $html);
         }
     }
 
-
-    /**
-     * Envoie un email à tous les abonnés de la newsletter
-     * @param array $subscribers
-     * @param string $subject
-     * @param string $content
-     * @return void
-     */
     public function sendEmailToAllSubscribers(array $subscribers, string $subject, string $content): void
     {
         foreach ($subscribers as $subscriber) {
@@ -169,18 +144,12 @@ class EmailSendService implements SendMailInterface
                 $subscriber->getUnsubscribeToken()
             );
 
-            $email = (new TemplatedEmail())
-                ->from($this->fromAddress)
-                ->to($subscriber->getEmail())
-                ->subject($subject)
-                ->htmlTemplate('mails/newsletter/newsletter.html.twig')
-                ->context([
-                    'content' => $content,
-                    'unsubscribeLink' => $unsubscribeLink,
-                ]);
+            $html = $this->twig->render('mails/newsletter/newsletter.html.twig', [
+                'content' => $content,
+                'unsubscribeLink' => $unsubscribeLink,
+            ]);
 
-            $this->renderer->render($email);
-            $this->mailer->send($email);
+            $this->sendMail($subscriber->getEmail(), $subject, $html);
         }
     }
 }

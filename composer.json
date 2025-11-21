@@ -17,6 +17,7 @@
         "fakerphp/faker": "^1.23",
         "knplabs/knp-paginator-bundle": "^6.5",
         "phpdocumentor/reflection-docblock": "^5.4",
+        "phpmailer/phpmailer": "*",
         "phpstan/phpdoc-parser": "^1.30",
         "stripe/stripe-php": "^17.3",
         "symfony/asset": "7.3.*",
