@@ -31,10 +31,10 @@ class SendAtelierReminderUseCase
             $this->mailer->sendEmailReminderAtelier(
                 $participants->toArray(),
                 $atelier->getTitle(),
-                $atelier->getDate(),
+                $atelier->getFormattedDate(),
+                $atelier->getFormattedDateHour(),
                 $atelier->getLink(),
                 $atelier->getIsVisio(),
-                $atelier->getSlug(),
                 $atelier->getTypeAtelier()->value
             );
         }
