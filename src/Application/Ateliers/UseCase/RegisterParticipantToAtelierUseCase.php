@@ -34,7 +34,8 @@ class RegisterParticipantToAtelierUseCase
 
         $this->mailer->sendMailInscriptionAtelier($participant->getEmail(), 
             $participant->getAteliers()->getTitle(), 
-            $participant->getFormattedDate()
+            $participant->getFormattedDate(),
+            $participant->getFormattedDateHour()
         );
 
         return 'success';

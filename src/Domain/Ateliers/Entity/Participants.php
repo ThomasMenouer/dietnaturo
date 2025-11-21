@@ -80,9 +80,16 @@ class Participants
         return $this->email;
     }
 
-        public function getFormattedDate(): string
+
+    public function getFormattedDate(): string
     {
-        return $this->date->format('d/m/Y H:i');
+        return $this->date->format('d/m/Y');
     }
+
+    public function getFormattedDateHour(): string
+    {
+        return $this->date->format('H\hi');
+    }
+
 
 }

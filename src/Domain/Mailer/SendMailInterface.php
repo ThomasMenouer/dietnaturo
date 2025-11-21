@@ -11,9 +11,10 @@ interface SendMailInterface
      * @param string $email
      * @param string $atelierTitle
      * @param string $date
+     * @param string $dateHour
      * @return void
      */
-    public function sendMailInscriptionAtelier(string $email, string $atelierTitle, string $date): void;
+    public function sendMailInscriptionAtelier(string $email, string $atelierTitle, string $date, string $dateHour): void;
 
     /**
      * Envoie un email à un participant
@@ -56,7 +57,7 @@ interface SendMailInterface
      *
      * @param array $participants
      * @param string $title
-     * @param \DateTimeInterface $date
+     * @param string $date
      * @param string|null $link
      * @param boolean $isVisio
      * @param string $slug
@@ -66,10 +67,10 @@ interface SendMailInterface
     public function sendEmailReminderAtelier(
         array $participants,
         string $title,
-        \DateTimeInterface $date,
+        string $date,
+        string $dateHour,
         ?string $link,
         bool $isVisio,
-        string $slug,
         string $typeAtelier
     ): void;
 

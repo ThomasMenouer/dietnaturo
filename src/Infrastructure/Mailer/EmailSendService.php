@@ -18,7 +18,16 @@ class EmailSendService implements SendMailInterface
         private string $fromAddress
     ) {}
 
-    public function sendMailInscriptionAtelier(string $email, string $atelierTitle, string $date): void
+    /**
+     * Envoie un email de confirmation d'inscription à un atelier
+     *
+     * @param string $email
+     * @param string $atelierTitle
+     * @param string $date
+     * @param string $dateHour
+     * @return void
+     */
+    public function sendMailInscriptionAtelier(string $email, string $atelierTitle, string $date, string $dateHour): void
     {
 
         $email = (new TemplatedEmail())
@@ -29,6 +38,7 @@ class EmailSendService implements SendMailInterface
             ->context([
                 'atelier' => $atelierTitle,
                 'date' => $date,
+                'dateHour' => $dateHour,
             ]);
 
 
@@ -102,10 +112,10 @@ class EmailSendService implements SendMailInterface
     public function sendEmailReminderAtelier(
         array $participants,
         string $title,
-        \DateTimeInterface $date,
+        string $date,
+        string $dateHour,
         ?string $link,
         bool $isVisio,
-        string $slug,
         string $typeAtelier
     ): void {
 
@@ -134,6 +144,7 @@ class EmailSendService implements SendMailInterface
                     'participant' => $participant,
                     'title' => $title,
                     'date' => $date,
+                    'dateHour' => $dateHour,
                     'link' => $link,
                     'isVisio' => $isVisio,
                 ]);
