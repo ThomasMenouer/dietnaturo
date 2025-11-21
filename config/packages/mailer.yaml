@@ -2,4 +2,4 @@ framework:
     mailer:
         envelope:
             sender: 'coline.legeard@dietnaturo.fr'
-        dsn: '%env(MAILER_DSN)%'
+        dsn: 'smtps://coline.legeard%40dietnaturo.fr:%env(MAIL_PASSWORD)%@ssl0.ovh.net:465?auth_mode=login'
