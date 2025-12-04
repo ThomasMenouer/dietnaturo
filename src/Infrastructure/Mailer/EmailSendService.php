@@ -48,6 +48,15 @@ class EmailSendService implements SendMailInterface
 
 
 
+    /**
+     * Envoie un email à un participant
+     *
+     * @param Participants $participants
+     * @param string $to
+     * @param string $subject
+     * @param string $content
+     * @return void
+     */
     public function sendEmail(Participants $participants, string $to, string $subject, string $content): void
     {
         $email = (new Email())
@@ -59,6 +68,13 @@ class EmailSendService implements SendMailInterface
         $this->mailer->send($email);
     }
 
+    /**
+     * Envoie un email à tous les participants
+     * @param array $participants
+     * @param string $subject
+     * @param string $content
+     * @return void
+     */
     public function sendEmailToAllParticipants(array $participants, string $subject, string $content): void
     {
 
@@ -73,6 +89,12 @@ class EmailSendService implements SendMailInterface
         }
     }
 
+    /**
+     * Envoie un email de contact
+     *
+     * @param array $data
+     * @return void
+     */
     public function sendEmailContact(array $data): void
     {
         $email = (new TemplatedEmail())
@@ -88,6 +110,15 @@ class EmailSendService implements SendMailInterface
         $this->mailer->send($email);
     }
 
+    /**
+     * Envoie un email avec la facture et les ebooks en pièces jointes
+     *
+     * @param string $email
+     * @param string $firstname
+     * @param string $invoicePath
+     * @param array $ebookPaths
+     * @return void
+     */
     public function sendInvoiceAndEbooks(string $email, string $firstname, string $invoicePath, array $ebookPaths): void
     {
         $mail = (new TemplatedEmail())
@@ -109,6 +140,19 @@ class EmailSendService implements SendMailInterface
         $this->mailer->send($mail);
     }
 
+
+    /**
+     * Envoie un email de rappel d'atelier aux participants
+     *
+     * @param array $participants
+     * @param string $title
+     * @param string $date
+     * @param string $dateHour
+     * @param string|null $link
+     * @param bool $isVisio
+     * @param string $typeAtelier
+     * @return void
+     */
     public function sendEmailReminderAtelier(
         array $participants,
         string $title,
