@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class StripePaymentService extends AbstractController
+class StripePaymentService
 {
     public function __construct(
         private readonly CartService $cartService, 
@@ -19,8 +19,9 @@ class StripePaymentService extends AbstractController
         private readonly UploaderHelper $uploaderHelper,
         private readonly RequestStack $requestStack,
         private readonly OrdersRepositoryInterface $ordersRepository,
+        private readonly string $stripeSecretKey
     ) {
-        Stripe::setApiKey($this->getParameter('stripe.secret_key'));
+        Stripe::setApiKey($stripeSecretKey);
     }
 
     public function createCheckoutSession(array $cartData, array $infoCustomer): string

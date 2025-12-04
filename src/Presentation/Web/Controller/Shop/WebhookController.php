@@ -17,6 +17,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class WebhookController extends AbstractController
 {
+    public function __construct(
+        private readonly string $stripeSecretKey,
+        private readonly string $stripeWebhookSecret,
+    ) {}
 
     #[Route('/stripe/webhook', name: 'stripe_webhook', methods: ['POST'])]
     public function handleWebhook(
@@ -24,14 +28,15 @@ final class WebhookController extends AbstractController
         CheckoutService $checkoutService, 
         CreateInvoiceUseCase $createInvoiceUseCase,
         SendInvoiceAndEbooksUseCase $sendInvoiceAndEbooksUseCase,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+
         ): Response
     {
-        Stripe::setApiKey($this->getParameter('stripe.secret_key'));
+        Stripe::setApiKey($this->stripeSecretKey);
 
         $payload = $request->getContent();
         $signature = $request->headers->get('stripe-signature');
-        $secret = $this->getParameter('stripe.webhook_secret');
+        $secret = $this->stripeWebhookSecret;
 
         try {
             $event = Webhook::constructEvent($payload, $signature, $secret);
