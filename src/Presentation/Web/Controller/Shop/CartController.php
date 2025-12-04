@@ -17,12 +17,12 @@ class CartController extends AbstractController
     public function index(CartService $cartService): Response
     {
         // Page en maintenance
-        return $this->render('maintenance/maintenance.html.twig');
+        // return $this->render('maintenance/maintenance.html.twig');
 
-        // return $this->render('cart/cart.html.twig', [
-        //     'cartData' => $cartService->getCartData(),
-        //     'TotalHTC' => $cartService->getPriceHTC()
-        // ]);
+        return $this->render('cart/cart.html.twig', [
+            'cartData' => $cartService->getCartData(),
+            'TotalHTC' => $cartService->getPriceHTC()
+        ]);
     }
 
 
