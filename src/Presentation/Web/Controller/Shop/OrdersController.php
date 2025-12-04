@@ -5,7 +5,6 @@ namespace App\Presentation\Web\Controller\Shop;
 
 use App\Presentation\Web\Form\CheckoutType;
 use App\Application\Shop\Service\CartService;
-use App\Application\Shop\Service\CheckoutService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
