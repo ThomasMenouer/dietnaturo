@@ -12,6 +12,10 @@
 
 		<div class="row row-cols-1 row-cols-md-3 g-4">
 
+			{% if products is empty %}
+				<p class="text-center">Aucun ebook disponible pour le moment. Revenez plus tard !</p>
+			{% endif %}
+
 			{% for product in products %}
 
 				<div class="col">
