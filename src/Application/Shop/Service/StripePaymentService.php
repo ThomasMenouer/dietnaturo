@@ -6,11 +6,12 @@ namespace App\Application\Shop\Service;
 use App\Domain\Shop\Cart\Repository\OrdersRepositoryInterface;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class StripePaymentService
+class StripePaymentService extends AbstractController
 {
     public function __construct(
         private readonly CartService $cartService, 
@@ -18,9 +19,8 @@ class StripePaymentService
         private readonly UploaderHelper $uploaderHelper,
         private readonly RequestStack $requestStack,
         private readonly OrdersRepositoryInterface $ordersRepository,
-        string $stripeSecretKey
     ) {
-        Stripe::setApiKey($stripeSecretKey);
+        Stripe::setApiKey($this->getParameter('stripe.secret_key'));
     }
 
     public function createCheckoutSession(array $cartData, array $infoCustomer): string
