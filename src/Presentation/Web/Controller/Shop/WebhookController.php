@@ -27,11 +27,11 @@ final class WebhookController extends AbstractController
         LoggerInterface $logger
         ): Response
     {
-        Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
+        Stripe::setApiKey($this->getParameter('stripe.secret_key'));
 
         $payload = $request->getContent();
         $signature = $request->headers->get('stripe-signature');
-        $secret = $_ENV['STRIPE_WEBHOOK_SECRET'];
+        $secret = $this->getParameter('stripe.webhook_secret');
 
         try {
             $event = Webhook::constructEvent($payload, $signature, $secret);
