@@ -12,7 +12,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use App\Domain\Pages\Entity\Accompagnement\AccompagnementContent;
+use BcMath\Number;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 
 class AccompagnementContentCrudController extends AbstractCrudController
 {
@@ -24,14 +26,12 @@ class AccompagnementContentCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->hideOnForm(),
             TextField::new('title', 'Titre'),
-
 
             TextEditorField::new('content', 'Contenu')
                 ->hideOnIndex(),
 
-            IntegerField::new('position', 'Ordre d’affichage'),
+            IntegerField::new('position', 'Ordre d’affichage du texte'),
 
             TextField::new('imageFile', 'Image')
                 ->setFormType(VichImageType::class)

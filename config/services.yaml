@@ -41,6 +41,16 @@ services:
         arguments:
             $stripeSecretKey: '%env(STRIPE_SECRET_KEY)%'
 
+    # Déclaration automatique de tous les handlers Stripe
+    App\Application\Shop\Webhook\Handler\:
+        resource: '../src/Application/Shop/Webhook/Handler'
+        tags: ['app.stripe_event_handler']
+
+    # Le dispatcher central récupère automatiquement les handlers taggés
+    App\Application\Shop\Webhook\StripeEventDispatcher:
+        arguments:
+            $handlers: !tagged_iterator app.stripe_event_handler
+
     App\Presentation\Web\Controller\Shop\WebhookController:
         arguments:
             $stripeSecretKey: '%env(STRIPE_SECRET_KEY)%'

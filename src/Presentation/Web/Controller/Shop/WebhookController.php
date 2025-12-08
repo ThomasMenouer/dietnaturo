@@ -24,14 +24,13 @@ final class WebhookController extends AbstractController
 
     #[Route('/stripe/webhook', name: 'stripe_webhook', methods: ['POST'])]
     public function handleWebhook(
-        Request $request, 
-        CheckoutService $checkoutService, 
+        Request $request,
+        CheckoutService $checkoutService,
         CreateInvoiceUseCase $createInvoiceUseCase,
         SendInvoiceAndEbooksUseCase $sendInvoiceAndEbooksUseCase,
         LoggerInterface $logger,
 
-        ): Response
-    {
+    ): Response {
         Stripe::setApiKey($this->stripeSecretKey);
 
         $payload = $request->getContent();
@@ -44,6 +43,13 @@ final class WebhookController extends AbstractController
             return new Response('Invalid signature: ' . $e->getMessage(), 400);
         }
 
+        /**
+         * Voir si il faut écouter d'autres événements Stripe comme :
+         * - payment_intent.succeeded
+         * Le EventDispatcher est créer dans Application/shop/webhook
+         * 
+         */
+
         if ($event->type === 'checkout.session.completed') {
             $session = $event->data->object;
 
@@ -53,14 +59,12 @@ final class WebhookController extends AbstractController
 
                 $order = $checkoutService->createOrderFromStripeSession($fullSession);
 
-                // Create invoice
-                $invoice = $createInvoiceUseCase->execute($order);
-
-                $order->setInvoice($invoice);
-
-                // send email with invoice and ebooks
-                $sendInvoiceAndEbooksUseCase->execute($order);
-
+                // Vérifie que le paiement est payé
+                if ($order->getStatus() === 'paid') {
+                    $invoice = $createInvoiceUseCase->execute($order);
+                    $order->setInvoice($invoice);
+                    $sendInvoiceAndEbooksUseCase->execute($order);
+                }
             } catch (\Exception $e) {
                 $logger->error('Stripe webhook error: ' . $e->getMessage(), [
                     'exception' => $e,

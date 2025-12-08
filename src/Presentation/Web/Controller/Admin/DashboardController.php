@@ -4,10 +4,8 @@ namespace App\Presentation\Web\Controller\Admin;
 
 
 use App\Domain\Shop\Entity\Orders;
-use App\Domain\Blog\Entity\Articles;
 use App\Domain\Shop\Entity\Invoices;
 use App\Domain\Shop\Entity\Products;
-use App\Domain\Blog\Entity\Categories;
 use App\Domain\Pages\Entity\Faqs\Faqs;
 use App\Domain\Pages\Entity\Home\Home;
 use App\Domain\Ateliers\Entity\Ateliers;

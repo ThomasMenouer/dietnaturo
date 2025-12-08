@@ -9,7 +9,7 @@ use App\Domain\Ateliers\Entity\Participants;
 use App\Domain\Ateliers\Enum\TypeAtelier;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Vich\UploaderBundle\Mapping\Attribute as Vich;
 use App\Infrastructure\Persistence\Doctrine\Repository\Ateliers\AteliersRepository;
 use Doctrine\DBAL\Types\Type;
 

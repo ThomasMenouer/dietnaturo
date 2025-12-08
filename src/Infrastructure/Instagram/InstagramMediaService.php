@@ -90,4 +90,40 @@ public function syncMedia(): int
 
         return $data['data'] ?? [];
     }
+
+    public function refreshMediaUrlsIfExpired(): int
+{
+    $accessToken = $this->tokenService->getAccessToken();
+    if (!$accessToken) {
+        throw new \RuntimeException('Aucun token Instagram disponible.');
+    }
+
+    $endpoint = 'https://graph.instagram.com/me/media';
+    $fields = 'id,media_url,thumbnail_url,caption,permalink';
+    $url = sprintf('%s?fields=%s&limit=100&access_token=%s', $endpoint, $fields, $accessToken);
+
+    $response = $this->http->request('GET', $url);
+    $data = $response->toArray();
+
+    $updated = 0;
+
+    foreach ($data['data'] as $item) {
+        $existing = $this->em->getRepository(InstagramPost::class)
+            ->findOneBy(['instagramId' => $item['id']]);
+
+        if ($existing) {
+            $existing->setMediaUrl($item['media_url']);
+            $existing->setThumbnailUrl($item['thumbnail_url'] ?? null);
+            $existing->setCaption($item['caption'] ?? $existing->getCaption());
+            $existing->setPermalink($item['permalink']);
+            $existing->setLastRefreshedAt(new \DateTimeImmutable());
+            $updated++;
+        }
+    }
+
+    $this->em->flush();
+
+    return $updated;
+}
+
 }

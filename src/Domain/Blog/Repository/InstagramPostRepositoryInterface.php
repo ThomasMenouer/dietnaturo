@@ -27,4 +27,10 @@ interface InstagramPostRepositoryInterface
      * @return int
      */
     public function countAll(): int;
+
+    /**
+     * Récupère la date de la dernière actualisation des liens médias
+     * @return ?\DateTimeImmutable
+     */
+    public function getLastRefreshedAt(): ?\DateTimeImmutable;
 }

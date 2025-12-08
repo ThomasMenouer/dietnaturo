@@ -2,6 +2,7 @@
 
 namespace App\Presentation\Web\Controller\Admin\Shop;
 
+use Dom\Text;
 use App\Domain\Shop\Entity\Orders;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -9,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -24,7 +26,6 @@ class OrdersCrudController extends AbstractCrudController
     {
         return $actions
             ->disable(Action::NEW);
-        
     }
 
 
@@ -34,19 +35,26 @@ class OrdersCrudController extends AbstractCrudController
             TextField::new('reference', 'Référence')
                 ->setHelp('Référence unique de la commande'),
 
-            
-            TextField::new('firstname', 'Prénom'),
-            TextField::new('lastname', 'Nom'),
-            EmailField::new('email'),
-            
-            MoneyField::new('totalPrice', 'Prix')->setCurrency('EUR'),
-            
-            AssociationField::new('invoice', 'Facture')
-                ->setHelp('Facture liée à cette commande')
-                ->onlyOnIndex(),
+            DateTimeField::new('createdAt', 'Date de création')
+                ->setHelp('Date de création de la commande'),
 
-            CollectionField::new('orderDetails', 'Détails de  commande')
-                ->onlyOnDetail(),
+            TextField::new('firstname', 'Prénom')
+                ->setHelp('Prénom du client')
+                ->hideOnIndex(),
+
+
+
+            TextField::new('lastname', 'Nom')
+                ->setHelp('Nom du client')
+                ->hideOnIndex(),
+
+            EmailField::new('email'),
+
+            TextField::new('status', 'Statut')
+                ->setHelp('Statut actuel de la commande'),
+
+
+            MoneyField::new('totalPrice', 'Prix total')->setCurrency('EUR'),
 
         ];
     }

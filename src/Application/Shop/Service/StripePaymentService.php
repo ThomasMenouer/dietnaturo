@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class StripePaymentService
 {
     public function __construct(
-        private readonly UrlGeneratorInterface $urlGenerator, 
+        private readonly UrlGeneratorInterface $urlGenerator,
         private readonly string $stripeSecretKey
     ) {
         Stripe::setApiKey($stripeSecretKey);
@@ -42,17 +42,25 @@ class StripePaymentService
         $session = Session::create([
             'line_items' => $lineItems,
             'mode' => 'payment',
+            'automatic_tax' => [
+                'enabled' => true,
+            ],
             'customer_email' => $infoCustomer['email'],
             'metadata' => [
                 'firstname' => $infoCustomer['firstName'],
                 'lastname' => $infoCustomer['lastName'],
                 'order_reference' => $orderReference,
-                'cart' => json_encode(array_map(fn ($item) => [
+                'cart' => json_encode(array_map(fn($item) => [
                     'productName' => $item['product']->getName(),
                     'quantity' => $item['quantity'],
                     'price' => $item['product']->getPrice(),
                     'ebookPath' => $item['product']->getFirstEbookPath(),
                 ], $cartData)),
+            ],
+            'payment_intent_data' => [
+                'metadata' => [
+                    'order_reference' => $orderReference,
+                ],
             ],
             'success_url' => $this->urlGenerator->generate('checkout_success', [], UrlGeneratorInterface::ABSOLUTE_URL),
             'cancel_url' => $this->urlGenerator->generate('cart_index', ['reference' => $orderReference], UrlGeneratorInterface::ABSOLUTE_URL)
@@ -60,6 +68,4 @@ class StripePaymentService
 
         return $session->url;
     }
-
-
 }
