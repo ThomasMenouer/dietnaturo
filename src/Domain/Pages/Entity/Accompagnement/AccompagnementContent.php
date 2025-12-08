@@ -5,7 +5,7 @@ namespace App\Domain\Pages\Entity\Accompagnement;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Vich\UploaderBundle\Mapping\Attribute as Vich;
 use App\Infrastructure\Persistence\Doctrine\Repository\Pages\Accompagnement\AccompagnementContentRepository;
 
 #[ORM\Entity(repositoryClass: AccompagnementContentRepository::class)]
@@ -116,5 +116,10 @@ class AccompagnementContent
     {
         $this->position = $position;
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->title;
     }
 }

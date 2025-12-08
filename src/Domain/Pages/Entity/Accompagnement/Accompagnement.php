@@ -23,6 +23,9 @@ class Accompagnement
     #[ORM\Column(type: 'text', nullable: true)]
     private string $slug;
 
+    #[ORM\Column(type: 'integer', options: ['default' => 0])]
+    private int $pagePosition= 0;
+
     #[ORM\OneToMany(mappedBy: 'accompagnement', targetEntity: AccompagnementContent::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[ORM\OrderBy(['position' => 'ASC'])]
     private Collection $contents;
@@ -55,6 +58,17 @@ class Accompagnement
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+        return $this;
+    }
+
+    public function getPagePosition(): int
+    {
+        return $this->pagePosition;
+    }
+
+    public function setPagePosition(int $pagePosition): static
+    {
+        $this->pagePosition = $pagePosition;
         return $this;
     }
 

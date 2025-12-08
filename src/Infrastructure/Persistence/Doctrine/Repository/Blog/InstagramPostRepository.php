@@ -58,4 +58,15 @@ class InstagramPostRepository extends ServiceEntityRepository implements Instagr
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    /**
+     * Récupère la date de la dernière actualisation des liens médias
+     * @return ?\DateTimeImmutable
+     */
+    public function getLastRefreshedAt(): ?\DateTimeImmutable
+    {
+        $post = $this->findOneBy([], ['lastRefreshedAt' => 'DESC']);
+
+        return $post ? $post->getLastRefreshedAt() : null;
+    }
 }

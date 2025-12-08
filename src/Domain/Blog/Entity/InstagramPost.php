@@ -40,6 +40,9 @@ class InstagramPost
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $category = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $lastRefreshedAt = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -130,6 +133,16 @@ class InstagramPost
     public function setCategory(?string $category): static
     {
         $this->category = $category;
+        return $this;
+    }
+
+    public function getLastRefreshedAt(): ?\DateTimeImmutable
+    {
+        return $this->lastRefreshedAt;
+    }
+    public function setLastRefreshedAt(?\DateTimeImmutable $date): static
+    {
+        $this->lastRefreshedAt = $date;
         return $this;
     }
 }

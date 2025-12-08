@@ -2,33 +2,45 @@
 
 namespace App\Presentation\Web\Controller\Blog;
 
-use App\Domain\Blog\Entity\InstagramPost;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use App\Application\Blog\UseCase\GetInstagramPostUseCase;
+use App\Infrastructure\Instagram\InstagramMediaService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Application\Blog\UseCase\GetPaginatedInstagramPostsUseCase;
+use App\Application\Blog\UseCase\GetInstagramPostLastRefreshUseCase;
 use App\Application\Blog\UseCase\GetInstagramPostWithChildrenUseCase;
 
 #[Route('/blog', name: 'blog_')]
 class InstagramBlogController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(Request $request, GetPaginatedInstagramPostsUseCase $getPaginatedInstagramPostsUseCase): Response
-    {
+    public function index(
+        Request $request,
+        GetPaginatedInstagramPostsUseCase $useCase,
+        InstagramMediaService $mediaService,
+        GetInstagramPostLastRefreshUseCase $lastRefreshUseCase,
+    ): Response {
         $page = max(1, $request->query->getInt('page', 1));
         $limit = 12;
+        
 
-        $result = $getPaginatedInstagramPostsUseCase->execute($page, $limit);
+        $lastPost = $lastRefreshUseCase->execute();
 
-        // return $this->render('blog/blog_instagram.html.twig', [
-        //     'posts' => $result['posts'],
-        //     'page' => $page,
-        //     'totalPages' => $result['totalPages'],
-        // ]);
+        $shouldRefresh = !$lastPost ||
+            $lastPost < (new \DateTimeImmutable('-24 hours'));
 
-        return $this->render('maintenance/maintenance.html.twig');
+        if ($shouldRefresh) {
+            $mediaService->refreshMediaUrlsIfExpired();
+        }
+
+        $result = $useCase->execute($page, $limit);
+
+        return $this->render('blog/blog_instagram.html.twig', [
+            'posts' => $result['posts'],
+            'page' => $page,
+            'totalPages' => $result['totalPages'],
+        ]);
     }
 
     #[Route('/post/{id}', name: 'show', requirements: ['id' => '\d+'])]
