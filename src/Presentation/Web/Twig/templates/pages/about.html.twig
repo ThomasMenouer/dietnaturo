@@ -13,7 +13,7 @@
 		<div class="row g-4">
 
 			{% for item in about %}
-				{% if loop.first %}
+				{# {% if loop.first %} #}
 					<div class="col-12 col-md-12 col-lg-6">
 						<div class="card border-0 shadow-sm h-100 rounded-4">
 							<img src="{{ asset('/images/about/') ~ item.imageName }}" class="img-fluid rounded-4 h-100 object-fit-cover" alt="">
@@ -29,7 +29,7 @@
 							</div>
 						</div>
 					</div>
-				{% endif %}
+				{# {% endif %} #}
 			{% endfor %}
 		</div>
 	</div>
@@ -60,7 +60,7 @@
 
 	</div>
 
-	<div class="container diplomes mb-5">
+	{# <div class="container diplomes mb-5">
 		<h1 class="text-center py-5">Mon parcours</h1>
 		<div class="row g-4">
 			{% for item in about %}
@@ -83,5 +83,5 @@
 				{% endif %}
 			{% endfor %}
 		</div>
-	</div>
+	</div> #}
 {% endblock %}
