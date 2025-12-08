@@ -25,6 +25,9 @@ class AccompagnementRepository extends ServiceEntityRepository implements Accomp
      */
     public function findAllAccompagnement(): array
     {
-        return $this->findAll();
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.pagePosition', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 }

@@ -25,56 +25,56 @@ class InstagramMediaService
      * @throws \RuntimeException
      * @return int
      */
-public function syncMedia(): int
-{
-    $accessToken = $this->tokenService->getAccessToken();
-    if (!$accessToken) {
-        throw new \RuntimeException('Aucun token Instagram disponible.');
-    }
-
-    $endpoint = 'https://graph.instagram.com/me/media';
-    $fields = 'id,caption,media_type,media_url,permalink,thumbnail_url,timestamp';
-    $url = sprintf('%s?fields=%s&access_token=%s', $endpoint, $fields, $accessToken);
-
-    $countNew = 0;
-    $countUpdated = 0;
-
-    while ($url) {
-        $response = $this->http->request('GET', $url);
-        $data = $response->toArray();
-
-        foreach ($data['data'] as $item) {
-            $existing = $this->em->getRepository(InstagramPost::class)
-                ->findOneBy(['instagramId' => $item['id']]);
-
-            if (!$existing) {
-                // ✅ Nouveau post
-                $post = new InstagramPost();
-                $post->setInstagramId($item['id']);
-                $post->setCaption($item['caption'] ?? null);
-                $post->setMediaType($item['media_type']);
-                $post->setMediaUrl($item['media_url']);
-                $post->setPermalink($item['permalink']);
-                $post->setThumbnailUrl($item['thumbnail_url'] ?? null);
-                $post->setTimestamp(new \DateTime($item['timestamp']));
-                $this->em->persist($post);
-                $countNew++;
-            } else {
-                // ♻️ Post déjà existant → mise à jour de l’URL (elle expire régulièrement)
-                $existing->setMediaUrl($item['media_url']);
-                $existing->setThumbnailUrl($item['thumbnail_url'] ?? null);
-                $existing->setCaption($item['caption'] ?? $existing->getCaption());
-                $existing->setPermalink($item['permalink']);
-                $countUpdated++;
-            }
+    public function syncMedia(): int
+    {
+        $accessToken = $this->tokenService->getAccessToken();
+        if (!$accessToken) {
+            throw new \RuntimeException('Aucun token Instagram disponible.');
         }
 
-        $this->em->flush();
-        $url = $data['paging']['next'] ?? null;
-    }
+        $endpoint = 'https://graph.instagram.com/me/media';
+        $fields = 'id,caption,media_type,media_url,permalink,thumbnail_url,timestamp';
+        $url = sprintf('%s?fields=%s&access_token=%s', $endpoint, $fields, $accessToken);
 
-    return $countNew + $countUpdated;
-}
+        $countNew = 0;
+        $countUpdated = 0;
+
+        while ($url) {
+            $response = $this->http->request('GET', $url);
+            $data = $response->toArray();
+
+            foreach ($data['data'] as $item) {
+                $existing = $this->em->getRepository(InstagramPost::class)
+                    ->findOneBy(['instagramId' => $item['id']]);
+
+                if (!$existing) {
+                    // ✅ Nouveau post
+                    $post = new InstagramPost();
+                    $post->setInstagramId($item['id']);
+                    $post->setCaption($item['caption'] ?? null);
+                    $post->setMediaType($item['media_type']);
+                    $post->setMediaUrl($item['media_url']);
+                    $post->setPermalink($item['permalink']);
+                    $post->setThumbnailUrl($item['thumbnail_url'] ?? null);
+                    $post->setTimestamp(new \DateTime($item['timestamp']));
+                    $this->em->persist($post);
+                    $countNew++;
+                } else {
+                    // ♻️ Post déjà existant → mise à jour de l’URL (elle expire régulièrement)
+                    $existing->setMediaUrl($item['media_url']);
+                    $existing->setThumbnailUrl($item['thumbnail_url'] ?? null);
+                    $existing->setCaption($item['caption'] ?? $existing->getCaption());
+                    $existing->setPermalink($item['permalink']);
+                    $countUpdated++;
+                }
+            }
+
+            $this->em->flush();
+            $url = $data['paging']['next'] ?? null;
+        }
+
+        return $countNew + $countUpdated;
+    }
 
     public function getCarouselChildren(string $mediaId): array
     {
@@ -92,38 +92,37 @@ public function syncMedia(): int
     }
 
     public function refreshMediaUrlsIfExpired(): int
-{
-    $accessToken = $this->tokenService->getAccessToken();
-    if (!$accessToken) {
-        throw new \RuntimeException('Aucun token Instagram disponible.');
-    }
-
-    $endpoint = 'https://graph.instagram.com/me/media';
-    $fields = 'id,media_url,thumbnail_url,caption,permalink';
-    $url = sprintf('%s?fields=%s&limit=100&access_token=%s', $endpoint, $fields, $accessToken);
-
-    $response = $this->http->request('GET', $url);
-    $data = $response->toArray();
-
-    $updated = 0;
-
-    foreach ($data['data'] as $item) {
-        $existing = $this->em->getRepository(InstagramPost::class)
-            ->findOneBy(['instagramId' => $item['id']]);
-
-        if ($existing) {
-            $existing->setMediaUrl($item['media_url']);
-            $existing->setThumbnailUrl($item['thumbnail_url'] ?? null);
-            $existing->setCaption($item['caption'] ?? $existing->getCaption());
-            $existing->setPermalink($item['permalink']);
-            $existing->setLastRefreshedAt(new \DateTimeImmutable());
-            $updated++;
+    {
+        $accessToken = $this->tokenService->getAccessToken();
+        if (!$accessToken) {
+            throw new \RuntimeException('Aucun token Instagram disponible.');
         }
+
+        $endpoint = 'https://graph.instagram.com/me/media';
+        $fields = 'id,media_url,thumbnail_url,caption,permalink';
+        $url = sprintf('%s?fields=%s&limit=100&access_token=%s', $endpoint, $fields, $accessToken);
+
+        $response = $this->http->request('GET', $url);
+        $data = $response->toArray();
+
+        $updated = 0;
+
+        foreach ($data['data'] as $item) {
+            $existing = $this->em->getRepository(InstagramPost::class)
+                ->findOneBy(['instagramId' => $item['id']]);
+
+            if ($existing) {
+                $existing->setMediaUrl($item['media_url']);
+                $existing->setThumbnailUrl($item['thumbnail_url'] ?? null);
+                $existing->setCaption($item['caption'] ?? $existing->getCaption());
+                $existing->setPermalink($item['permalink']);
+                $existing->setLastRefreshedAt(new \DateTimeImmutable());
+                $updated++;
+            }
+        }
+
+        $this->em->flush();
+
+        return $updated;
     }
-
-    $this->em->flush();
-
-    return $updated;
-}
-
 }

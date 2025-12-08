@@ -31,7 +31,7 @@ class InstagramBlogController extends AbstractController
             $lastPost < (new \DateTimeImmutable('-24 hours'));
 
         if ($shouldRefresh) {
-            $mediaService->refreshMediaUrlsIfExpired();
+            $mediaService->syncMedia();
         }
 
         $result = $useCase->execute($page, $limit);
