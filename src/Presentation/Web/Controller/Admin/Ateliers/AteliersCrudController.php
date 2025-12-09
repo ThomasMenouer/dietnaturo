@@ -27,6 +27,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use App\Presentation\Web\Form\Admin\ParticipantsAdminType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
@@ -91,6 +92,7 @@ class AteliersCrudController extends AbstractCrudController
             ImageField::new('imageName', 'Image')
                 ->setBasePath('/images/ateliers')
                 ->setUploadDir('public/images')
+                ->hideOnIndex()
                 ->hideOnForm(),
 
             TextEditorField::new('content', 'Au programme')
@@ -129,10 +131,14 @@ class AteliersCrudController extends AbstractCrudController
 
             FormField::addTab('Inscriptions'),
 
+            AssociationField::new('participants', 'Participants')
+                ->hideOnDetail(),
+
             CollectionField::new('Participants', 'Participants inscrits')
                 ->allowAdd(true)
                 ->allowDelete(true)
                 ->setEntryType(ParticipantsAdminType::class)
+                ->hideOnIndex()
                 ->setFormTypeOption(
                     'entry_options',
                     [
