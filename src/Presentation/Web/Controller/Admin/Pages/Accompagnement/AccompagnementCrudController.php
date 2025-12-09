@@ -21,16 +21,29 @@ class AccompagnementCrudController extends AbstractCrudController
         return Accompagnement::class;
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('Page d’accompagnement')
+            ->setEntityLabelInPlural('Pages d’accompagnement')
+            ->setPageTitle(Crud::PAGE_INDEX, 'Liste des pages d’accompagnement')
+            ->setPageTitle(Crud::PAGE_NEW, 'Créer une page d’accompagnement')
+            ->setPageTitle(Crud::PAGE_EDIT, 'Modifier une page d’accompagnement')
+            ->setPageTitle(Crud::PAGE_DETAIL, 'Détails de la page d’accompagnement')
+            ->setHelp(Crud::PAGE_INDEX, 'Création et gestion des pages d’accompagnement.');
+    }
+
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('title', 'Titre'),
-            IntegerField::new('pagePosition', 'Ordre d’affichage'),
-            SlugField::new('slug')->setTargetFieldName('title'),
+            TextField::new('title', 'Titre')
+            ->setHelp("Titre de la page pour 'Mes accompagnements'"),
 
-            AssociationField::new('contents', 'Contenus')
-                ->setCrudController(AccompagnementContentCrudController::class)
-                ->autocomplete(),
+            IntegerField::new('pagePosition', 'Ordre d’affichage')
+            ->setHelp("Ordre d’affichage de la page dans le menu. (1 = premier)"),
+
+            SlugField::new('slug')->setTargetFieldName('title')
+            ->setHelp("Le slug est généré automatiquement à partir du titre."),
         ];
     }
 }

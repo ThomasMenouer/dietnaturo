@@ -1,15 +1,72 @@
-.consultation-header{
+.consultation-page .consultation-header{
     
     background-color: var(--orange-pastel);
 }
 
-.pricing-separator {
+.consultation-page .pricing-separator {
     color: var(--orange-pastel);
 }
 
-.custom-separator {
+.consultation-page .custom-separator {
     
     width: 5rem;
     height: 8px;
     background-color: var(--orange-pastel);
+}
+
+/* --- Responsive uniquement pour la page Consultation --- */
+@media (max-width: 768px) {
+  .consultation-page .card.d-flex.flex-row {
+    flex-direction: column !important;
+    align-items: center;
+    text-align: center;
+  }
+
+  .consultation-page .card img {
+    transform: none !important;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    max-width: 90%;
+    height: auto;
+  }
+
+  .consultation-page .row.mb-5 {
+    margin-bottom: 2rem !important;
+  }
+
+  .consultation-page .card {
+    padding: 1.5rem !important;
+  }
+
+  .consultation-page .card-body {
+    padding: 0 !important;
+  }
+
+  .consultation-page .card-title {
+    font-size: 1.25rem;
+    margin-top: 0.5rem;
+  }
+
+  .consultation-page .card-text.fw-bold.fs-5 {
+    font-size: 1rem !important;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .consultation-page .container.mb-5 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .consultation-page .card.h-100 {
+    padding: 1.5rem !important;
+  }
+
+  .consultation-page h1.title {
+    font-size: 1.8rem;
+  }
+
+  .consultation-page h2.text-center.py-4 {
+    font-size: 1.4rem;
+  }
 }

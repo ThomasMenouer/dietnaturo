@@ -7,5 +7,13 @@
     --red-pastel: #FF8A8A;   /* Rouge pastel doux */
     --green-pastel: #9FD9A3; /* Vert pastel harmonieux */
 
+    --marron-cafe-creme: #B79C84;	/* Marron clair tirant sur le taupe, doux et élégant.*/
+    --marron-noisette-pastel: #A37B5E;	/* Plus chaud, légèrement orangé, contraste bien avec le beige clair. */
+    --marron-lait-amande: #C5A98B;	 /*Teinte très douce, un peu plus lumineuse, idéale pour gros textes. */
+    --marron-rosee: #B68C7B;  /*  Chaud avec une légère pointe rosée, s’accorde bien avec ton rose pastel. */
+    --marron-sable-chaud: #AA8F6F	; /*Teinte naturelle et neutre, donne un rendu apaisant et lisible. */
+    --marron-cappuccino-pastel:	#8B6F5A;	 /*Un peu plus sombre (pour meilleur contraste sur fond clair), reste doux. */
+    --marron-taupe-clair: #9E8A78;	/* Subtil et moderne, très lisible sans être trop fort. */
+
 
 }

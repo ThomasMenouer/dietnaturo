@@ -23,6 +23,19 @@ class AccompagnementContentCrudController extends AbstractCrudController
         return AccompagnementContent::class;
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('Bloc d’accompagnement')
+            ->setEntityLabelInPlural('Blocs d’accompagnement')
+            ->setPageTitle(Crud::PAGE_INDEX, 'Liste des blocs d’accompagnement')
+            ->setPageTitle(Crud::PAGE_NEW, 'Créer un bloc d’accompagnement')
+            ->setPageTitle(Crud::PAGE_EDIT, 'Modifier un bloc d’accompagnement')
+            ->setPageTitle(Crud::PAGE_DETAIL, 'Détails du bloc d’accompagnement')
+            ->setHelp(Crud::PAGE_INDEX, 'Gestion des blocs de contenu pour les pages d’accompagnement.');
+    }
+
+
     public function configureFields(string $pageName): iterable
     {
         return [
