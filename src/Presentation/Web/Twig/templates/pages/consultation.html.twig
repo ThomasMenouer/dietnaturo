@@ -3,11 +3,13 @@
 {% block title %}Consultation
 {% endblock %}
 
+{% block body_class %}consultation-page{% endblock %}
+
 {% block body %}
 
 	<div class="container-fluid consultation-header py-5 mb-5">
 		<div class="row">
-			<div class=" col-12 col-md-12 text-center mx-auto">
+			<div class="col-12 col-md-12 text-center mx-auto">
 
 				{% for consultation in consultations %}
 					<h1 class="title text-center text-white mb-5">{{ consultation.title }}</h1>

@@ -21,8 +21,8 @@ class AccompagnementContent
     #[ORM\JoinColumn(nullable: false)]
     private ?Accompagnement $accompagnement = null;
 
-    #[ORM\Column(length: 255)]
-    private string $title;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private string $content;
@@ -57,11 +57,11 @@ class AccompagnementContent
         return $this;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
-    public function setTitle(string $title): static
+    public function setTitle(?string $title): static
     {
         $this->title = $title;
         return $this;
@@ -116,10 +116,5 @@ class AccompagnementContent
     {
         $this->position = $position;
         return $this;
-    }
-
-    public function __toString(): string
-    {
-        return $this->title;
     }
 }
