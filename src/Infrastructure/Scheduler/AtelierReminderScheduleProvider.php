@@ -15,8 +15,7 @@ class AtelierReminderScheduleProvider implements ScheduleProviderInterface
     {
         return (new Schedule())
             // Tous les jours à 8h
-            //->add(RecurringMessage::cron('0 8 * * *', new SendAtelierReminderMessage()));
-            ->add(RecurringMessage::cron('*/1 * * * *', new SendAtelierReminderMessage()));
+            ->add(RecurringMessage::cron('0 8 * * *', new SendAtelierReminderMessage()));
 
             
     }
