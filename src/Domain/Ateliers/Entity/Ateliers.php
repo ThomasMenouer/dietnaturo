@@ -111,12 +111,12 @@ class Ateliers
         return $this->imageName;
     }
 
-    public function setImageSize(int $imageSize): void
+    public function setImageSize(?int $imageSize): void
     {
         $this->imageSize = $imageSize;
     }
 
-    public function getImageSize(): int
+    public function getImageSize(): ?int
     {
         return $this->imageSize;
     }
