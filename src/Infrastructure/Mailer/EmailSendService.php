@@ -6,6 +6,7 @@ use Symfony\Component\Mime\Email;
 use App\Domain\Mailer\SendMailInterface;
 use App\Domain\Ateliers\Enum\TypeAtelier;
 use App\Domain\Ateliers\Entity\Participants;
+use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\BodyRendererInterface;
@@ -163,6 +164,7 @@ class EmailSendService implements SendMailInterface
         string $typeAtelier
     ): void {
 
+
         // Choix du template selon le type et si c'est en visio
         if ($isVisio) {
             $template = match ($typeAtelier) {
@@ -180,7 +182,7 @@ class EmailSendService implements SendMailInterface
 
         foreach ($participants as $participant) {
             $email = (new TemplatedEmail())
-                ->from('dietnaturo@gmail.com')
+                ->from($this->fromAddress)
                 ->to($participant->getEmail())
                 ->subject('Rappel : votre ' . $title . ' approche !')
                 ->htmlTemplate($template)
@@ -192,6 +194,8 @@ class EmailSendService implements SendMailInterface
                     'link' => $link,
                     'isVisio' => $isVisio,
                 ]);
+
+
             $this->renderer->render($email);
             $this->mailer->send($email);
         }
@@ -207,6 +211,7 @@ class EmailSendService implements SendMailInterface
      */
     public function sendEmailToAllSubscribers(array $subscribers, string $subject, string $content): void
     {
+        
         foreach ($subscribers as $subscriber) {
             $unsubscribeLink = sprintf(
                 'https://dietnaturo.fr/newsletter/unsubscribe/%s',

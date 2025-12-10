@@ -40,12 +40,12 @@ class AteliersController extends AbstractController
             return $this->redirectToRoute('ateliers_index');
         }
 
-        return $this->render('maintenance/maintenance.html.twig');
+        // return $this->render('maintenance/maintenance.html.twig');
 
-        // return $this->render('Ateliers/ateliers.html.twig', [
-        //     'ateliers' => $ateliers,
-        //     'form' => $form->createView(),
-        // ]);
+        return $this->render('Ateliers/ateliers.html.twig', [
+            'ateliers' => $ateliers,
+            'form' => $form->createView(),
+        ]);
     }
 
     #[Route('/{slug}', name: 'detail')]
