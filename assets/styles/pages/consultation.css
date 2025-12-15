@@ -1,17 +1,15 @@
-.consultation-page .consultation-header{
-    
-    background-color: var(--orange-pastel);
+.consultation-page .consultation-header {
+  background-color: var(--orange-pastel);
 }
 
 .consultation-page .pricing-separator {
-    color: var(--orange-pastel);
+  color: var(--orange-pastel);
 }
 
 .consultation-page .custom-separator {
-    
-    width: 5rem;
-    height: 8px;
-    background-color: var(--orange-pastel);
+  width: 5rem;
+  height: 8px;
+  background-color: var(--orange-pastel);
 }
 
 /* --- Responsive uniquement pour la page Consultation --- */

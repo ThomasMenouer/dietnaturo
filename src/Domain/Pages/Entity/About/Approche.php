@@ -24,6 +24,9 @@ class Approche
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $content = null;
 
+    #[ORM\Column(type: 'integer', options: ['default' => 0])]
+    private int $position= 0;
+
     #[Vich\UploadableField(mapping: 'approche', fileNameProperty: 'imageName', size: 'imageSize')]
     private ?File $imageFile = null;
 
@@ -109,4 +112,17 @@ class Approche
 
         return $this;
     }
+
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(int $position): static
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
 }

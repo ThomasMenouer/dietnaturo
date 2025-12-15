@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Infrastructure\Persistence\Doctrine\Repository\Shop\ProductsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: ProductsRepository::class)]
 class Products
@@ -16,12 +18,14 @@ class Products
     #[ORM\Column]
     private int $id;
 
+    #[Assert\NotBlank]
     #[ORM\Column(length: 255)]
     private string $name;
 
     #[ORM\Column(type: Types::TEXT)]
     private string $description;
 
+    #[Assert\PositiveOrZero]
     #[ORM\Column]
     private int $price;
 
@@ -178,7 +182,7 @@ class Products
     }
 
 
-    public function getFirstEbookPath(): string
+    public function getFirstEbookPath(): ?string
     {
         $firstEbook = $this->ebooks->first();
         if (!$firstEbook) {

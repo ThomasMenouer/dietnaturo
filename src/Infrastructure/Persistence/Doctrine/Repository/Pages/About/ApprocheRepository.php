@@ -23,4 +23,9 @@ class ApprocheRepository extends ServiceEntityRepository implements ApprocheRepo
         return $this->findAll();
     }
 
+    public function getAllApprocheOrderedByPosition(): array
+    {
+        return $this->findBy([], ['position' => 'ASC']);
+    }
+
 }

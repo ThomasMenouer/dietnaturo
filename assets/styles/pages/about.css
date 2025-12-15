@@ -3,3 +3,59 @@
     border-bottom: unset;
 }
 
+/* --- Responsive uniquement pour la page approche / A propos --- */
+@media (max-width: 768px) {
+  .approche-page .card.d-flex.flex-row {
+    flex-direction: column !important;
+    align-items: center;
+    text-align: center;
+  }
+
+  .approche-page .card img {
+    transform: none !important;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    max-width: 90%;
+    height: auto;
+  }
+
+  .approche-page .row.mb-5 {
+    margin-bottom: 2rem !important;
+  }
+
+  .approche-page .card {
+    padding: 1.5rem !important;
+  }
+
+  .approche-page .card-body {
+    padding: 0 !important;
+  }
+
+  .approche-page .card-title {
+    font-size: 1.25rem;
+    margin-top: 0.5rem;
+  }
+
+  .approche-page .card-text.fw-bold.fs-5 {
+    font-size: 1rem !important;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .approche-page .container.mb-5 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .approche-page .card.h-100 {
+    padding: 1.5rem !important;
+  }
+
+  .approche-page h1.title {
+    font-size: 1.8rem;
+  }
+
+  .approche-page h2.text-center.py-4 {
+    font-size: 1.4rem;
+  }
+}

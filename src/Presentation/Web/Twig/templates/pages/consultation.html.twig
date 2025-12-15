@@ -3,7 +3,8 @@
 {% block title %}Consultation
 {% endblock %}
 
-{% block body_class %}consultation-page{% endblock %}
+{% block body_class %}consultation-page
+{% endblock %}
 
 {% block body %}
 
@@ -20,12 +21,8 @@
 
 	</div>
 
-	<div
-		class="container">
+	<div class="container">
 
-		{# <h1 class="text-center py-5">Déroulement de la consultation</h1> #}
-
-		<div class="row">
 			{% for deroulement in deroulements %}
 
 				<div class="row mb-5">
@@ -67,7 +64,6 @@
 
 			{% endfor %}
 
-		</div>
 
 	</div>
 
@@ -86,7 +82,7 @@
 
 					<div class="col mx-auto">
 
-						<div class="card h-100 border-0 shadow-sm rounded-4 p-5" >
+						<div class="card h-100 border-0 shadow-sm rounded-4 p-5">
 
 							<h4 class="fw-bold text-center">{{ consultation.name }}</h4>
 							<hr class="mx-auto w-75 pricing-separator">

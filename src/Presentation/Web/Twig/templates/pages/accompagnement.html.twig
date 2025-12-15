@@ -1,72 +1,78 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ accompagnement.title }}{% endblock %}
+{% block title %}
+	{{ accompagnement.title }}
+{% endblock %}
 
 {% block body %}
 
-<div class="container my-5">
-    <h1 class="text-center mb-5">{{ accompagnement.title }}</h1>
-    <div class="row g-4">
+	<div class="container my-5">
+		<h1 class="text-center mb-5">{{ accompagnement.title }}</h1>
+		<div class="row g-4">
 
-        {% for bloc in accompagnement.contents %}
+			{% for bloc in accompagnement.contents %}
 
-        {% if bloc.imageName %}
-            
-            {% if bloc.position is odd %}
-                <!-- Image à gauche pour les itérations impaires -->
-                    <div class="col-12 col-md-12 col-lg-6">
-                        <div class="card border-0 shadow-sm h-100 rounded-4">
-                            <img src="{{ asset('/images/accompagnementContent/') ~ bloc.imageName }}" 
-                            class="img-fluid rounded-4 h-100 object-fit-cover" alt="{{bloc.imageName}}">
-                        </div>
-                    </div>
-                <div class="col-12 col-md-12 col-lg-6">
-                    <div class="card border-0 text-center p-4 h-100 rounded-4 shadow-sm">
-                        <div class="card-header">
-                            {% if bloc.title %}<h3 class="card-title">{{ bloc.title }}</h3>{% endif %}
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">{{ bloc.content|raw }}</p>
-                        </div>
-                    </div>
-                </div>
+				{% if bloc.imageName %}
 
-            {% else %}
-                <!-- Image à droite pour les itérations paires -->
-                <div class="col-12 col-md-12 col-lg-6">
-                    <div class="card border-0 text-center p-4 h-100 rounded-4 shadow-sm">
-                        <div class="card-header">
-                            {% if bloc.title %}<h3 class="card-title">{{ bloc.title }}</h3>{% endif %}
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">{{ bloc.content|raw }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-12 col-lg-6">
-                    <div class="card border-0 shadow-sm h-100 rounded-4">
-                        <img src="{{ asset('/images/accompagnementContent/') ~ bloc.imageName }}" 
-                        class="img-fluid rounded-4 h-100 object-fit-cover" alt="{{bloc.imageName}}">
-                    </div>
-                </div>
-            {% endif %}
-        
-        {% else %}
+					{% if bloc.position is odd %}
+						<!-- Image à gauche pour les itérations impaires -->
+						<div class="col-12 col-md-12 col-lg-6">
+							<div class="card border-0 shadow-sm h-100 rounded-4">
+								<img src="{{ asset('/images/accompagnementContent/') ~ bloc.imageName }}" class="img-fluid rounded-4 h-100 object-fit-cover" alt="{{bloc.imageName}}">
+							</div>
+						</div>
+						<div class="col-12 col-md-12 col-lg-6">
+							<div class="card border-0 text-center p-4 h-100 rounded-4 shadow-sm">
+								<div class="card-header">
+									{% if bloc.title %}
+										<h3 class="card-title">{{ bloc.title }}</h3>
+									{% endif %}
+								</div>
+								<div class="card-body">
+									<p class="card-text">{{ bloc.content|raw }}</p>
+								</div>
+							</div>
+						</div>
 
-            <div class="col-12 col-md-12 col-lg-12">
-                <div class="card border-0 text-center p-4 h-100 rounded-4 shadow-sm">
-                    <div class="card-header">
-                        {% if bloc.title %}<h3 class="card-title">{{ bloc.title }}</h3>{% endif %}
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">{{ bloc.content|raw }}</p>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-            
-        {% endfor %}
+					{% else %}
+						<!-- Image à droite pour les itérations paires -->
+						<div class="col-12 col-md-12 col-lg-6">
+							<div class="card border-0 text-center p-4 h-100 rounded-4 shadow-sm">
+								<div class="card-header">
+									{% if bloc.title %}
+										<h3 class="card-title">{{ bloc.title }}</h3>
+									{% endif %}
+								</div>
+								<div class="card-body">
+									<p class="card-text">{{ bloc.content|raw }}</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-md-12 col-lg-6">
+							<div class="card border-0 shadow-sm h-100 rounded-4">
+								<img src="{{ asset('/images/accompagnementContent/') ~ bloc.imageName }}" class="img-fluid rounded-4 h-100 object-fit-cover" alt="{{bloc.imageName}}">
+							</div>
+						</div>
+					{% endif %}
 
-    </div>
-</div>
+				{% else %}
+
+					<div class="col-12 col-md-12 col-lg-12">
+						<div class="card border-0 text-center p-4 h-100 rounded-4 shadow-sm">
+							<div class="card-header">
+								{% if bloc.title %}
+									<h3 class="card-title">{{ bloc.title }}</h3>
+								{% endif %}
+							</div>
+							<div class="card-body">
+								<p class="card-text">{{ bloc.content|raw }}</p>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+
+			{% endfor %}
+
+		</div>
+	</div>
 {% endblock %}

@@ -12,6 +12,6 @@ class GetApprocheUseCase
 
     public function execute(): array
     {
-        return $this->ApprocheRepository->getAllApproche();
+        return $this->ApprocheRepository->getAllApprocheOrderedByPosition();
     }
 }

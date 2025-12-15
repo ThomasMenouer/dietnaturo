@@ -11,7 +11,9 @@ use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Attribute as Vich;
 use App\Infrastructure\Persistence\Doctrine\Repository\Ateliers\AteliersRepository;
-use Doctrine\DBAL\Types\Type;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
 
 #[ORM\Entity(repositoryClass: AteliersRepository::class)]
 #[Vich\Uploadable]
@@ -22,18 +24,22 @@ class Ateliers
     #[ORM\Column]
     private int $id;
 
+    #[Assert\NotBlank]
     #[ORM\Column(length: 255)]
     private string $title;
 
+    #[Assert\NotBlank]
     #[ORM\Column(length: 255)]
     private string $theme;
 
+    #[Assert\NotBlank]
     #[ORM\Column(type: Types::TEXT)]
     private string $content;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date = null;
 
+    #[Assert\PositiveOrZero]
     #[ORM\Column(type: 'integer')]
     private int $price;
 
@@ -49,6 +55,10 @@ class Ateliers
     #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private bool $isVisio = false;
 
+    #[Assert\Expression(
+        expression: "this.getIsVisio() == false or (this.getIsVisio() == true and this.getLink() != null)",
+        message: "Le lien doit être renseigné pour un atelier en visio."
+    )]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $link = null;
 

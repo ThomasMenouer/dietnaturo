@@ -64,7 +64,7 @@ class ProductsEbook
         return $this->product;
     }
 
-    public function setProduct(Products $product): static
+    public function setProduct(?Products $product): static
     {
         $this->product = $product;
         return $this;

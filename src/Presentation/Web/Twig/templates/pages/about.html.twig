@@ -3,85 +3,113 @@
 {% block title %}À propos
 {% endblock %}
 
+{% block body_class %}about-page
+{% endblock %}
+
 {% block body %}
 
-	<div class="container py-5">
-		<h1 class="text-center">À propos</h1>
-	</div>
+	<div class="container mb-5">
 
-	<div class="container valeurs">
+		<div class="row my-5">
+			<h1 class="text-center">À propos</h1>
+		</div>
+
 		<div class="row g-4">
 
 			{% for item in about %}
-				{# {% if loop.first %} #}
-					<div class="col-12 col-md-12 col-lg-6">
-						<div class="card border-0 shadow-sm h-100 rounded-4">
-							<img src="{{ asset('/images/about/') ~ item.imageName }}" class="img-fluid rounded-4 h-100 object-fit-cover" alt="">
+				<div class="col-12 col-md-12 col-lg-6">
+					<div class="card border-0 shadow-sm h-100 rounded-4">
+						<img src="{{ asset('/images/about/') ~ item.imageName }}" class="img-fluid rounded-4 h-100 object-fit-cover" alt="{{ item.imageName }}">
+					</div>
+				</div>
+				<div class="col-12 col-md-12 col-lg-6">
+					<div class="card border-0 text-center p-4 h-100 rounded-4 shadow-sm">
+						<div class="card-header">
+							<h3 class="card-title">{{ item.title }}</h3>
+						</div>
+						<div class="card-body">
+							<p class="card-text">{{ item.content | raw }}</p>
 						</div>
 					</div>
-					<div class="col-12 col-md-12 col-lg-6">
-						<div class="card border-0 text-center p-4 h-100 rounded-4 shadow-sm">
-							<div class="card-header">
-								<h3 class="card-title">{{ item.title }}</h3>
-							</div>
-							<div class="card-body">
-								<p class="card-text">{{ item.content | raw }}</p>
-							</div>
-						</div>
-					</div>
-				{# {% endif %} #}
-			{% endfor %}
-		</div>
-	</div>
-
-	<div class="container approche mb-5">
-		<h1 class="text-center py-5">Mon approche</h1>
-
-		<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-			{% for item in approche %}
-				<div class="col d-flex align-items-stretch">
-					{% if item.title is not empty or item.content is not empty %}
-						<div class="card border-0 h-100 text-center rounded-4 shadow-sm p-4">
-							<div class="card-header">
-								<h3 class="card-title">{{ item.title }}</h3>
-							</div>
-							<div class="card-body">
-								<p class="card-text">{{ item.content | raw }}</p>
-							</div>
-						</div>
-					{% else %}
-						<div class="card border-0 h-100 shadow-sm rounded-4">
-							<img src="{{ asset('/images/about/') ~ item.imageName }}" class="img-fluid h-100 rounded-4 object-fit-cover" alt="">
-						</div>
-					{% endif %}
 				</div>
 			{% endfor %}
 		</div>
 
+		<div class="row my-5">
+			<h1 class="text-center">Mon approche</h1>
+		</div>
+
+		<div class="row g-4 approche-page">
+
+
+			{% for item in approche %}
+
+
+				<div class="card p-5 border-0 shadow-sm rounded-4 d-flex flex-row justify-content-between">
+
+					{% if loop.index is odd %}
+						<!-- Image à gauche pour les itérations impaires -->
+
+
+						{% if not item.imageName %}
+							<div class="col-12 col-md-12">
+								<div class="card-body">
+									<h3 class="card-title">{{ item.title }}</h3>
+									<p class="card-text">{{ item.content | raw }}</p>
+								</div>
+							</div>
+
+						{% else %}
+							<div class="col-12 col-md-3">
+								<img src="{{ asset('/images/about/') ~ item.imageName }}" class="img-fluid object-fit-cover shadow-sm rounded-4" style="transform: translateX(-80px);" alt="{{ item.imageName }}">
+							</div>
+
+							<div class="col-12 col-md-9">
+								<div class="card-body">
+									<h3 class="card-title">{{ item.title }}</h3>
+									<p class="card-text">{{ item.content | raw }}</p>
+								</div>
+							</div>
+
+
+						{% endif %}
+
+
+					{% else %}
+						<!-- Image à droite pour les itérations paires -->
+						{% if not item.imageName %}
+
+							<div class=" col-12 col-md-12">
+								<div class="card-body">
+									<h3 class="card-title">{{ item.title }}</h3>
+									<p class="card-text">{{ item.content | raw }}</p>
+								</div>
+							</div>
+						{% else %}
+
+							<div class=" col-12 col-md-9">
+								<div class="card-body">
+									<h3 class="card-title">{{ item.title }}</h3>
+									<p class="card-text">{{ item.content | raw }}</p>
+								</div>
+							</div>
+
+							<div class="col-12 col-md-3">
+								<img src="{{ asset('/images/about/') ~ item.imageName }}" class="img-fluid object-fit-cover shadow-sm rounded-4" style="transform: translateX(80px);" alt="{{ item.imageName }}">
+							</div>
+
+						{% endif %}
+
+					{% endif %}
+
+				</div>
+
+			{% endfor %}
+
+		</div>
+
+
 	</div>
 
-	{# <div class="container diplomes mb-5">
-		<h1 class="text-center py-5">Mon parcours</h1>
-		<div class="row g-4">
-			{% for item in about %}
-				{% if loop.last %}
-					<div class="col-12 col-md-12 col-lg-6">
-						<div class="card border-0 h-100 rounded-4 shadow-sm">
-							<img src="{{ asset('/images/about/') ~ item.imageName }}" class="img-fluid h-100 rounded-4 object-fit-cover" alt="">
-						</div>
-					</div>
-					<div class="col-12 col-md-12 col-lg-6">
-						<div class="card border-0 text-center h-100 rounded-4 shadow-sm p-4">
-							<div class="card-header">
-								<h3 class="card-title">{{ item.title }}</h3>
-							</div>
-							<div class="card-body">
-								<p class="card-text">{{ item.content | raw }}</p>
-							</div>
-						</div>
-					</div>
-				{% endif %}
-			{% endfor %}
-		</div>
-	</div> #}
+
 {% endblock %}

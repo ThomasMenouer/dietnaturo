@@ -1,0 +1,15 @@
+{
+  "entrypoints": {
+    "app": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_hotwired_stimulus-webpack-helpers_dist_stimulus-webpack-helpers_js-node_-0cb7ea.js",
+        "/build/app.js"
+      ],
+      "css": [
+        "/build/vendors-node_modules_hotwired_stimulus-webpack-helpers_dist_stimulus-webpack-helpers_js-node_-0cb7ea.css",
+        "/build/app.css"
+      ]
+    }
+  }
+}
