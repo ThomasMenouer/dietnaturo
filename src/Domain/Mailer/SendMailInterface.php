@@ -60,7 +60,6 @@ interface SendMailInterface
      * @param string $date
      * @param string|null $link
      * @param boolean $isVisio
-     * @param string $slug
      * @param string $typeAtelier
      * @return void
      */

@@ -37,9 +37,9 @@ class ContactType extends AbstractType
                     'class' => 'form-control rounded-pill',
                     'placeholder' => 'Email*',
                 ],
-                'constraints' =>[new Assert\Email([
-                    'message' => 'L\'email {{ value }} n\'est pas valide.']
-                    )],
+                'constraints' => [
+                    new Assert\Email(message: 'L\'email {{ value }} n\'est pas valide.'),
+                ],
                 'label' => false,
                 'required' => true,
             ])
@@ -48,8 +48,7 @@ class ContactType extends AbstractType
                     'class' => 'form-control rounded-4',
                     'placeholder' => 'Message*'
                 ],
-                'constraints' => [new Assert\NotBlank(['message' => 'Le message ne peut pas etre vide.']
-                )],
+                'constraints' => [new Assert\NotBlank(message: 'Le message ne peut pas etre vide.')],
                 'label' => false,
                 'required' => true,
             ])
