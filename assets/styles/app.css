@@ -32,6 +32,12 @@ body{
     font-family: 'Libre Baskerville', serif;
 }
 
+p, h1, h2, h3, h4, h5, h6, div, .card-header, .card-title, .card-text{
+
+    color: var(--marron-chocolat);
+}
+
+
 nav {
 
     background-color: var(--pink-pastel);
@@ -75,7 +81,7 @@ footer {
 }
 
 .card{
-    background-color: var(--light-beige-pastel);
+    background-color: var(--card-pink);
 }
 
 .card-footer{
