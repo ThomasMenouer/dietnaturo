@@ -8,94 +8,79 @@
 
 {% block body %}
 
-	<div class="container-fluid consultation-header py-5 mb-5">
+	<div class="container-fluid consultation-header py-5 mb-5 reveal-top">
 		<div class="row">
 			<div class="col-12 col-md-12 text-center mx-auto">
-
 				{% for consultation in consultations %}
 					<h1 class="title text-center text-white mb-5">{{ consultation.title }}</h1>
 					<p class="fs-4 text-center text-white">{{ consultation.content }}</p>
 				{% endfor %}
 			</div>
 		</div>
-
 	</div>
 
 	<div class="container">
+		{% for deroulement in deroulements %}
+			<div class="row mb-5">
+				<div class="card p-5 border-0 shadow-sm rounded-4 d-flex flex-row justify-content-between
+						                        {% if loop.index is odd %}reveal-left{% else %}reveal-right{% endif %}">
 
-			{% for deroulement in deroulements %}
+					{% if loop.index is odd %}
+						<!-- Image à gauche -->
+						<div class="col-12 col-md-3">
+							<img src="{{ asset('/images/consultations/') ~ deroulement.imageName }}" class="img-fluid object-fit-cover shadow-sm rounded-4" style="transform: translateX(-80px);" alt="{{ deroulement.imageName }}">
+						</div>
 
-				<div class="row mb-5">
-
-					<div class="card p-5 border-0 shadow-sm rounded-4 d-flex flex-row justify-content-between">
-
-						{% if loop.index is odd %}
-							<!-- Image à gauche pour les itérations impaires -->
-							<div class="col-12 col-md-3">
-								<img src="{{ asset('/images/consultations/') ~ deroulement.imageName }}" class="img-fluid object-fit-cover shadow-sm rounded-4" style="transform: translateX(-80px);" alt="{{ deroulement.imageName }}">
+						<div class="col-12 col-md-9">
+							<div class="card-body">
+								<span class="card-text fw-bold fs-5">{{ "%02d"|format(deroulement.step) }}</span>
+								<h3 class="card-title">{{ deroulement.title }}</h3>
+								<p class="card-text">{{ deroulement.content | raw }}</p>
 							</div>
-
-							<div class="col-12 col-md-9">
-								<div class="card-body">
-									<span class="card-text fw-bold fs-5">{{ "%02d"|format(deroulement.step) }}</span>
-									<h3 class="card-title">{{ deroulement.title }}</h3>
-									<p class="card-text">{{ deroulement.content | raw }}</p>
-								</div>
+						</div>
+					{% else %}
+						<!-- Image à droite -->
+						<div class="col-12 col-md-9">
+							<div class="card-body">
+								<span class="card-text fw-bold fs-5">{{ "%02d"|format(deroulement.step) }}</span>
+								<h3 class="card-title">{{ deroulement.title }}</h3>
+								<p class="card-text">{{ deroulement.content | raw }}</p>
 							</div>
+						</div>
 
-						{% else %}
-							<!-- Image à droite pour les itérations paires -->
-							<div class=" col-12 col-md-9">
-								<div class="card-body">
-									<span class="card-text fw-bold fs-5">{{ "%02d"|format(deroulement.step) }}</span>
-									<h3 class="card-title">{{ deroulement.title }}</h3>
-									<p class="card-text">{{ deroulement.content | raw }}</p>
-								</div>
-							</div>
-
-							<div class="col-12 col-md-3">
-								<img src="{{ asset('/images/consultations/') ~ deroulement.imageName }}" class="img-fluid object-fit-cover shadow-sm rounded-4" style="transform: translateX(80px);" alt="{{ deroulement.imageName }}">
-							</div>
-
-						{% endif %}
-
-					</div>
+						<div class="col-12 col-md-3">
+							<img src="{{ asset('/images/consultations/') ~ deroulement.imageName }}" class="img-fluid object-fit-cover shadow-sm rounded-4" style="transform: translateX(80px);" alt="{{ deroulement.imageName }}">
+						</div>
+					{% endif %}
 				</div>
-
-			{% endfor %}
-
-
+			</div>
+		{% endfor %}
 	</div>
 
 	<div class="container mb-5">
-		<h1 class="text-center py-5">Tarifications</h1>
-
+		<h1 class="text-center py-5 reveal-top">Tarifications</h1>
 
 		{% for category, consultations in groupedConsultations %}
-
-			<h2 class="text-center py-4">{{ category }}</h2>
+			<h2 class="text-center py-4 reveal-bottom">{{ category }}</h2>
 
 			<div class="row row-cols-1 row-cols-md-2 g-4">
-
-
 				{% for consultation in consultations %}
-
-					<div class="col mx-auto">
-
+					<div class="col mx-auto reveal-bottom">
 						<div class="card h-100 border-0 shadow-sm rounded-4 p-5">
-
 							<h4 class="fw-bold text-center">{{ consultation.name }}</h4>
 							<hr class="mx-auto w-75 pricing-separator">
-							<h2 class="text-center font-weight-bold display-6">{{ (consultation.price / 100) | format_currency('EUR') }}</h2>
+							<h2 class="text-center font-weight-bold display-6">
+								{{ (consultation.price / 100) | format_currency('EUR') }}
+							</h2>
 							<div class="mx-auto my-4 custom-separator border-0 rounded-4"></div>
 							{% if consultation.description %}
 								<div class="card-text">{{ consultation.description | raw }}</div>
 							{% endif %}
 						</div>
 					</div>
-
 				{% endfor %}
 			</div>
 		{% endfor %}
 	</div>
+
 {% endblock %}
