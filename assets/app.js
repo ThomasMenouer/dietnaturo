@@ -3,6 +3,9 @@ import './bootstrap.js';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+// ScrollReveal
+import './js/scrollReveal.js';
+
 /* Stylesheets */
 
 // Blog styles

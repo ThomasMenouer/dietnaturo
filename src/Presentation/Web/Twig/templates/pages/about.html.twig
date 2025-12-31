@@ -8,14 +8,15 @@
 
 {% block body %}
 
-	<div class="container mb-5">
+	<div
+		class="container mb-5">
 
 		{# <div class="row my-5">
-			<h1 class="text-center">À propos</h1>
-		</div> #}
+					<h1 class="text-center">À propos</h1>
+				</div> #}
 
 		<div class="row my-5">
-			<h1 class="text-center">Mon approche</h1>
+			<h1 class="text-center reveal-top">Mon approche</h1>
 		</div>
 
 		<div class="row g-4 approche-page">
@@ -24,7 +25,8 @@
 			{% for item in approche %}
 
 
-				<div class="card p-5 border-0 shadow-sm rounded-4 d-flex flex-row justify-content-between">
+				<div class="card p-5 border-0 shadow-sm rounded-4 d-flex flex-row justify-content-between
+				 {% if loop.index is odd %}reveal-left{% else %}reveal-right{% endif %}">
 
 					{% if loop.index is odd %}
 						<!-- Image à gauche pour les itérations impaires -->
@@ -88,19 +90,19 @@
 		</div>
 
 		<div class="row my-5">
-			<h1 class="text-center">Mon parcours</h1>
+			<h1 class="text-center reveal-top">Mon parcours</h1>
 		</div>
 
 		<div class="row g-4">
 
 			{% for item in about %}
 				<div class="col-12 col-md-12 col-lg-6">
-					<div class="card border-0 shadow-sm h-100 rounded-4">
+					<div class="card border-0 shadow-sm h-100 rounded-4 reveal-left">
 						<img src="{{ asset('/images/about/') ~ item.imageName }}" class="img-fluid rounded-4 h-100 object-fit-cover" alt="{{ item.imageName }}">
 					</div>
 				</div>
 				<div class="col-12 col-md-12 col-lg-6">
-					<div class="card border-0 text-center p-4 h-100 rounded-4 shadow-sm">
+					<div class="card border-0 text-center p-4 h-100 rounded-4 shadow-sm reveal-right">
 						<div class="card-header">
 							<h3 class="card-title">{{ item.title }}</h3>
 						</div>

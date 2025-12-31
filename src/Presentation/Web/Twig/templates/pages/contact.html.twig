@@ -4,86 +4,85 @@
 
 {% block body %}
 
-    <div class="container mb-5">
+<div class="container mb-5">
 
-        <h1 class="text-center my-5">Contact</h1>
+    <h1 class="text-center my-5 reveal-top">Contact</h1>
 
-        {# Flash messages #}
-        {% for label, messages in app.flashes(['success', 'danger']) %}
-            {% for message in messages %}
-                <div class="alert alert-{{ label }} text-center rounded-pill shadow-sm">
-                    {{ message }}
-                </div>
-            {% endfor %}
+    {# Flash messages #}
+    {% for label, messages in app.flashes(['success', 'danger']) %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }} text-center rounded-pill shadow-sm reveal-bottom">
+                {{ message }}
+            </div>
         {% endfor %}
+    {% endfor %}
 
-        <div class="row g-5 align-items-start">
-            
-            <!-- Coordonnées -->
-            <div class="col-md-5">
-                <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
-                    <h4 class="mb-3">Coordonnées</h4>
-                    <p class="mb-1">📍 19 route de Provins, 77144 Montévrain</p>
-                    <p class="mb-1">📍 53 boulevard Antoine Giroust, 77600 Bussy Saint Georges</p>
-                    <p class="mb-1">✉️ <a href="mailto:coline.legeard@gmail.com" class="text-color-custom">coline.legeard@gmail.com</a></p>
-                    <p>📞 <a href="tel:0635237601" class="text-color-custom">06 35 23 76 01</a></p>
-                </div>
-
-                <div class="card border-0 shadow-sm rounded-4 p-4">
-                    <h4 class="mb-3">Réseaux sociaux</h4>
-                    <p class="text-muted">Recettes, conseils & articles</p>
-                    <div class="d-flex justify-content-center gap-3">
-                        <a href="https://www.instagram.com/cocodietnaturo" class="text-decoration-none" target="_blank" rel="noopener noreferrer">
-                            <img src="/images/icons/Instagram_logo.svg" alt="Instagram" width="30" height="30">
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100063477043523" class="text-decoration-none" target="_blank" rel="noopener noreferrer">
-                            <img src="/images/icons/Facebook_icon.svg" alt="Facebook" width="30" height="30">
-                        </a>
-                    </div>
-                </div>
+    <div class="row g-5 align-items-start">
+        
+        <!-- Coordonnées -->
+        <div class="col-md-5 reveal-left">
+            <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                <h4 class="mb-3">Coordonnées</h4>
+                <p class="mb-1">📍 19 route de Provins, 77144 Montévrain</p>
+                <p class="mb-1">📍 53 boulevard Antoine Giroust, 77600 Bussy Saint Georges</p>
+                <p class="mb-1">✉️ <a href="mailto:coline.legeard@gmail.com" class="text-color-custom">coline.legeard@gmail.com</a></p>
+                <p>📞 <a href="tel:0635237601" class="text-color-custom">06 35 23 76 01</a></p>
             </div>
 
-            <!-- Formulaire -->
-            <div class="col-md-7">
-
-                <div class="card text-center border-0 shadow-sm rounded-4 p-4 mb-4">
-
-                    <h3 class="text-center mb-4">Prendre rendez-vous sur Doctolib</h3>
-
-                    <div class="mb-3">
-                        <a href="https://www.doctolib.fr/dieteticien/esbly/coline-legeard" class="btn btn-custom-color text-white rounded-pill">Prendre rendez-vous</a>
-                    </div>
-
+            <div class="card border-0 shadow-sm rounded-4 p-4">
+                <h4 class="mb-3">Réseaux sociaux</h4>
+                <p class="text-muted">Recettes, conseils & articles</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="https://www.instagram.com/cocodietnaturo" class="text-decoration-none" target="_blank" rel="noopener noreferrer">
+                        <img src="/images/icons/Instagram_logo.svg" alt="Instagram" width="30" height="30">
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100063477043523" class="text-decoration-none" target="_blank" rel="noopener noreferrer">
+                        <img src="/images/icons/Facebook_icon.svg" alt="Facebook" width="30" height="30">
+                    </a>
                 </div>
-
-                <span class="choice d-flex justify-content-center my-3">ou</span>
-
-                <div class="card border-0 shadow-sm rounded-4 p-4">
-                    <h3 class="text-center mb-4">Me contacter</h3>
-                    
-                    {{ form_start(form) }}
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                {{ form_row(form.Prenom) }}
-                            </div>
-                            <div class="col-md-6">
-                                {{ form_row(form.Nom) }}
-                            </div>
-                            <div class="col-12">
-                                {{ form_row(form.Email) }}
-                            </div>
-                            <div class="col-12">
-                                {{ form_row(form.Message) }}
-                            </div>
-                            <div class="col-12 text-center mt-3">
-                                {{ form_row(form.Envoyer, {'attr': {'class': 'btn btn-custom-color text-white rounded-pill'}}) }}
-                            </div>
-                        </div>
-                    {{ form_end(form) }}
-                </div>
-
-
             </div>
         </div>
+
+        <!-- Formulaire -->
+        <div class="col-md-7 reveal-right">
+
+            <div class="card text-center border-0 shadow-sm rounded-4 p-4 mb-4">
+                <h3 class="text-center mb-4">Prendre rendez-vous sur Doctolib</h3>
+
+                <div class="mb-3">
+                    <a href="https://www.doctolib.fr/dieteticien/esbly/coline-legeard" class="btn btn-custom-color text-white rounded-pill">
+                        Prendre rendez-vous
+                    </a>
+                </div>
+            </div>
+
+            <span class="choice d-flex justify-content-center my-3 reveal-top">ou</span>
+
+            <div class="card border-0 shadow-sm rounded-4 p-4 reveal-bottom">
+                <h3 class="text-center mb-4">Me contacter</h3>
+                
+                {{ form_start(form) }}
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            {{ form_row(form.Prenom) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(form.Nom) }}
+                        </div>
+                        <div class="col-12">
+                            {{ form_row(form.Email) }}
+                        </div>
+                        <div class="col-12">
+                            {{ form_row(form.Message) }}
+                        </div>
+                        <div class="col-12 text-center mt-3">
+                            {{ form_row(form.Envoyer, {'attr': {'class': 'btn btn-custom-color text-white rounded-pill'}}) }}
+                        </div>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+
+        </div>
     </div>
+</div>
 {% endblock %}
