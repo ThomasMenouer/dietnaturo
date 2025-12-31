@@ -6,7 +6,7 @@
 /config/secrets/prod/prod.decrypt.private.php
 /config/secrets/dev/dev.decrypt.private.php
 /public/bundles/
-# /public/build/
+/public/build/
 /public/ebooks/
 /public/images/
 /var/
