@@ -31,9 +31,10 @@ class EmailSendService implements SendMailInterface
     public function sendMailInscriptionAtelier(string $email, string $atelierTitle, string $date, string $dateHour): void
     {
 
-        $email = (new TemplatedEmail())
+        $mail = (new TemplatedEmail())
             ->from($this->fromAddress)
             ->to($email)
+            ->addBcc($this->fromAddress)
             ->subject('Confirmation d\'inscription')
             ->htmlTemplate('mails/inscription_atelier.html.twig')
             ->context([
@@ -43,15 +44,12 @@ class EmailSendService implements SendMailInterface
             ]);
 
 
-        $this->renderer->render($email);
-        $this->mailer->send($email);
+        $this->renderer->render($mail);
+        $this->mailer->send($mail);
     }
-
-
 
     /**
      * Envoie un email à un participant
-     *
      * @param Participants $participants
      * @param string $to
      * @param string $subject

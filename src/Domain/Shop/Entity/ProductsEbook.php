@@ -42,10 +42,6 @@ class ProductsEbook
 
         if ($file !== null) {
             $this->updatedAt = new \DateTimeImmutable();
-            
-            if ($file instanceof UploadedFile) {
-                $this->fileName = $file->getClientOriginalName();
-            }
         }
     }
 

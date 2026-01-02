@@ -11,8 +11,6 @@ use App\Domain\Pages\Entity\Home\Home;
 use App\Domain\Ateliers\Entity\Ateliers;
 use App\Domain\Pages\Entity\About\About;
 use App\Domain\Shop\Entity\OrderDetails;
-use App\Domain\Shop\Entity\ProductsCover;
-use App\Domain\Shop\Entity\ProductsEbook;
 use App\Domain\Pages\Entity\About\Approche;
 use App\Domain\Pages\Entity\Contact\Contact;
 use App\Domain\Shop\Entity\CategoriesProducts;
@@ -119,8 +117,6 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::subMenu('Boutique', 'fa-solid fa-bag-shopping')->setSubItems([
             MenuItem::linkToCrud('Voir produits', 'fa-regular fa-file', Products::class),
-            MenuItem::linkToCrud('Covers', 'fa fa-image', ProductsCover::class),
-            MenuItem::linkToCrud('Ebooks', 'fa fa-file-pdf', ProductsEbook::class),
             MenuItem::linkToCrud('Voir categories', 'fa-solid fa-tags', CategoriesProducts::class),
         ]);
 

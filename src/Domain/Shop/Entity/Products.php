@@ -135,6 +135,9 @@ class Products
 
     public function addCover(ProductsCover $cover): static
     {
+        if ($this->covers->count() >= 1) {
+            return $this;
+        }
         if (!$this->covers->contains($cover)) {
             $this->covers[] = $cover;
             $cover->setProduct($this);
@@ -162,6 +165,10 @@ class Products
 
     public function addEbook(ProductsEbook $ebook): static
     {
+        if ($this->ebooks->count() >= 1) {
+            return $this;
+        }
+
         if (!$this->ebooks->contains($ebook)) {
             $this->ebooks[] = $ebook;
             $ebook->setProduct($this);

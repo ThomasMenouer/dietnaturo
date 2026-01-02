@@ -37,14 +37,14 @@ class ProductsCrudController extends AbstractCrudController
 
             CollectionField::new('covers', 'Images de couverture')
                 ->setEntryType(ProductsCoverAdminType::class)
-                ->allowAdd()
-                ->allowDelete()
+                ->allowAdd(true)
+                ->allowDelete(false)
                 ->hideOnIndex(),
 
             CollectionField::new('ebooks', 'Ebooks')
                 ->setEntryType(ProductsEbookAdminType::class)
-                ->allowAdd()
-                ->allowDelete()
+                ->allowAdd(true)
+                ->allowDelete(false)
                 ->hideOnIndex(),
         ];
     }

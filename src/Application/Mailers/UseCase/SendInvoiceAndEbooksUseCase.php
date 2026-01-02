@@ -13,23 +13,27 @@ class SendInvoiceAndEbooksUseCase
     public function execute(Orders $order): void
     {
 
-        $ebooksPaths = [];
+        $ebooks = [];
         foreach ($order->getOrderDetails() as $detail) {
 
             $relativePath = $detail->getEbookPath();
             $path = $this->params->get('kernel.project_dir') . '/public' . $relativePath;
 
             if (file_exists($path)) {
-                $ebooksPaths[] = $path;
+                // On crée un tableau avec le chemin du fichier et le nom à afficher au client
+                $ebooks[] = [
+                    'path' => $path,
+                    'name' => $detail->getProductName() . '.pdf'
+                ];
             }
         }
 
 
         $this->mailer->sendInvoiceAndEbooks(
-            $order->getEmail(), 
-            $order->getFirstname(), 
+            $order->getEmail(),
+            $order->getFirstname(),
             $order->getInvoice()->getPdfPath(),
-            $ebooksPaths
+            $ebooks
 
         );
 

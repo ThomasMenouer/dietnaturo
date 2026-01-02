@@ -14,7 +14,7 @@ class ProductsEbookAdminType extends AbstractType
     {
         $builder->add('file', VichFileType::class, [
             'required' => false,
-            'allow_delete' => true,
+            'allow_delete' => false,
             'download_uri' => true,
             'label' => 'Fichier ebook',
         ]);
